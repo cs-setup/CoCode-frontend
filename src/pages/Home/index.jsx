@@ -5,8 +5,6 @@ export default function Home() {
   return (
     <>
       <div>Home</div>
-      <Button type="primary">jmt</Button>
-      <Button type="dashed">lyz</Button>
     </>
   );
 }
