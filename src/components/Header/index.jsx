@@ -87,26 +87,25 @@ export default function Header(props) {
           </Col>
         </Row>
       </Layout.Header>
-      {openLoginForm && (
-        <Modal
-          centered
-          open={openLoginForm}
-          footer={null}
-          onCancel={closeLoginFrom}
-          width={800}
-          style={{ height: "400px" }}
-          maskClosable={false}
-          destroyOnClose={true}
-        >
-          <Row justify="start">
-            <Col xs={24} sm={24} md={16}>
-              <Card style={{ height: "100%" }}>
-                <LoginForm></LoginForm>
-              </Card>
-            </Col>
-          </Row>
-        </Modal>
-      )}
+
+      <Modal
+        centered
+        open={openLoginForm}
+        footer={null}
+        onCancel={closeLoginFrom}
+        width={800}
+        style={{ height: "400px" }}
+        maskClosable={false}
+        destroyOnClose={true}
+      >
+        <Row justify="start">
+          <Col xs={24} sm={24} md={16}>
+            <Card style={{ height: "100%" }}>
+              <LoginForm closeLoginFrom={closeLoginFrom}></LoginForm>
+            </Card>
+          </Col>
+        </Row>
+      </Modal>
     </>
   );
 }

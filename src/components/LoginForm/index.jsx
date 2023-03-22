@@ -1,39 +1,80 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, message } from "antd";
-import { UserOutlined, LockOutlined, MobileOutlined } from "@ant-design/icons";
-// import { register, login } from '../../api/user';
+import React, { useState, useContext, useEffect } from "react";
+import { Form, Input, Button, message } from "antd";
+import { LockOutlined, MobileOutlined } from "@ant-design/icons";
+import { register, login, verify } from "../../api/user";
+import { LoginContext } from "../../contexts/LoginContext";
 import "./index.css";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
   const [isPassword, setIsPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [isCounting, setIsCounting] = useState(false);
+  const [countdown, setCountdown] = useState(60);
+  const { setIsLoggedIn } = useContext(LoginContext);
+  const { closeLoginFrom } = props;
 
+  // 提交表单
   const onFinish = async (values) => {
-    console.log(values);
     setLoading(true);
     try {
       if (isLogin) {
-        await login(values);
+        // 登录
+        const result = await login(values);
+        localStorage.setItem("token", result.token);
+        setIsLoggedIn(true);
         message.success("登录成功");
+        closeLoginFrom();
       } else {
+        // 注册
         await register(values);
+        const result = await login(values);
+        localStorage.setItem("token", result.token);
+        setIsLoggedIn(true);
         message.success("注册成功");
-        setIsLogin(true);
+        closeLoginFrom();
       }
-    } catch (error) {
-      message.error(error.message);
-    }
+    } catch (error) {}
     setLoading(false);
   };
 
+  // 切换登录注册
   const onToggle = () => {
     setIsLogin(!isLogin);
   };
 
+  //切换登录方式
   const changeLoginMethod = (e) => {
     e.preventDefault();
     setIsPassword(!isPassword);
+  };
+
+  // 手机号输入
+  const onPhoneChange = (e) => {
+    setPhone(e.target.value);
+  };
+
+  // 获取验证码
+  const getCode = async () => {
+    verifyTimeOut();
+    try {
+      await verify({ phone });
+      message.success("发送成功");
+    } catch (error) {}
+  };
+
+  // 验证码倒计时
+  const verifyTimeOut = () => {
+    setIsCounting(true);
+    const timer = setInterval(() => {
+      setCountdown((prevCountdown) => prevCountdown - 1);
+    }, 1000);
+    setTimeout(() => {
+      clearInterval(timer);
+      setIsCounting(false);
+      setCountdown(60);
+    }, 60000);
   };
 
   return (
@@ -42,6 +83,7 @@ const LoginForm = () => {
         name="normal_login"
         initialValues={{ remember: true }}
         onFinish={onFinish}
+        size="large"
       >
         <h2>{isLogin ? "登录" : "注册"}</h2>
 
@@ -55,6 +97,9 @@ const LoginForm = () => {
           <Input
             prefix={<MobileOutlined className="site-form-item-icon" />}
             placeholder="手机号"
+            onChange={(e) => {
+              onPhoneChange(e);
+            }}
           />
         </Form.Item>
         {!isLogin && (
@@ -91,7 +136,9 @@ const LoginForm = () => {
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 placeholder="验证码"
               />
-              <Button>获取验证码</Button>
+              <Button onClick={getCode} disabled={isCounting}>
+                {isCounting ? `${countdown}s` : "发送验证码"}
+              </Button>
             </div>
           </Form.Item>
         )}

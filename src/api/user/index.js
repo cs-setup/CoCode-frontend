@@ -9,21 +9,20 @@ export const register = async (params) => {
 }
 
 export const login = async (params) => {
-    const result = await request.post('user/login', params, {
+    const result = await request.post('admin/login', params, {
         headers: {
             'notoken': true
         }
     })
-    return result
+    return result.data
 }
 
-export const verify  = async (params) => {
-    console.log(params);
-    const result = await request.post('user/message',params,{
+export const verify = async (params) => {
+    const result = await request.post('user/message', params, {
         headers: {
             'notoken': true
         }
     })
     console.log(result);
-    return result
+    return result.data
 }
