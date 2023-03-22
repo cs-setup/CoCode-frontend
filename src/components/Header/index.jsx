@@ -1,8 +1,20 @@
-import React, { useState } from "react";
-import { Col, Row, Menu, Button, Layout, Space, Modal, Card } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import React, { useState, useContext, Suspense } from "react";
+import {
+  Col,
+  Row,
+  Menu,
+  Button,
+  Layout,
+  Space,
+  Modal,
+  Card,
+  Avatar,
+} from "antd";
+import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import LoginForm from "../LoginForm";
 import style from "./index.module.css";
+import { LoginContext } from "../../contexts/LoginContext";
+import { useEffect } from "react";
 
 const items = [
   {
@@ -22,6 +34,12 @@ const items = [
 export default function Header(props) {
   const [current, setCurrent] = useState("mail");
   const [openLoginForm, setOpenLoginForm] = useState(false);
+  const { isLoggedIn } = useContext(LoginContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [isLoggedIn]);
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -55,9 +73,16 @@ export default function Header(props) {
                 <EditOutlined />
                 发布帖子
               </Button>
-              <Button type="default" size="large" onClick={showLoginFrom}>
-                注册/登录
-              </Button>
+              <Suspense fallback={<div></div>}>
+                {!loading &&
+                  (isLoggedIn ? (
+                    <Avatar size="large" icon={<UserOutlined />} />
+                  ) : (
+                    <Button type="default" size="large" onClick={showLoginFrom}>
+                      注册/登录
+                    </Button>
+                  ))}
+              </Suspense>
             </Space>
           </Col>
         </Row>
@@ -69,11 +94,13 @@ export default function Header(props) {
           footer={null}
           onCancel={closeLoginFrom}
           width={800}
-          style={{ height: "400px", backgroundColor: "" }}
+          style={{ height: "400px" }}
+          maskClosable={false}
+          destroyOnClose={true}
         >
           <Row justify="start">
             <Col xs={24} sm={24} md={16}>
-              <Card style={{height: "100%"}}>
+              <Card style={{ height: "100%" }}>
                 <LoginForm></LoginForm>
               </Card>
             </Col>
