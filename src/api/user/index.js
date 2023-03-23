@@ -9,7 +9,7 @@ export const register = async (params) => {
 }
 
 export const login = async (params) => {
-    const result = await request.post('admin/login', params, {
+    const result = await request.post('user/login', params, {
         headers: {
             'notoken': true
         }

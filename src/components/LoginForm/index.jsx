@@ -29,7 +29,8 @@ const LoginForm = (props) => {
       } else {
         // 注册
         await register(values);
-        const result = await login(values);
+        const {formValue, code } = values
+        const result = await login(formValue);
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
         message.success("注册成功");
