@@ -1,5 +1,5 @@
 import Home from '../pages/Home'
-import Login from '../pages/Login'
+import UserCenter from '../pages/UserCenter'
 
 const routes = [
     {
@@ -7,8 +7,8 @@ const routes = [
         component: Home
     },
     {
-        path: "/login",
-        component: Login
+        path: "/usercenter",
+        component: UserCenter
     },
 ]
 

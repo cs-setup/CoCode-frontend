@@ -58,10 +58,10 @@ export default function Header(props) {
     <>
       <Layout.Header className={style.header}>
         <Row justify="center" align="middle" gutter={12}>
-          <Col xs={0} sm={6} md={5} lg={4} xl={2}>
+          <Col xs={0} sm={6} md={5} lg={4} xl={2} xxl={2}>
             <div className={style.title}>CoCode</div>
           </Col>
-          <Col xs={0} sm={0} md={0} lg={6} xl={6}>
+          <Col xs={0} sm={0} md={0} lg={6} xl={6} xxl={6}>
             <Menu
               onClick={onClick}
               selectedKeys={[current]}
@@ -69,19 +69,19 @@ export default function Header(props) {
               items={items}
             />
           </Col>
-          <Col xs={20} sm={14} md={10} lg={8} xl={8}>
+          <Col xs={20} sm={14} md={10} lg={8} xl={8} xxl={8}>
             <Row align="middle">
               <SearchInput></SearchInput>
               <Col span={24}></Col>
             </Row>
           </Col>
-          <Col xs={0} sm={0} md={5} lg={4} xl={3}>
+          <Col xs={0} sm={0} md={5} lg={4} xl={3} xxl={2}>
             <Button type="primary" size="large">
               <EditOutlined />
               发布帖子
             </Button>
           </Col>
-          <Col xs={4} sm={4} md={4} lg={2} xl={1}>
+          <Col xs={4} sm={4} md={4} lg={2} xl={1} xxl={1}>
             {!loading &&
               (isLoggedIn ? (
                 <>

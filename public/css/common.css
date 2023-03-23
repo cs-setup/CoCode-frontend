@@ -7,3 +7,8 @@ a:hover {
 a:active {
     color: #08979c;
 }
+
+body{
+    height: 100%;
+    background-color: #f6f6f6;
+}

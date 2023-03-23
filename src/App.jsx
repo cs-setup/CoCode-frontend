@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import routes from './router'
-import "./App.css"
 import 'antd/dist/reset.css';
 
 function App() {
