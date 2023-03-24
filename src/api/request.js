@@ -7,7 +7,7 @@ const instance = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ? 'http://119.23.244.10:10001/' : 'https://mock.apifox.cn/m1/2452451-0-default/',
     timeout: 6000,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
     }
 });
 
