@@ -28,15 +28,25 @@ const LoginForm = (props) => {
         closeLoginFrom();
       } else {
         // 注册
-        await register(values);
-        const {formValue, code } = values
-        const result = await login(formValue);
-        localStorage.setItem("token", result.token);
-        setIsLoggedIn(true);
-        message.success("注册成功");
-        closeLoginFrom();
+        const registerResult = await register(values);
+
+        if(!registerResult.data){
+          message.error("注册失败")
+        }else{
+          const { code, ...formValue } = values;
+          const result = await login(formValue);
+          localStorage.setItem("token", result.token);
+          if (result.token) {
+            setIsLoggedIn(true);
+            closeLoginFrom();
+          }
+          message.success("注册成功");
+
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   };
 
