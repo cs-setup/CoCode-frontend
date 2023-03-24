@@ -7,7 +7,7 @@ import "./index.css";
 
 const LoginForm = (props) => {
   const [isLogin, setIsLogin] = useState(true);
-  const [isPassword, setIsPassword] = useState(false);
+  const [isPassword, setIsPassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState("");
   const [isCounting, setIsCounting] = useState(false);
@@ -30,9 +30,9 @@ const LoginForm = (props) => {
         // 注册
         const registerResult = await register(values);
 
-        if(!registerResult.data){
-          message.error("注册失败")
-        }else{
+        if (!registerResult.data) {
+          message.error("注册失败");
+        } else {
           const { code, ...formValue } = values;
           const result = await login(formValue);
           localStorage.setItem("token", result.token);
@@ -41,7 +41,6 @@ const LoginForm = (props) => {
             closeLoginFrom();
           }
           message.success("注册成功");
-
         }
       }
     } catch (error) {
@@ -116,7 +115,13 @@ const LoginForm = (props) => {
         {!isLogin && (
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "请输入密码" }]}
+            rules={[
+              { required: true, message: "请输入密码" },
+              {
+                pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/,
+                message: "密码必须包含数字和字母，且长度在8~18之间",
+              },
+            ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
@@ -129,7 +134,13 @@ const LoginForm = (props) => {
         {isLogin && isPassword ? (
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "请输入密码" }]}
+            rules={[
+              { required: true, message: "请输入密码" },
+              {
+                pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/,
+                message: "密码必须包含数字和字母，且长度在8~18之间",
+              },
+            ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
@@ -173,7 +184,21 @@ const LoginForm = (props) => {
             {isLogin ? "登录" : "注册"}
           </Button>
           <div className="login-form-toggle" onClick={onToggle}>
-            {isLogin ? "没有账号？去注册" : "已有账号？去登录"}
+            {isLogin ? (
+              <div>
+                没有账号？
+                <span style={{ fontSize: "1.3rem", color: "#08979c" }}>
+                  去注册
+                </span>
+              </div>
+            ) : (
+              <div>
+                已有账号？
+                <span style={{ fontSize: "1.3rem", color: "#08979c" }}>
+                  去登录
+                </span>
+              </div>
+            )}
           </div>
         </Form.Item>
       </Form>
