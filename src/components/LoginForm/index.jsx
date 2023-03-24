@@ -3,7 +3,7 @@ import { Form, Input, Button, message } from "antd";
 import { LockOutlined, MobileOutlined } from "@ant-design/icons";
 import { register, login, verify } from "../../utils/api/user";
 import { LoginContext } from "../../contexts/LoginContext";
-import debounce from "../../utils/debounce";
+// import debounce from "../../utils/debounce";
 import "./index.css";
 
 const LoginForm = (props) => {
@@ -184,7 +184,7 @@ const LoginForm = (props) => {
           >
             {isLogin ? "登录" : "注册"}
           </Button>
-          <div className="login-form-toggle" onClick={debounce(onToggle,3000)}>
+          <div className="login-form-toggle" onClick={onToggle}>
             {isLogin ? (
               <div>
                 没有账号？
