@@ -22,25 +22,18 @@ const LoginForm = (props) => {
     try {
       if (isLogin) {
         // 登录
+        console.log(values);
         const result = await login(values);
-        localStorage.setItem("token", result.token);
-        setIsLoggedIn(true);
-        message.success("登录成功");
-        closeLoginFrom();
+        doLogin(result);
       } else {
         // 注册
         const registerResult = await register(values);
-
         if (!registerResult.data) {
           message.error("注册失败");
         } else {
           const { code, ...formValue } = values;
           const result = await login(formValue);
-          localStorage.setItem("token", result.token);
-          if (result.token) {
-            setIsLoggedIn(true);
-            closeLoginFrom();
-          }
+          doLogin(result);
           message.success("注册成功");
         }
       }
@@ -86,6 +79,16 @@ const LoginForm = (props) => {
       setIsCounting(false);
       setCountdown(60);
     }, 60000);
+  };
+
+  const doLogin = (result) => {
+    console.log(result);
+    if (result.token) {
+      localStorage.setItem("token", result.token);
+      setIsLoggedIn(true);
+      message.success("登录成功");
+      closeLoginFrom();
+    }
   };
 
   return (

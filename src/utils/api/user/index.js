@@ -6,7 +6,11 @@ export const register = async (params) => {
             'notoken': true
         }
     })
-    return result
+    if(result.message == "10000"){
+        return true
+    }else{
+        return
+    }
 }
 
 export const login = async (params) => {
@@ -15,10 +19,12 @@ export const login = async (params) => {
             'notoken': true
         }
     })
+    console.log(result);
     if(!result.data){
         message.error("登录失败")
-    }else{
-        return result
+        return {}
+    }else{  
+        return result.data
     }
 }
 
