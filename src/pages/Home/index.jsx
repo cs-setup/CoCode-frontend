@@ -1,12 +1,12 @@
 import React from "react";
 import { Card } from "antd";
 import TwoColumn from "../../components/Layout/TwoColumn";
-import CommList from "../../components/List";
+import FeedList from "../../components/List/FeedList";
 
 const LeftColumn = () => {
   return (
     <Card title={<div>沸点列表</div>}>
-      <CommList />
+      <FeedList />
     </Card>
   );
 };

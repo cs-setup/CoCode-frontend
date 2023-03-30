@@ -8,7 +8,6 @@ const instance = axios.create({
     baseURL: 'http://119.23.244.10:10001',
     timeout: 10000,
     headers: {
-        // 'Content-Type': 'multipart/form-data'
         'Content-Type': 'application/json'
 
     }

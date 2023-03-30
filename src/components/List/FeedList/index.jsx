@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getList } from "../../utils/api/article";
+import { getList } from "../../../utils/api/feed";
 import { List, Space, Skeleton, Avatar } from "antd";
 import { LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
+import dayjs from "dayjs"
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -12,7 +13,7 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
-const CommList = () => {
+const FeedList = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNum, setPageNum] = useState(0);
@@ -39,12 +40,7 @@ const CommList = () => {
   };
   useEffect(() => {
     getArticleList();
-    console.log(list);
   }, []);
-
-  const loadMoreData = () => {
-    console.log(111);
-  };
 
   return (
     <InfiniteScroll
@@ -87,7 +83,7 @@ const CommList = () => {
             <List.Item.Meta
               avatar={<Avatar src={item.author.avatar} />}
               title={<a href={item.href}>{item.author.nickname}</a>}
-              description={item.createTime}
+              description={dayjs(item.createTime).format("YYYY-MM-DD HH:mm")}
             />
             {item.content}
           </List.Item>
@@ -97,4 +93,4 @@ const CommList = () => {
   );
 };
 
-export default CommList;
+export default FeedList;
