@@ -1,4 +1,5 @@
-import React, { useState, useContext, Suspense } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Col,
   Row,
@@ -16,7 +17,6 @@ import AvatarInfo from "../AvatarInfo";
 import SearchInput from "../SearchInput";
 import style from "./index.module.css";
 import { LoginContext } from "../../contexts/LoginContext";
-import { useEffect } from "react";
 
 const items = [
   {
@@ -61,8 +61,9 @@ export default function Header(props) {
           <Col xs={0} sm={6} md={5} lg={4} xl={3} xxl={2}>
             <Row justify="center">
               <Col size={24}>
-              <div className={style.title}>CoCode</div>
-
+                <Link to="/home">
+                  <div className={style.title}>CoCode</div>
+                </Link>
               </Col>
             </Row>
           </Col>

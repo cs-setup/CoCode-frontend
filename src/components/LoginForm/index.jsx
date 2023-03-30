@@ -28,9 +28,7 @@ const LoginForm = (props) => {
       } else {
         // 注册
         const registerResult = await register(values);
-        if (!registerResult.data) {
-          message.error("注册失败");
-        } else {
+        if (registerResult) {
           const { code, ...formValue } = values;
           const result = await login(formValue);
           doLogin(result);

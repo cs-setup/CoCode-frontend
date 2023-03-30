@@ -3,13 +3,13 @@ import UserCenter from '../pages/UserCenter'
 
 const routes = [
     {
-        path:'/',
+        path:'/home',
         component: Home
     },
     {
         path: "/usercenter",
         component: UserCenter
-    },
+    },    
 ]
 
 export default routes   

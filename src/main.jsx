@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <ConfigProvider
         theme={{
           token: {
-            fontSize: 16,
+            fontSize: 14,
             colorPrimary: '#13c2c2',
           },
         }}
