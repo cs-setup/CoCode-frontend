@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 
 const TwoColumn = (props) => {
   return (
-    <Row justify="center" gutter={12}>
+    <Row justify="center" gutter={12} style={{width: "100%"}}>
       <Col xs={23} sm={23} md={16} lg={16} xl={16} xxl={12}>
         {props.left}
       </Col>
