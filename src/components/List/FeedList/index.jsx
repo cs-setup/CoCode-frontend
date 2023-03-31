@@ -1,10 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { getList } from "../../../utils/api/feed";
+import { useState, useEffect, useContext, useRef } from "react";
 import { List, Space, Skeleton, Avatar } from "antd";
 import { LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
-import dayjs from "dayjs"
+import dayjs from "dayjs";
+import { getList } from "../../../utils/api/feed";
+import { HomeContext } from "../../../contexts/HomeContext";
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -15,19 +16,17 @@ const IconText = ({ icon, text }) => (
 
 const FeedList = () => {
   const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const { publishItem, setPublishItem } = useContext(HomeContext);
+  const firstPostRef = useRef(Date.now())
 
+  // 请求文章列表
   const getArticleList = async () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
     const result = await getList({
       pageSize: 10,
       pageNum: pageNum + 1,
-      time: Date.now(),
+      time: firstPostRef.current,
     });
     setPageNum(pageNum + 1);
     if (result.postList.length == 0) {
@@ -36,11 +35,18 @@ const FeedList = () => {
       setHasMore(true);
     }
     setList([...list, ...result.postList]);
-    setLoading(false);
   };
   useEffect(() => {
     getArticleList();
   }, []);
+
+  useEffect(()=>{
+    if(publishItem.id){
+      setList([publishItem,...list])
+      setPublishItem({})
+    }
+  },[publishItem])
+
 
   return (
     <InfiniteScroll
