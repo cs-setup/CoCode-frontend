@@ -42,8 +42,14 @@ const FeedEdit = () => {
           onChange={(e) => {
             setTextAreaValue(e.target.value);
           }}
-          onFocus={()=>{setShowEdit(true)}}
-          onBlur={()=>{setShowEdit(false)}}
+          onFocus={() => {
+            setShowEdit(true);
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              setShowEdit(false);
+            }, 200);
+          }}
         />
         {showEdit && (
           <Row justify="end">
