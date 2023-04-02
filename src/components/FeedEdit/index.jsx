@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Input, Button, Space, Row, Col, message } from "antd";
 import { HomeContext } from "../../contexts/HomeContext";
-
 import { publish } from "../../utils/api/feed";
 
 const { TextArea } = Input;
 
 const FeedEdit = () => {
   const { setPublishItem } = useContext(HomeContext);
+  const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
 
   const submitFeed = async () => {
@@ -32,7 +32,7 @@ const FeedEdit = () => {
     <>
       <Space direction="vertical" size="large" style={{ display: "flex" }}>
         <TextArea
-          autoSize={{ minRows: 4, maxRows: 4 }}
+          autoSize={{ minRows: 3, maxRows: 3 }}
           rows={6}
           placeholder="说点什么吧..."
           maxLength={200}
@@ -42,14 +42,18 @@ const FeedEdit = () => {
           onChange={(e) => {
             setTextAreaValue(e.target.value);
           }}
+          onFocus={()=>{setShowEdit(true)}}
+          onBlur={()=>{setShowEdit(false)}}
         />
-        <Row justify="end">
-          <Col>
-            <Button type="primary" onClick={submitFeed}>
-              发布
-            </Button>
-          </Col>
-        </Row>
+        {showEdit && (
+          <Row justify="end">
+            <Col>
+              <Button type="primary" onClick={submitFeed}>
+                发布
+              </Button>
+            </Col>
+          </Row>
+        )}
       </Space>
     </>
   );
