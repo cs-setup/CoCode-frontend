@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
 import { LikeOutlined, LikeTwoTone, MessageOutlined } from "@ant-design/icons";
-import { like } from "../../../utils/api/feed";
-import CommentList from "../CommentList";
+import { like } from "../../../../utils/api/feed";
+import CommentList from "../../CommentList";
 
 const IconText = ({ icon, text, callback, id }) => (
   <Row justify="center">
@@ -44,7 +44,7 @@ const FeedItem = ({ item }) => {
   };
   return (
     <List.Item key={item.id}>
-      <Card size="small">
+      <Card size="small" bordered={false} type="inner">
         <List.Item.Meta
           avatar={<Avatar src={item.author.avatar} />}
           title={<a href={item.href}>{item.author.nickname}</a>}

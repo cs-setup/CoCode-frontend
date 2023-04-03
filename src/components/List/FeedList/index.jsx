@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
 import { List, Skeleton, Row } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import FeedItem from "../FeedItem";
+import FeedItem from "./FeedItem";
 import { getList } from "../../../utils/api/feed";
 import { HomeContext } from "../../../contexts/HomeContext";
 
