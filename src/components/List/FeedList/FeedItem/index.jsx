@@ -44,7 +44,7 @@ const FeedItem = ({ item }) => {
   };
   return (
     <List.Item key={item.id}>
-      <Card size="small" bordered={false}>
+      <Card bordered={false}>
         <List.Item.Meta
           avatar={<Avatar src={item.author.avatar} />}
           title={<a href={item.href}>{item.author.nickname}</a>}
