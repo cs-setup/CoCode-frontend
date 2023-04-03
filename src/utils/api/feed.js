@@ -42,5 +42,7 @@ export const comment = async (params) => {
     console.log(result);
     if(result.code === 10000){
         return true
+    }else if(result.code === 10003){
+        message.warning("账号未登录")
     }
 }
