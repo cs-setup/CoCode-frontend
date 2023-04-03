@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import formatTime from "../../../../utils/formatTime";
 import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
 import { LikeOutlined, LikeTwoTone, MessageOutlined } from "@ant-design/icons";

@@ -4,7 +4,7 @@ import { comment } from "../../utils/api/feed";
 
 const { TextArea } = Input;
 
-const CommentEdit = ({ id }) => {
+const CommentEdit = ({ id, getCommentList }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
 
@@ -21,7 +21,9 @@ const CommentEdit = ({ id }) => {
     } else {
       message.warning("内容不能为空");
     }
+    console.log(result);
     if (result === true) {
+      getCommentList()
       setTextAreaValue("");
       message.success("评论成功");
     }

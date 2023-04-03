@@ -12,28 +12,24 @@ const CommentList = ({ id }) => {
   };
   useEffect(() => {
     getCommentList();
-    setTimeout(() => {
-      console.log(theCommentList);
-    }, 3000);
   }, []);
 
   return (
     <>
-      <CommentEdit id={id} />
+      <CommentEdit id={id} getCommentList={getCommentList}/>
       {theCommentList.length !== 0 && (
         <>
           <Divider></Divider>
           <List
             itemLayout="vertical"
-            size="small"
+            size="middle"
             dataSource={theCommentList}
             grid={{
               column: 1,
             }}
             locale={{ emptyText: <></> }}
             renderItem={(item) => <CommentItem item={item} />}
-            pagination={{align:"center"}}
-            // bordered
+            pagination={{ align: "center", pageSize: 6 }}
           />
         </>
       )}
