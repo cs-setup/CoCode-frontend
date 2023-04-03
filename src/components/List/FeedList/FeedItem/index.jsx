@@ -44,7 +44,7 @@ const FeedItem = ({ item }) => {
   };
   return (
     <List.Item key={item.id}>
-      <Card bordered={false}>
+      <Card bordered={false} size="small">
         <List.Item.Meta
           avatar={<Avatar src={item.author.avatar} />}
           title={<a href={item.href}>{item.author.nickname}</a>}
@@ -54,7 +54,7 @@ const FeedItem = ({ item }) => {
           <Col span={24} offset={4}>
             {item.content}
           </Col>
-          <Divider style={{ marginBottom: 5, width: "100%" }}></Divider>
+          <Divider style={{ marginBottom: 8, width: "100%" }}></Divider>
           <Col span={24}>
             <Row align>
               <Col span={12}>

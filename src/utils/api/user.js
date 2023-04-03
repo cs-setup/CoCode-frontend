@@ -44,3 +44,8 @@ export const verify = async (params) => {
     })
     return {}
 }
+
+export const fetchUserInfo = async () => {
+    const result = await request.get('/user/info')
+    return result.data
+}

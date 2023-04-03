@@ -101,7 +101,9 @@ export default function Header(props) {
                         <Avatar>
                           <BellFilled />
                         </Avatar>
-                        <AvatarInfo />
+                        <Link to="/usercenter">
+                          <AvatarInfo />
+                        </Link>
                       </Space>
                     </>
                   ) : (

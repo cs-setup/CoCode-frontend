@@ -66,6 +66,7 @@ const FeedList = () => {
         }}
         locale={{ emptyText: <></> }}
         renderItem={(item) => <FeedItem item={item} />}
+        style={{overflow: "hidden"}}
       />
     </InfiniteScroll>
   );
