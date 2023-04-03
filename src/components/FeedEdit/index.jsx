@@ -46,15 +46,21 @@ const FeedEdit = () => {
             setShowEdit(true);
           }}
           onBlur={() => {
-            setTimeout(() => {
+            if (textAreaValue.trim() === "") {
               setShowEdit(false);
-            }, 200);
+            }
           }}
         />
         {showEdit && (
           <Row justify="end">
             <Col>
-              <Button type="primary" onClick={submitFeed}>
+              <Button
+                type="primary"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  submitFeed();
+                }}
+              >
                 发布
               </Button>
             </Col>
