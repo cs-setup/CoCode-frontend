@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Col,
   Row,
@@ -20,16 +20,16 @@ import { LoginContext } from "../../contexts/LoginContext";
 
 const items = [
   {
-    label: "首页",
-    key: "mail",
+    label: <Link to="/home">首页</Link>,
+    key: "/home",
   },
   {
-    label: "论坛",
-    key: "app",
+    label: <Link to="/app">论坛</Link>,
+    key: "/app",
   },
   {
-    label: "圈子",
-    key: "squre",
+    label: <Link to="/squre">圈子</Link>,
+    key: "/squre",
   },
 ];
 
@@ -38,6 +38,7 @@ export default function Header(props) {
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const { isLoggedIn } = useContext(LoginContext);
   const [loading, setLoading] = useState(true);
+  const location = useLocation()
 
   useEffect(() => {
     setLoading(false);
@@ -46,6 +47,11 @@ export default function Header(props) {
   const onClick = (e) => {
     setCurrent(e.key);
   };
+
+  useEffect(()=>{
+    setCurrent(location.pathname)
+  },[location])
+
 
   const showLoginFrom = () => {
     setOpenLoginForm(true);
