@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
+import formatTime from "../../../../utils/formatTime";
 import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
 import { LikeOutlined, LikeTwoTone, MessageOutlined } from "@ant-design/icons";
 import { like } from "../../../../utils/api/feed";
@@ -44,11 +44,11 @@ const FeedItem = ({ item }) => {
   };
   return (
     <List.Item key={item.id}>
-      <Card size="small" bordered={false} type="inner">
+      <Card size="small" bordered={false}>
         <List.Item.Meta
           avatar={<Avatar src={item.author.avatar} />}
           title={<a href={item.href}>{item.author.nickname}</a>}
-          description={dayjs(item.createTime).format("YYYY-MM-DD HH:mm")}
+          description={formatTime(item.createTime)}
         />
         <Row justify="center">
           <Col span={24} offset={4}>
@@ -80,7 +80,7 @@ const FeedItem = ({ item }) => {
               <Divider
                 style={{ width: "100%", marginTop: 8, marginBottom: 16 }}
               ></Divider>
-              <Col span={20}>
+              <Col span={24}>
                 <CommentList id={item.id} />
               </Col>
             </>

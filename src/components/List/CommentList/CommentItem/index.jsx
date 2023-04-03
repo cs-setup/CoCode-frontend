@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
+import formatTime from "../../../../utils/formatTime";
 import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
 import { LikeOutlined, LikeTwoTone, MessageOutlined } from "@ant-design/icons";
 import { like } from "../../../../utils/api/feed";
@@ -40,18 +41,21 @@ const CommentItem = ({ item }) => {
   };
   return (
     <List.Item key={item.id}>
-      <Card bordered={false} type="inner" size="small">
+      <Card bordered={false} type="inner" size="middle">
         <List.Item.Meta
           avatar={<Avatar size="small" src={item.user.avatar} />}
           title={
+            <Row justify="space-between">
+                <Col>
             <a href={item.href} style={{ fontSize: 16, margin: 0 }}>
               {item.user.nickname}
-            </a>
-          }
-          description={
+            </a></Col>
+            <Col>
             <div style={{ fontSize: 14, padding: 0 }}>
-              {dayjs(item.createTime).format("YYYY-MM-DD HH:mm")}
-            </div>
+            {formatTime(item.createTime)}
+          </div>
+          </Col>
+          </Row>
           }
           style={{ margin: 0 }}
         />
@@ -67,13 +71,12 @@ const CommentItem = ({ item }) => {
                 id={item.id}
                 callback={changeLike}
               />
-
               <IconText
                 icon={MessageOutlined}
                 text={item.commentCount}
                 key="list-vertical-message"
                 callback={showCommentList}
-              />
+              />                       
             </Space>
           </Col>
           {showComment && (
