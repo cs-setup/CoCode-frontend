@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Input, Button, Avatar, Row, Col, Space } from "antd";
+import { UserContext } from "../../contexts/UserContext";
 import { comment } from "../../utils/api/feed";
 
 const { TextArea } = Input;
@@ -7,6 +8,7 @@ const { TextArea } = Input;
 const CommentEdit = ({ id, getCommentList }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
+  const { userInfo } = useContext(UserContext);
 
   const submitComment = async () => {
     let result;
@@ -23,7 +25,7 @@ const CommentEdit = ({ id, getCommentList }) => {
     }
     console.log(result);
     if (result === true) {
-      getCommentList()
+      getCommentList();
       setTextAreaValue("");
       message.success("评论成功");
     }
@@ -34,7 +36,7 @@ const CommentEdit = ({ id, getCommentList }) => {
       <Space direction="vertical" style={{ display: "flex" }} size="small">
         <Row justify="space-between">
           <Col span={4} lg={2}>
-            <Avatar />
+            <Avatar src={userInfo.user.avatar} />
           </Col>
           <Col span={20} lg={22}>
             <TextArea

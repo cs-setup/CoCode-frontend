@@ -18,7 +18,7 @@ const LeftColumn = () => {
 }
 const RightColumn = () => {
   return (
-    <></>
+    <><Card>此处是广告牌</Card></>
   )
 }
 

@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
-import { Card, Avatar, Button, Row, Col } from "antd";
-import { LoginContext } from "../../contexts/LoginContext";
-import FeedList from "../List/FeedList";
+import { Card, Avatar, Button, Row, Col, Space } from "antd";
+import { UserContext } from "../../contexts/UserContext";
+import { UserOutlined } from "@ant-design/icons";
 
 const UserInfo = () => {
-  const { userInfo } = useContext(LoginContext);
-
-  if (!userInfo || !userInfo.user) {
-    return null;
-  }
+  const { userInfo } = useContext(UserContext);
 
   return (
     <>
@@ -18,7 +14,12 @@ const UserInfo = () => {
             <Card.Meta
               avatar={<Avatar size={64} src={userInfo.user.avatar} />}
               title={userInfo.user.nickname}
-              description={<div>{userInfo.user.nickname}的个人主页</div>}
+              description={
+                <Space>
+                  <UserOutlined />
+                  <div>{userInfo.user.nickname}的个人主页</div>
+                </Space>
+              }
             />
           </Col>
           <Col xs={0} sm={0} md={4}>

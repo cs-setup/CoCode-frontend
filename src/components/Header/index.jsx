@@ -34,7 +34,7 @@ const items = [
 ];
 
 export default function Header(props) {
-  const [current, setCurrent] = useState("mail");
+  const [current, setCurrent] = useState("home");
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const { isLoggedIn } = useContext(LoginContext);
   const [loading, setLoading] = useState(true);
@@ -92,7 +92,7 @@ export default function Header(props) {
               <Col size={24}>
                 <Button type="primary" size="large">
                   <EditOutlined />
-                  发布帖子
+                  笔记中心
                 </Button>
               </Col>
             </Row>
@@ -107,7 +107,7 @@ export default function Header(props) {
                         <Avatar>
                           <BellFilled />
                         </Avatar>
-                        <Link to="/usercenter">
+                        <Link to="/user">
                           <AvatarInfo />
                         </Link>
                       </Space>
