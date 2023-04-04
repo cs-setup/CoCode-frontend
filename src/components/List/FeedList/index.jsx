@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
-import { List, Skeleton, Row } from "antd";
+import { List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FeedItem from "./FeedItem";
-import { getList } from "../../../utils/api/feed";
+import { getList, getMyList } from "../../../utils/api/feed";
 import { HomeContext } from "../../../contexts/HomeContext";
+import { UserContext } from "../../../contexts/UserContext";
 
-const FeedList = () => {
+const FeedList = ({ myList }) => {
+  const { userInfo } = useContext(UserContext);
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -15,11 +17,24 @@ const FeedList = () => {
 
   // 请求文章列表
   const getArticleList = async () => {
-    const result = await getList({
+    if(userInfo.user.id===""){
+      return
+    }
+    console.log(userInfo);
+    let result = {};
+    const options = {
       pageSize: 10,
       pageNum: pageNum + 1,
       time: firstPostRef.current,
-    });
+    };
+    if (myList) {
+      options.id = userInfo.user.id;
+      result = await getMyList(options);
+    } else {
+      result = await getList(options);
+    }
+
+    console.log(result);
 
     setPageNum(pageNum + 1);
     if (result.postList.length == 0) {
@@ -31,7 +46,7 @@ const FeedList = () => {
   };
   useEffect(() => {
     getArticleList();
-  }, []);
+  }, [userInfo]);
 
   useEffect(() => {
     if (publishItem.id) {
@@ -62,11 +77,11 @@ const FeedList = () => {
         split={false}
         dataSource={list}
         grid={{
-          column: 1
+          column: 1,
         }}
         locale={{ emptyText: <></> }}
         renderItem={(item) => <FeedItem item={item} />}
-        style={{overflow: "hidden"}}
+        style={{ overflow: "hidden" }}
       />
     </InfiniteScroll>
   );

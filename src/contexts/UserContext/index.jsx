@@ -3,14 +3,14 @@ import { fetchUserInfo } from "../../utils/api/user";
 
 export const UserContext = createContext({
   userInfo: {
-    user: { nickname: "", avatar: "" },
+    user: { nickname: "", avatar: "", id: "" },
   },
   setUserInfo: () => {},
 });
 
 export const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({
-    user: { nickname: "", avatar: "" },
+    user: { nickname: "", avatar: "", id: ""  },
   });
 
   useEffect(() => {

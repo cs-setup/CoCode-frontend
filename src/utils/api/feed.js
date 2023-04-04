@@ -12,6 +12,16 @@ export const getList = async (params) => {
     }
 }
 
+export const getMyList = async (params) =>{
+    const {id, ...option} = params
+    const result = await request.post(`/post/user/${id}`,option)
+    if (result.code == 10000) {
+        return result.data
+    } else {
+        return {}
+    }
+}
+
 export const publish = async (params) => {
     const result = await request.post("/post", params)
     if (result.code === 10000) {

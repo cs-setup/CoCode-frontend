@@ -10,7 +10,7 @@ const LeftColumn = () => {
     <Space direction="vertical" style={{display: "flex"}}>
     <UserInfo></UserInfo>
       <Card title="我的沸点">
-        <FeedList />
+        <FeedList myList={true}/>
       </Card>
     </Space>
     </>
