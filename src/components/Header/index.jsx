@@ -38,7 +38,7 @@ export default function Header(props) {
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const { isLoggedIn } = useContext(LoginContext);
   const [loading, setLoading] = useState(true);
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
     setLoading(false);
@@ -48,10 +48,9 @@ export default function Header(props) {
     setCurrent(e.key);
   };
 
-  useEffect(()=>{
-    setCurrent(location.pathname)
-  },[location])
-
+  useEffect(() => {
+    setCurrent(location.pathname);
+  }, [location]);
 
   const showLoginFrom = () => {
     setOpenLoginForm(true);
@@ -122,6 +121,28 @@ export default function Header(props) {
           </Col>
         </Row>
       </Layout.Header>
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={0}>
+          <div>
+            <Menu
+              onClick={onClick}
+              selectedKeys={[current]}
+              mode="vertical"
+              style={{ display: "flex", justifyContent: "space-around" }}
+            >
+              <Menu.Item className={style.menuitem} key="/home">
+                <Link to="/home">首页</Link>
+              </Menu.Item>
+              <Menu.Item className={style.menuitem} key="/app">
+                <Link to="/app">论坛</Link>
+              </Menu.Item>
+              <Menu.Item className={style.menuitem} key="/squre">
+                <Link to="/squre">圈子</Link>
+              </Menu.Item>
+            </Menu>
+          </div>
+        </Col>
+      </Row>
 
       <Modal
         centered
