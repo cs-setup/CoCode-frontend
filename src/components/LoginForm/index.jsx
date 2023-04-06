@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Input, Button, message } from "antd";
 import { LockOutlined, MobileOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { register, login, verify } from "../../utils/api/user";
 import { LoginContext } from "../../contexts/LoginContext";
-// import debounce from "../../utils/debounce";
 import "./index.css";
 
 const LoginForm = (props) => {
@@ -15,6 +15,7 @@ const LoginForm = (props) => {
   const [countdown, setCountdown] = useState(60);
   const { setIsLoggedIn } = useContext(LoginContext);
   const { closeLoginFrom } = props;
+  const navigate = useNavigate();
 
   // 提交表单
   const onFinish = async (values) => {
@@ -22,7 +23,6 @@ const LoginForm = (props) => {
     try {
       if (isLogin) {
         // 登录
-        console.log(values);
         const result = await login(values);
         doLogin(result);
       } else {
@@ -80,10 +80,10 @@ const LoginForm = (props) => {
   };
 
   const doLogin = (result) => {
-    console.log(result);
     if (result.token) {
       localStorage.setItem("token", result.token);
       setIsLoggedIn(true);
+      navigate("/", { replace: true });
       message.success("登录成功");
       closeLoginFrom();
     }

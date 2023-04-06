@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import useLogin from "../../hooks/useLogin"
 import { fetchUserInfo } from "../../utils/api/user";
 
 export const UserContext = createContext({
@@ -12,6 +13,7 @@ export const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({
     user: { nickname: "", avatar: "", id: ""  },
   });
+  const isLogin = useLogin()
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -19,7 +21,7 @@ export const UserProvider = ({ children }) => {
       setUserInfo(result);
     };
     getUserInfo();
-  }, []);
+  }, [isLogin]);
 
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>

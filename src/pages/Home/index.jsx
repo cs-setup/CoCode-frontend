@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Space } from "antd";
 import { HomeProvider } from "../../contexts/HomeContext";
-import { LoginContext } from "../../contexts/LoginContext";
+import useLogin from "../../hooks/useLogin";
 import TwoColumn from "../../components/Layout/TwoColumn";
 import FeedList from "../../components/List/FeedList";
 import FeedEdit from "../../components/FeedEdit";
 
 const LeftColumn = () => {
-  const { isLoggedIn } = useContext(LoginContext);
+  const isLogin = useLogin()
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-        {isLoggedIn && (
+        {isLogin && (
           <Card>
             <FeedEdit />
           </Card>

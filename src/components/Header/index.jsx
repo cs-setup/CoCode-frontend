@@ -16,7 +16,7 @@ import LoginForm from "../LoginForm";
 import AvatarInfo from "../AvatarInfo";
 import SearchInput from "../SearchInput";
 import style from "./index.module.css";
-import { LoginContext } from "../../contexts/LoginContext";
+import useLogin from "../../hooks/useLogin"
 
 const items = [
   {
@@ -36,13 +36,13 @@ const items = [
 export default function Header(props) {
   const [current, setCurrent] = useState("home");
   const [openLoginForm, setOpenLoginForm] = useState(false);
-  const { isLoggedIn } = useContext(LoginContext);
+  const isLogin = useLogin()
   const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     setLoading(false);
-  }, [isLoggedIn]);
+  }, [isLogin]);
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -50,7 +50,7 @@ export default function Header(props) {
 
   useEffect(() => {
     setCurrent(location.pathname);
-  }, [location]);
+  }, [location.pathname]);
 
   const showLoginFrom = () => {
     setOpenLoginForm(true);
@@ -100,7 +100,7 @@ export default function Header(props) {
             <Row>
               <Col size={24}>
                 {!loading &&
-                  (isLoggedIn ? (
+                  (isLogin ? (
                     <>
                       <Space>
                         <Avatar>

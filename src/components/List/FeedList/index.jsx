@@ -17,9 +17,6 @@ const FeedList = ({ myList }) => {
 
   // 请求文章列表
   const getArticleList = async () => {
-    if(userInfo.user.id===""){
-      return
-    }
     console.log(userInfo);
     let result = {};
     const options = {
@@ -27,14 +24,12 @@ const FeedList = ({ myList }) => {
       pageNum: pageNum + 1,
       time: firstPostRef.current,
     };
-    if (myList) {
+    if (myList && userInfo.user.id) {
       options.id = userInfo.user.id;
       result = await getMyList(options);
     } else {
       result = await getList(options);
     }
-
-    console.log(result);
 
     setPageNum(pageNum + 1);
     if (result.postList.length == 0) {
