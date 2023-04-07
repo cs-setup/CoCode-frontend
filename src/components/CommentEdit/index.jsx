@@ -23,7 +23,6 @@ const CommentEdit = ({ id, getCommentList }) => {
     } else {
       message.warning("内容不能为空");
     }
-    console.log(result);
     if (result === true) {
       getCommentList();
       setTextAreaValue("");

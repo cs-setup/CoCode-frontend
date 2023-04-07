@@ -4,17 +4,7 @@ import {
 import request from "./request"
 
 export const getList = async (params) => {
-    const result = await request.post("/post/feed/latest", params)
-    if (result.code == 10000) {
-        return result.data
-    } else {
-        return {}
-    }
-}
-
-export const getMyList = async (params) =>{
-    const {id, ...option} = params
-    const result = await request.post(`/post/user/${id}`,option)
+    const result = await request.post("/post/list", params)
     if (result.code == 10000) {
         return result.data
     } else {
@@ -49,7 +39,6 @@ export const commentList = async (params) =>{
 
 export const comment = async (params) => {
     const result = await request.post("/comment",params)
-    console.log(result);
     if(result.code === 10000){
         return true
     }else if(result.code === 10003){

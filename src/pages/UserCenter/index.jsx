@@ -35,7 +35,7 @@ const UserCenter = () => {
       navigate("/", { replace: true });
       message.warning("请先登录");
     }
-  });
+  }, []);
   return (
     <>
       <TwoColumn left={<LeftColumn />} right={<RightColumn />}></TwoColumn>

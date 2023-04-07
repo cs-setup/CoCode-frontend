@@ -14,7 +14,7 @@ export const LoginProvider = ({ children }) => {
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [localStorage.getItem("token")]);
 
   return (
     <LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>

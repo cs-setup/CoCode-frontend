@@ -9,7 +9,6 @@ export const register = async (params) => {
             'Content-Type': 'multipart/form-data'
         }
     })
-    console.log(result);
     if (result.code == 10000) {
         return true
     }else {
@@ -25,7 +24,6 @@ export const login = async (params) => {
             'Content-Type': 'multipart/form-data'
         }
     })
-    console.log(result);
 
     if (result.code == 10000) {
         return result.data

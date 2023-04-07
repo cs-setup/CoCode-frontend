@@ -3,7 +3,7 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FeedItem from "./FeedItem";
-import { getList, getMyList } from "../../../utils/api/feed";
+import { getList } from "../../../utils/api/feed";
 import { HomeContext } from "../../../contexts/HomeContext";
 import { UserContext } from "../../../contexts/UserContext";
 
@@ -17,27 +17,39 @@ const FeedList = ({ myList }) => {
 
   // 请求文章列表
   const getArticleList = async () => {
-    console.log(userInfo);
     let result = {};
-    const options = {
+    const pageParam = {
       pageSize: 10,
       pageNum: pageNum + 1,
       time: firstPostRef.current,
     };
+    const options = {
+      specify: {
+        // "authorId/eq": 0,
+      },
+      order: {
+        createTime: "desc",
+        likedCount: "desc",
+      },
+    };
+    console.log({ pageParam, options });
     if (myList && userInfo.user.id) {
-      options.id = userInfo.user.id;
-      result = await getMyList(options);
+      options.specify["authorId/eq"] = userInfo.user.id;
+      result = await getList({ pageParam, options });
     } else {
-      result = await getList(options);
+      result = await getList({ pageParam, options });
+      console.log(result);
     }
 
-    setPageNum(pageNum + 1);
-    if (result.postList.length == 0) {
-      setHasMore(false);
-    } else {
-      setHasMore(true);
+    if (result.postList) {
+      setPageNum(pageNum + 1);
+      if (result.postList.length == 0) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+      setList([...list, ...result.postList]);
     }
-    setList([...list, ...result.postList]);
   };
   useEffect(() => {
     getArticleList();
