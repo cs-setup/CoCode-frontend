@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import useLogin from "../hooks/useLogin";
 import Home from "../pages/Home";
 import UserCenter from "../pages/UserCenter";
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
 import NotFound from "../pages/NotFound";
+import { useEffect } from "react";
 
 const CommonRoutes = [
   {
@@ -46,6 +48,10 @@ const AuthRoutes = [
   },
 ];
 
-export default localStorage.getItem("token")
-  ? [...CommonRoutes, ...AuthRoutes]
-  : CommonRoutes;
+const useRouter = () => {
+  const isLogin = useLogin();
+
+  return isLogin ? [...CommonRoutes, ...AuthRoutes] : CommonRoutes;
+};
+
+export default useRouter;
