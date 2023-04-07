@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Input, Button, Avatar, Row, Col, Space } from "antd";
 import { UserContext } from "../../contexts/UserContext";
 import { comment } from "../../utils/api/feed";
+import { message } from "antd";
 
 const { TextArea } = Input;
 
@@ -9,6 +10,10 @@ const CommentEdit = ({ id, getCommentList }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const { userInfo } = useContext(UserContext);
+
+  if(!userInfo.user || !userInfo.user.avatar){
+    return null
+  }
 
   const submitComment = async () => {
     let result;
