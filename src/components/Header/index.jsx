@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Suspense } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Col,
@@ -13,10 +13,11 @@ import {
 } from "antd";
 import { EditOutlined, BellFilled } from "@ant-design/icons";
 import LoginForm from "../LoginForm";
-import AvatarInfo from "../AvatarInfo";
 import SearchInput from "../SearchInput";
+import Author from "../Author";
 import style from "./index.module.css";
-import useLogin from "../../hooks/useLogin"
+import useLogin from "../../hooks/useLogin";
+
 
 const items = [
   {
@@ -36,7 +37,7 @@ const items = [
 export default function Header(props) {
   const [current, setCurrent] = useState("home");
   const [openLoginForm, setOpenLoginForm] = useState(false);
-  const isLogin = useLogin()
+  const isLogin = useLogin();
   const [loading, setLoading] = useState(true);
   const location = useLocation();
 
@@ -107,7 +108,7 @@ export default function Header(props) {
                           <BellFilled />
                         </Avatar>
                         <Link to="/user">
-                          <AvatarInfo />
+                        <Author />
                         </Link>
                       </Space>
                     </>

@@ -24,21 +24,17 @@ const FeedList = ({ myList }) => {
       time: firstPostRef.current,
     };
     const options = {
-      specify: {
-        // "authorId/eq": 0,
-      },
+      specify: {},
       order: {
         createTime: "desc",
         likedCount: "desc",
       },
     };
-    console.log({ pageParam, options });
     if (myList && userInfo.user.id) {
       options.specify["authorId/eq"] = userInfo.user.id;
       result = await getList({ pageParam, options });
     } else {
       result = await getList({ pageParam, options });
-      console.log(result);
     }
 
     if (result.postList) {

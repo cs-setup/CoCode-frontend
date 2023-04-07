@@ -6,24 +6,28 @@ import { UserOutlined } from "@ant-design/icons";
 const UserInfo = () => {
   const { userInfo } = useContext(UserContext);
 
+  if (!userInfo.user || !userInfo.user.avatar) {
+    return null;
+  }
+
   return (
     <>
       <Card>
-        <Row justify="space-between" align="middle">
-          <Col span={20}>
+        <Row justify="space-between" align="middle" wrap={true}>
+          <Col span={20} xs={18}>
             <Card.Meta
               avatar={<Avatar size={64} src={userInfo.user.avatar} />}
               title={userInfo.user.nickname}
               description={
-                <Space>
+                <Space align="start">
                   <UserOutlined />
                   <div>{userInfo.user.nickname}的个人主页</div>
                 </Space>
               }
             />
           </Col>
-          <Col xs={0} sm={0} md={4}>
-            <Button>编辑资料</Button>
+          <Col xs={6} sm={4}>
+            <Button type="primary">编辑资料</Button>
           </Col>
         </Row>
       </Card>
