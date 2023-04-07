@@ -14,7 +14,6 @@ const Author = () => {
   }
 
   const logOut = () => {
-    console.log(222);
     navigate("/", { replace: true });
     localStorage.removeItem("token");
     setIsLoggedIn(false);

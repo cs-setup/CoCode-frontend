@@ -18,7 +18,6 @@ import Author from "../Author";
 import style from "./index.module.css";
 import useLogin from "../../hooks/useLogin";
 
-
 const items = [
   {
     label: <Link to="/home">首页</Link>,
@@ -35,7 +34,7 @@ const items = [
 ];
 
 export default function Header(props) {
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState("/home");
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const isLogin = useLogin();
   const [loading, setLoading] = useState(true);
@@ -107,9 +106,8 @@ export default function Header(props) {
                         <Avatar>
                           <BellFilled />
                         </Avatar>
-                        <Link to="/user">
+
                         <Author />
-                        </Link>
                       </Space>
                     </>
                   ) : (

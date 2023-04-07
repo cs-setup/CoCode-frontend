@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Card, Avatar, Button, Row, Col, Space } from "antd";
 import { UserContext } from "../../contexts/UserContext";
 import { UserOutlined } from "@ant-design/icons";
@@ -27,7 +28,7 @@ const UserInfo = () => {
             />
           </Col>
           <Col xs={6} sm={4}>
-            <Button type="primary">编辑资料</Button>
+            <Button type="primary"><Link to="/user/settings/profile">编辑资料</Link></Button>
           </Col>
         </Row>
       </Card>
