@@ -1,10 +1,12 @@
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import Home from "../pages/Home";
 import UserCenter from "../pages/UserCenter";
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
+import NotFound from "../pages/NotFound";
 
-const routes = [
+const CommonRoutes = [
   {
     path: "/",
     element: <Navigate to="home" replace />,
@@ -13,6 +15,13 @@ const routes = [
     path: "/home",
     element: <Home />,
   },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+];
+
+const AuthRoutes = [
   {
     path: "/user",
     element: <UserCenter />,
@@ -31,6 +40,12 @@ const routes = [
       },
     ],
   },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ];
 
-export default routes;
+export default localStorage.getItem("token")
+  ? [...CommonRoutes, ...AuthRoutes]
+  : CommonRoutes;
