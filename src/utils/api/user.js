@@ -11,7 +11,7 @@ export const register = async (params) => {
     })
     if (result.code == 10000) {
         return true
-    }else {
+    } else {
         message.error(result.message)
         return {}
     }
@@ -46,4 +46,17 @@ export const verify = async (params) => {
 export const fetchUserInfo = async () => {
     const result = await request.get('/user/info')
     return result.data
+}
+
+export const updateAvatar = async (params) => {
+    const result = await request.put('/user/avatar', params, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+    if (result.code == 10000) {
+        return result.data
+    }else{
+        return false
+    }
 }

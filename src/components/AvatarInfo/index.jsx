@@ -27,7 +27,6 @@ const AvatarInfo = ({ userInfo, logOut }) => {
               <Menu.Item
               key="2"
                 onClick={() => {
-                    console.log(111);
                     logOut();
                 }}
               >
