@@ -50,9 +50,10 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
 
-  if(!userInfo.user || !userInfo.user.id){
-    userInfo = {user:{id:""}}
+  if (!userInfo) {
+    return null
   }
+  
   const changeLike = async (params) => {
     const result = await like(params);
     if (result === true) {
@@ -69,13 +70,14 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
     try {
       const result = await deleteFeed({ id: item.id });
       if (result === true) {
-        reGetList()
+        reGetList();
         message.success("删除成功");
       }
     } catch (e) {
       message.error("删除失败");
     }
   };
+
   return (
     <List.Item key={item.id}>
       <Card bordered={false} size="small">

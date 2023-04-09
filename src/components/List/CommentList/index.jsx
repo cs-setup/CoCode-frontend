@@ -34,7 +34,7 @@ const CommentList = ({ parentItem }) => {
               column: 1,
             }}
             locale={{ emptyText: <></> }}
-            renderItem={(item) => <CommentItem item={item} />}
+            renderItem={(item) => <CommentItem item={item} getCommentList={getCommentList} />}
             pagination={{
               align: "center",
               pageSize: 5,

@@ -7,8 +7,8 @@ import { UserOutlined } from "@ant-design/icons";
 const UserInfo = () => {
   const { userInfo } = useContext(UserContext);
 
-  if (!userInfo.user || !userInfo.user.avatar) {
-    return null;
+  if (!userInfo) {
+    return null
   }
 
   return (

@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import formatTime from "../../../../utils/formatTime";
-import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
-import { LikeOutlined, LikeTwoTone, MessageOutlined, MoreOutlined } from "@ant-design/icons";
-import { like } from "../../../../utils/api/feed";
+import { List, Space, Avatar, Row, Col, Tooltip, Popconfirm, message } from "antd";
+import {
+  LikeOutlined,
+  LikeTwoTone,
+  MessageOutlined,
+  MoreOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { UserContext } from "../../../../contexts/UserContext";
+import { like, deleteComment } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
 
 const IconText = ({ icon, text, callback, id }) => (
@@ -23,10 +30,14 @@ const IconText = ({ icon, text, callback, id }) => (
   </Space>
 );
 
-const CommentItem = ({ item }) => {
+const CommentItem = ({ item, getCommentList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
-  console.log(item);
+  const { userInfo } = useContext(UserContext);
+
+  if (!userInfo) {
+    return null;
+  }
 
   const changeLike = async (params) => {
     const result = await like(params);
@@ -39,6 +50,19 @@ const CommentItem = ({ item }) => {
   const showCommentList = () => {
     setShowComment(!showComment);
   };
+
+  const handleDelete = async () => {
+    try {
+      const result = await deleteComment({ id: item.id });
+      if (result === true) {
+        message.success("删除成功");
+        getCommentList()
+      }
+    } catch (e) {
+      message.error("删除失败");
+    }
+  };
+
   return (
     <List.Item
       key={item.id}
@@ -53,9 +77,36 @@ const CommentItem = ({ item }) => {
                 {item.user.nickname}
               </a>
             </Col>
-            <Col style={{cursor: "pointer"}}>
-              <MoreOutlined />
-            </Col>
+            {userInfo.user.id === item.user.id && (
+              <Col>
+                <Tooltip
+                  title={
+                    <Popconfirm
+                      placement="left"
+                      title="确定要删除吗？"
+                      onConfirm={handleDelete}
+                      okText="确定"
+                      okType="danger"
+                      showCancel={false}
+                      icon={
+                        <QuestionCircleOutlined
+                          style={{
+                            color: "red",
+                          }}
+                        />
+                      }
+                    >
+                      <a style={{ color: "#000" }}>删除</a>
+                    </Popconfirm>
+                  }
+                  placement="bottom"
+                  trigger="click"
+                  color="#fff"
+                >
+                  <MoreOutlined />
+                </Tooltip>
+              </Col>
+            )}
           </Row>
         }
         style={{ margin: 0 }}

@@ -12,8 +12,8 @@ const CommentEdit = ({ parentItem, getCommentList }) => {
   const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(UserContext);
 
-  if (!userInfo.user || !userInfo.user.avatar) {
-    return null;
+  if (!userInfo) {
+    return null
   }
 
   const submitComment = async () => {

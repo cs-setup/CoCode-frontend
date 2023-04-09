@@ -59,3 +59,14 @@ export const comment = async (params) => {
         message.warning("账号未登录")
     }
 }
+
+export const deleteComment = async (params) => {
+    const {id} = params
+    const result = await request.delete(`/comment/${id}`)
+    if (result.code == 10000) {
+        return true
+    } else {
+        return false
+    }
+
+}

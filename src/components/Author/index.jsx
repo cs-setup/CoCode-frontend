@@ -9,8 +9,9 @@ const Author = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
-  if (!userInfo.user || !userInfo.user.avatar) {
-    return null;
+  
+  if (!userInfo) {
+    return null
   }
 
   const logOut = () => {
