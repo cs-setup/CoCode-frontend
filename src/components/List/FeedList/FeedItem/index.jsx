@@ -81,7 +81,7 @@ const FeedItem = ({ item }) => {
                 style={{ width: "100%", marginTop: 8, marginBottom: 16 }}
               ></Divider>
               <Col span={24}>
-                <CommentList id={item.id} />
+                <CommentList parentItem={item} />
               </Col>
             </>
           )}

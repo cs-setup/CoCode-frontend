@@ -6,25 +6,37 @@ import { message } from "antd";
 
 const { TextArea } = Input;
 
-const CommentEdit = ({ id, getCommentList }) => {
+const CommentEdit = ({ parentItem, getCommentList }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const { userInfo } = useContext(UserContext);
 
-  if(!userInfo.user || !userInfo.user.avatar){
-    return null
+  if (!userInfo.user || !userInfo.user.avatar) {
+    return null;
   }
 
   const submitComment = async () => {
     let result;
     if (textAreaValue.trim() !== "") {
-      result = await comment({
-        objectId: id,
-        objectType: "post",
-        content: textAreaValue,
-        parentId: "0",
-        toId: "0",
-      });
+      if (parentItem.parentId && parentItem.parentId == "0") {
+        // 评论对象为评论
+        result = await comment({
+          objectId: parentItem.objectId,
+          objectType: "post",
+          content: textAreaValue,
+          parentId: parentItem.id,
+          toId: parentItem.user.id,
+        });
+      } else {
+        // 评论对象为帖子
+        result = await comment({
+          objectId: parentItem.id,
+          objectType: "post",
+          content: textAreaValue,
+          parentId: "0",
+          toId: "0",
+        });
+      }
     } else {
       message.warning("内容不能为空");
     }

@@ -31,6 +31,7 @@ const FeedList = ({ myList }) => {
       },
     };
     if (myList && userInfo.user.id) {
+      // 请求我的feed列表
       options.specify["authorId/eq"] = userInfo.user.id;
       result = await getList({ pageParam, options });
     } else {
