@@ -9,6 +9,7 @@ const { TextArea } = Input;
 const CommentEdit = ({ parentItem, getCommentList }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
+  const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(UserContext);
 
   if (!userInfo.user || !userInfo.user.avatar) {
@@ -16,6 +17,7 @@ const CommentEdit = ({ parentItem, getCommentList }) => {
   }
 
   const submitComment = async () => {
+    setLoading(true);
     let result;
     if (textAreaValue.trim() !== "") {
       if (parentItem.parentId && parentItem.parentId == "0") {
@@ -45,6 +47,7 @@ const CommentEdit = ({ parentItem, getCommentList }) => {
       setTextAreaValue("");
       message.success("评论成功");
     }
+    setLoading(false);
   };
 
   return (
@@ -86,6 +89,7 @@ const CommentEdit = ({ parentItem, getCommentList }) => {
                   submitComment();
                 }}
                 style={{ fontSize: 14 }}
+                loading={loading}
               >
                 发表
               </Button>

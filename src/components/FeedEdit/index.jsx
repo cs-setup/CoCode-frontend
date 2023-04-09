@@ -8,9 +8,11 @@ const { TextArea } = Input;
 const FeedEdit = () => {
   const { setPublishItem } = useContext(HomeContext);
   const [showEdit, setShowEdit] = useState(false);
+  const [loading, setLoading] = useState(false)
   const [textAreaValue, setTextAreaValue] = useState("");
 
   const submitFeed = async () => {
+    setLoading(true)
     let result;
 
     if (textAreaValue.trim() !== "") {
@@ -26,6 +28,7 @@ const FeedEdit = () => {
       setPublishItem(result.post);
       message.success("发布成功");
     }
+    setLoading(false)
   };
 
   return (
@@ -60,6 +63,7 @@ const FeedEdit = () => {
                   event.stopPropagation();
                   submitFeed();
                 }}
+                loading={loading}
               >
                 发布
               </Button>
