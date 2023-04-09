@@ -19,7 +19,7 @@ const FeedList = ({ myList }) => {
   const getArticleList = async () => {
     let result = {};
     const pageParam = {
-      pageSize: 10,
+      pageSize: 15,
       pageNum: pageNum + 1,
       time: firstPostRef.current,
     };
@@ -40,7 +40,7 @@ const FeedList = ({ myList }) => {
 
     if (result.postList) {
       setPageNum(pageNum + 1);
-      if (result.postList.length == 0) {
+      if (result.postList.length < 15) {
         setHasMore(false);
       } else {
         setHasMore(true);
