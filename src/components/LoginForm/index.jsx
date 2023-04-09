@@ -22,13 +22,11 @@ const LoginForm = (props) => {
     setLoading(true);
     try {
       if (isLogin) {
-        values.tag = 0;
         // 登录
         const result = await login(values);
         doLogin(result);
       } else {
         // 注册
-        values.tag = 1;
         const registerResult = await register(values);
         if (registerResult) {
           const { code, ...formValue } = values;
@@ -63,7 +61,8 @@ const LoginForm = (props) => {
   const getCode = async () => {
     verifyTimeOut();
     try {
-      await verify({ phone });
+      let tag = isLogin ? 0 : 1;
+      await verify({ phone, tag });
       message.success("发送成功");
     } catch (error) {}
   };
