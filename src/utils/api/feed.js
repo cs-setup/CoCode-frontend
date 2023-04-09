@@ -22,26 +22,40 @@ export const publish = async (params) => {
 }
 
 export const like = async (params) => {
-    const result = await request.post('/like',params,{headers:{
-        'Content-Type': 'multipart/form-data'
-    }})
+    const result = await request.post('/like', params, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
     if (result.code === 10000) {
         return true
     }
 }
 
-export const commentList = async (params) =>{
+export const deleteFeed = async (params) => {
+    const {
+        id
+    } = params
+    const result = await request.delete(`/post/${id}`)
+    if (result.code == 10000) {
+        return true
+    } else {
+        return false
+    }
+}
+
+export const commentList = async (params) => {
     const result = await request.get(`/comment/list/post/${params.id}`)
-    if(result.code === 10000){
+    if (result.code === 10000) {
         return result.data
     }
 }
 
 export const comment = async (params) => {
-    const result = await request.post("/comment",params)
-    if(result.code === 10000){
+    const result = await request.post("/comment", params)
+    if (result.code === 10000) {
         return true
-    }else if(result.code === 10003){
+    } else if (result.code === 10003) {
         message.warning("账号未登录")
     }
 }

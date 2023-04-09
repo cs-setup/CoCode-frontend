@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FeedItem from "./FeedItem";
@@ -12,6 +11,7 @@ const FeedList = ({ myList }) => {
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [isReGetList, setIsReGetList] = useState(false);
   const { publishItem, setPublishItem } = useContext(HomeContext);
   const firstPostRef = useRef(Date.now());
 
@@ -19,7 +19,7 @@ const FeedList = ({ myList }) => {
   const getArticleList = async () => {
     let result = {};
     const pageParam = {
-      pageSize: 15,
+      pageSize: 10,
       pageNum: pageNum + 1,
       time: firstPostRef.current,
     };
@@ -30,7 +30,7 @@ const FeedList = ({ myList }) => {
         likedCount: "desc",
       },
     };
-    if (myList && userInfo.user.id) {
+    if (myList && userInfo.user && userInfo.user.id) {
       // 请求我的feed列表
       options.specify["authorId/eq"] = userInfo.user.id;
       result = await getList({ pageParam, options });
@@ -40,17 +40,19 @@ const FeedList = ({ myList }) => {
 
     if (result.postList) {
       setPageNum(pageNum + 1);
-      if (result.postList.length < 15) {
+      if (result.postList.length < 10) {
         setHasMore(false);
       } else {
         setHasMore(true);
       }
       setList([...list, ...result.postList]);
     }
+    setIsReGetList(false);
   };
+
   useEffect(() => {
     getArticleList();
-  }, [userInfo]);
+  }, [isReGetList]);
 
   useEffect(() => {
     if (publishItem.id) {
@@ -58,6 +60,13 @@ const FeedList = ({ myList }) => {
       setPublishItem({});
     }
   }, [publishItem]);
+
+  // 重新请求文章
+  const reGetList = () => {
+    setList([]);
+    setPageNum(0);
+    setIsReGetList(true);
+  };
 
   return (
     <InfiniteScroll
@@ -84,7 +93,9 @@ const FeedList = ({ myList }) => {
           column: 1,
         }}
         locale={{ emptyText: <></> }}
-        renderItem={(item) => <FeedItem item={item} />}
+        renderItem={(item) => (
+          <FeedItem item={item} userInfo={userInfo} reGetList={reGetList} />
+        )}
         style={{ overflow: "hidden" }}
       />
     </InfiniteScroll>

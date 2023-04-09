@@ -1,9 +1,28 @@
 import React, { useState } from "react";
 import formatTime from "../../../../utils/formatTime";
-import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
-import { LikeOutlined, LikeTwoTone, MessageOutlined } from "@ant-design/icons";
+import {
+  List,
+  Space,
+  Avatar,
+  Row,
+  Col,
+  Divider,
+  Card,
+  Tooltip,
+  Popconfirm,
+  Button,
+} from "antd";
+import {
+  LikeOutlined,
+  LikeTwoTone,
+  MessageOutlined,
+  MoreOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import { like } from "../../../../utils/api/feed";
+import { deleteFeed } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
+import { message } from "antd";
 
 const IconText = ({ icon, text, callback, id }) => (
   <Row justify="center">
@@ -27,10 +46,13 @@ const IconText = ({ icon, text, callback, id }) => (
   </Row>
 );
 
-const FeedItem = ({ item }) => {
+const FeedItem = ({ item, userInfo, reGetList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
 
+  if(!userInfo.user || !userInfo.user.id){
+    userInfo = {user:{id:""}}
+  }
   const changeLike = async (params) => {
     const result = await like(params);
     if (result === true) {
@@ -42,12 +64,62 @@ const FeedItem = ({ item }) => {
   const showCommentList = () => {
     setShowComment(!showComment);
   };
+
+  const handleDelete = async () => {
+    try {
+      const result = await deleteFeed({ id: item.id });
+      if (result === true) {
+        reGetList()
+        message.success("删除成功");
+      }
+    } catch (e) {
+      message.error("删除失败");
+    }
+  };
   return (
     <List.Item key={item.id}>
       <Card bordered={false} size="small">
         <List.Item.Meta
           avatar={<Avatar src={item.author.avatar} />}
-          title={<a href={item.href}>{item.author.nickname}</a>}
+          title={
+            <Row justify="space-between">
+              <Col>
+                <a href={item.href} style={{ fontSize: 20, color: "#000" }}>
+                  {item.author.nickname}
+                </a>
+              </Col>
+              {userInfo.user.id === item.author.id && (
+                <Col>
+                  <Tooltip
+                    title={
+                      <Popconfirm
+                        placement="left"
+                        title="确定要删除吗？"
+                        onConfirm={handleDelete}
+                        okText="确定"
+                        okType="danger"
+                        showCancel={false}
+                        icon={
+                          <QuestionCircleOutlined
+                            style={{
+                              color: "red",
+                            }}
+                          />
+                        }
+                      >
+                        <a style={{ color: "#000" }}>删除</a>
+                      </Popconfirm>
+                    }
+                    placement="bottom"
+                    trigger="click"
+                    color="#fff"
+                  >
+                    <MoreOutlined />
+                  </Tooltip>
+                </Col>
+              )}
+            </Row>
+          }
           description={formatTime(item.createTime)}
         />
         <Row justify="center">

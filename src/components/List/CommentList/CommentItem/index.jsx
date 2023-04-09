@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import formatTime from "../../../../utils/formatTime";
 import { List, Space, Avatar, Row, Col, Divider, Card } from "antd";
-import { LikeOutlined, LikeTwoTone, MessageOutlined } from "@ant-design/icons";
+import { LikeOutlined, LikeTwoTone, MessageOutlined, MoreOutlined } from "@ant-design/icons";
 import { like } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
 
@@ -49,9 +49,12 @@ const CommentItem = ({ item }) => {
         title={
           <Row justify="space-between">
             <Col>
-              <a href={item.href} style={{ fontSize: 16, margin: 0 }}>
+              <a href={item.href} style={{ fontSize: 16, color: "#000" }}>
                 {item.user.nickname}
               </a>
+            </Col>
+            <Col style={{cursor: "pointer"}}>
+              <MoreOutlined />
             </Col>
           </Row>
         }
