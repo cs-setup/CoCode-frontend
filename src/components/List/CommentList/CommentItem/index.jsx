@@ -1,6 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import formatTime from "../../../../utils/formatTime";
-import { List, Space, Avatar, Row, Col, Tooltip, Popconfirm, message } from "antd";
+import {
+  List,
+  Space,
+  Avatar,
+  Row,
+  Col,
+  Tooltip,
+  Popconfirm,
+  message,
+} from "antd";
 import {
   LikeOutlined,
   LikeTwoTone,
@@ -8,7 +17,6 @@ import {
   MoreOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import { UserContext } from "../../../../contexts/UserContext";
 import { like, deleteComment } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
 
@@ -30,13 +38,12 @@ const IconText = ({ icon, text, callback, id }) => (
   </Space>
 );
 
-const CommentItem = ({ item, getCommentList }) => {
+const CommentItem = ({ item, getCommentList, userInfo }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
-  const { userInfo } = useContext(UserContext);
 
-  if (!userInfo) {
-    return null;
+  if (!userInfo.user) {
+    userInfo = { user: { id: "" } };
   }
 
   const changeLike = async (params) => {
@@ -56,7 +63,7 @@ const CommentItem = ({ item, getCommentList }) => {
       const result = await deleteComment({ id: item.id });
       if (result === true) {
         message.success("删除成功");
-        getCommentList()
+        getCommentList();
       }
     } catch (e) {
       message.error("删除失败");

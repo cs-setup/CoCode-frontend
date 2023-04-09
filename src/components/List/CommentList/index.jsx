@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, Suspense } from "react";
 import { List, Divider } from "antd";
+import { UserContext } from "../../../contexts/UserContext";
 import { commentList } from "../../../utils/api/feed";
-import CommentEdit from "../../CommentEdit";
+// import CommentEdit from "../../CommentEdit";
+const CommentEdit = React.lazy(() => import("../../CommentEdit"));
 import CommentItem from "./CommentItem";
 
 const CommentList = ({ parentItem }) => {
   const [theCommentList, setTheCommentList] = useState([]);
+  const { userInfo } = useContext(UserContext);
 
   // 获取评论列表
   const getCommentList = async () => {
@@ -22,7 +25,16 @@ const CommentList = ({ parentItem }) => {
 
   return (
     <>
-      <CommentEdit parentItem={parentItem} getCommentList={getCommentList} />
+      {userInfo && (
+        <Suspense fallback={<></>}>
+          <CommentEdit
+            parentItem={parentItem}
+            getCommentList={getCommentList}
+            userInfo={userInfo}
+          />
+        </Suspense>
+      )}
+
       {theCommentList.length !== 0 && (
         <>
           <Divider>全部评论</Divider>
@@ -34,12 +46,18 @@ const CommentList = ({ parentItem }) => {
               column: 1,
             }}
             locale={{ emptyText: <></> }}
-            renderItem={(item) => <CommentItem item={item} getCommentList={getCommentList} />}
+            renderItem={(item) => (
+              <CommentItem
+                item={item}
+                getCommentList={getCommentList}
+                userInfo={userInfo}
+              />
+            )}
             pagination={{
               align: "center",
               pageSize: 5,
               hideOnSinglePage: true,
-              size: "small"
+              size: "small",
             }}
           />
         </>

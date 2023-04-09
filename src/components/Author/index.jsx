@@ -10,7 +10,7 @@ const Author = () => {
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
   
-  if (!userInfo) {
+  if (!userInfo.user) {
     return null
   }
 

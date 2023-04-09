@@ -1,19 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Input, Button, Avatar, Row, Col, Space } from "antd";
-import { UserContext } from "../../contexts/UserContext";
 import { comment } from "../../utils/api/feed";
 import { message } from "antd";
 
 const { TextArea } = Input;
 
-const CommentEdit = ({ parentItem, getCommentList }) => {
+const CommentEdit = ({ parentItem, getCommentList, userInfo }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const { userInfo } = useContext(UserContext);
 
-  if (!userInfo) {
-    return null
+  if (!userInfo.user|| !userInfo.user.avatar) {
+    return null;
   }
 
   const submitComment = async () => {
@@ -55,7 +53,7 @@ const CommentEdit = ({ parentItem, getCommentList }) => {
       <Space direction="vertical" style={{ display: "flex" }} size="small">
         <Row justify="space-between">
           <Col span={4} lg={2}>
-            <Avatar src={userInfo.user.avatar} />
+            <Avatar src={userInfo.user.avatar||""} />
           </Col>
           <Col span={20} lg={22}>
             <TextArea

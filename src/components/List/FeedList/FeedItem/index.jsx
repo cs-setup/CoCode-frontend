@@ -50,10 +50,10 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
 
-  if (!userInfo) {
-    return null
+  if (!userInfo.user) {
+    userInfo = {user: {id: ""}}
   }
-  
+
   const changeLike = async (params) => {
     const result = await like(params);
     if (result === true) {
