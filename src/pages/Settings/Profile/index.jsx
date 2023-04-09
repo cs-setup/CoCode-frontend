@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Form, Input, Button, Upload, Avatar, message } from "antd";
+import { Upload, Avatar, message, Card, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UserContext } from "../../../contexts/UserContext";
-import Settings from "..";
 import { updateAvatar } from "../../../utils/api/user";
+import Settings from "..";
+import ProfileForm from "../../../components/ProfileForm";
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
@@ -39,65 +40,76 @@ const Profile = () => {
   };
   return (
     <Settings>
-      <Upload
-        action=""
-        listType="picture-circle"
-        beforeUpload={handleUpload}
-        maxCount={1}
-        showUploadList={false}
-        onMouseEnter={handleMaskToggle}
-        onMouseLeave={handleMaskToggle}
-      >
-        {loading ? (
-          <LoadingOutlined />
-        ) : (
-          <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            {showMask && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50%",
-                  backgroundColor: "rgba(116,116,116,0.4)",
-                  opacity: 1,
-                  transition: "opacity 0.2s ease-in-out",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                  color: "#fff",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  zIndex: 100,
-                }}
-              >
-                修改我的头像
-              </div>
-            )}
-            <Avatar
-              src={imageUrl ? imageUrl : userInfo.user.avatar}
-              style={{ width: "100%", height: "100%" }}
-            ></Avatar>
-          </div>
-        )}
-      </Upload>
-      <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
-        layout="horizontal"
-        style={{ maxWidth: 600 }}
-      >
-        <Form.Item label="Input">
-          <Input />
-        </Form.Item>
-
-        <Form.Item>
-          <Button>Button</Button>
-        </Form.Item>
-      </Form>
+      <Card title="个人资料">
+        <Space direction="vertical" style={{ display: "flex" }} size="large">
+          <Card
+            title="我的头像"
+            bordered={false}
+            headStyle={{ border: 0 }}
+            size="small"
+          >
+            <Upload
+              action=""
+              listType="picture-circle"
+              beforeUpload={handleUpload}
+              maxCount={1}
+              showUploadList={false}
+              onMouseEnter={handleMaskToggle}
+              onMouseLeave={handleMaskToggle}
+            >
+              {loading ? (
+                <LoadingOutlined />
+              ) : (
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  {showMask && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                        backgroundColor: "rgba(116,116,116,0.4)",
+                        opacity: 1,
+                        transition: "opacity 0.2s ease-in-out",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        color: "#fff",
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                        zIndex: 100,
+                      }}
+                    >
+                      修改我的头像
+                    </div>
+                  )}
+                  <Avatar
+                    src={imageUrl ? imageUrl : userInfo.user.avatar}
+                    style={{ width: "100%", height: "100%" }}
+                  ></Avatar>
+                </div>
+              )}
+            </Upload>
+          </Card>
+          <Card
+            title="我的资料"
+            bordered={false}
+            headStyle={{ border: 0 }}
+            size="small"
+          >
+            <ProfileForm userInfo={userInfo} setUpdateUser={setUpdateUser} />
+          </Card>
+        </Space>
+      </Card>
     </Settings>
   );
 };

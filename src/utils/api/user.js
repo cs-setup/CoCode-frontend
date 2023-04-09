@@ -56,7 +56,14 @@ export const updateAvatar = async (params) => {
     })
     if (result.code == 10000) {
         return result.data
-    }else{
+    } else {
         return false
+    }
+}
+
+export const updateInfo = async (params) => {
+    const result = await request.put('user/info', params)
+    if (result.code == 10000) {
+        return true
     }
 }

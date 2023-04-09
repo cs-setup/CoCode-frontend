@@ -6,7 +6,7 @@ import { Link, useLocation, Outlet } from "react-router-dom";
 const LeftColumn = ({children}) => {
   return (
     <>
-      <Card>{children}</Card>
+      {children}
     </>
   );
 };
