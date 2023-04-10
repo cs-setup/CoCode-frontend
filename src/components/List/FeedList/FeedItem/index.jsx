@@ -10,7 +10,6 @@ import {
   Card,
   Tooltip,
   Popconfirm,
-  Button,
 } from "antd";
 import {
   LikeOutlined,
@@ -51,7 +50,7 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
   const [showComment, setShowComment] = useState(false);
 
   if (!userInfo.user) {
-    userInfo = {user: {id: ""}}
+    userInfo = { user: { id: "" } };
   }
 
   const changeLike = async (params) => {
@@ -149,6 +148,7 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
               </Col>
             </Row>
           </Col>
+
           {showComment && (
             <>
               <Divider
