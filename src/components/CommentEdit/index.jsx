@@ -5,7 +5,7 @@ import { message } from "antd";
 
 const { TextArea } = Input;
 
-const CommentEdit = ({ parentItem, getCommentList, userInfo }) => {
+const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,8 +40,9 @@ const CommentEdit = ({ parentItem, getCommentList, userInfo }) => {
     } else {
       message.warning("内容不能为空");
     }
-    if (result === true) {
-      getCommentList();
+    if (result) {
+      console.log(result);
+      addNewComment(result.comment);
       setTextAreaValue("");
       message.success("评论成功");
     }else{

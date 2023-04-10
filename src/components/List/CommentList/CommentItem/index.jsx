@@ -38,7 +38,7 @@ const IconText = ({ icon, text, callback, id }) => (
   </Space>
 );
 
-const CommentItem = ({ item, getCommentList, userInfo }) => {
+const CommentItem = ({ item, addNewComment, userInfo }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
 

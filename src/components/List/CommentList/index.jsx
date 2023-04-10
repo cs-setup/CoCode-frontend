@@ -16,13 +16,21 @@ const CommentList = ({ parentItem }) => {
   const getCommentList = async () => {
     setLoading(true);
     if (parentItem.childComments) {
+      // 一级评论评论列表
       setTheCommentList(parentItem.childComments);
     } else {
+      // 帖子评论列表
       const result = await commentList({ id: parentItem.id });
       setTheCommentList(result.commentList);
     }
     setLoading(false);
   };
+
+  // 添加最新评论
+  const addNewComment = (comment) => {
+    setTheCommentList([comment, ...theCommentList]);
+  };
+
   useEffect(() => {
     getCommentList();
   }, []);
@@ -33,21 +41,13 @@ const CommentList = ({ parentItem }) => {
         <Suspense fallback={<></>}>
           <CommentEdit
             parentItem={parentItem}
-            getCommentList={getCommentList}
+            addNewComment={addNewComment}
             userInfo={userInfo}
           />
         </Suspense>
       )}
       <Spin
         spinning={loading}
-        indicator={
-          <LoadingOutlined
-            style={{
-              fontSize: 24,
-            }}
-            spin
-          />
-        }
       >
         {theCommentList.length !== 0 && (
           <>
@@ -64,6 +64,7 @@ const CommentList = ({ parentItem }) => {
                 <CommentItem
                   item={item}
                   getCommentList={getCommentList}
+                  addNewComment={addNewComment}
                   userInfo={userInfo}
                 />
               )}

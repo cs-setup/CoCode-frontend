@@ -54,7 +54,7 @@ export const commentList = async (params) => {
 export const comment = async (params) => {
     const result = await request.post("/comment", params)
     if (result.code === 10000) {
-        return true
+        return result.data
     } else if (result.code === 10003) {
         message.warning("账号未登录")
     }
