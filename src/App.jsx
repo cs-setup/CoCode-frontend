@@ -1,15 +1,16 @@
+import { Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 import Layout from "./components/Layout";
-import useRouter from './router'
-import 'antd/dist/reset.css';
+import useRouter from "./router";
+import "antd/dist/reset.css";
 
 function App() {
-  const routes = useRouter()
+  const routes = useRouter();
   const routing = useRoutes(routes);
   return (
     <>
       <Layout>
-          {routing}
+        <Suspense>{routing}</Suspense>
       </Layout>
     </>
   );

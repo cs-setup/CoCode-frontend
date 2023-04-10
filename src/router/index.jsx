@@ -1,13 +1,14 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
-import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
-import UserCenter from "../pages/UserCenter";
-import Profile from "../pages/Settings/Profile";
-import Account from "../pages/Settings/Account";
-import Notes from "../pages/Notes";
-import Editor from "../pages/Editor";
+const NotFound = React.lazy(()=> import("../pages/NotFound"))
+const Home = React.lazy(()=> import("../pages/Home"))
+const UserCenter = React.lazy(()=> import("../pages/UserCenter"))
+const Profile = React.lazy(()=> import("../pages/Settings/Profile"))
+const Account = React.lazy(()=> import("../pages/Settings/Account"))
+const Notes = React.lazy(()=> import("../pages/Notes"))
+const Editor = React.lazy(()=> import("../pages/Editor"))
+
 
 const CommonRoutes = [
   {
