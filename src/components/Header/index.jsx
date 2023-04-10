@@ -62,12 +62,21 @@ export default function Header(props) {
   return (
     <>
       <Layout.Header className={style.header}>
-        <Row justify="center" align="middle" gutter={12}>
-          <Col xs={0} sm={6} md={5} lg={4} xl={3} xxl={2}>
+        <Row justify="center" align="middle" gutter={{ xs: 0, sm: 0, md: 12 }}>
+          <Col xs={0} sm={0} md={6} lg={4} xl={4} xxl={3}>
             <Row justify="center">
               <Col size={24}>
                 <Link to="/home">
-                  <div className={style.title}>CoCode</div>
+                  <div className={style.title}>ShareBytes</div>
+                </Link>
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={4} sm={4} md={0}>
+            <Row justify="center">
+              <Col size={24}>
+                <Link to="/home">
+                  <div className={style.title}>SH</div>
                 </Link>
               </Col>
             </Row>
@@ -80,24 +89,25 @@ export default function Header(props) {
               items={items}
             />
           </Col>
-          <Col xs={17} sm={14} md={10} lg={8} xl={8} xxl={7}>
+          <Col xs={12} sm={14} md={10} lg={8} xl={8} xxl={7}>
             <Row align="middle">
               <SearchInput></SearchInput>
-              <Col span={24}></Col>
             </Row>
           </Col>
-          <Col xs={0} sm={0} md={5} lg={4} xl={3} xxl={2}>
+          <Col xs={0} sm={0} md={4} lg={4} xl={3} xxl={2}>
             <Row justify="center">
               <Col size={24}>
-                <Button type="primary" size="large">
-                  <EditOutlined />
-                  笔记中心
-                </Button>
+                <Link to="/notes">
+                  <Button type="primary" size="large">
+                    <EditOutlined />
+                    笔记中心
+                  </Button>
+                </Link>
               </Col>
             </Row>
           </Col>
-          <Col xs={7} sm={4} md={4} lg={2} xl={2} xxl={2}>
-            <Row>
+          <Col xs={6} sm={6} md={4} lg={2} xl={2} xxl={2}>
+            <Row justify="center">
               <Col size={24}>
                 {!loading &&
                   (isLogin ? (

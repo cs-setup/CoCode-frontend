@@ -7,7 +7,7 @@ const TwoColumn = (props) => {
       <Col xs={23} sm={23} md={16} lg={14} xl={12} xxl={10}>
         {props.left}
       </Col>
-      <Col xs={0} sm={0} md={6} lg={6} xl={6} xxl={5}>
+      <Col xs={0} sm={0} md={6} lg={6} xl={5} xxl={4}>
         {props.right}
       </Col>
     </Row>
