@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Card, Menu } from "antd";
 import TwoColumn from "../../components/Layout/TwoColumn";
-import { Link, useLocation, Outlet } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const LeftColumn = ({children}) => {
   return (

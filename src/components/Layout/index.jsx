@@ -9,7 +9,7 @@ export default function Layout(props) {
       <Space direction="vertical" style={{ display: 'flex' }} size="middle">
         <Header />
         {props.children}
-        <Footer />
+        {/* <Footer /> */}
       </Space>
     </>
   );
