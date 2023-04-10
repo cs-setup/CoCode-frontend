@@ -94,7 +94,7 @@ const FeedList = ({ myList }) => {
         }}
         locale={{ emptyText: <></> }}
         renderItem={(item) => (
-          <FeedItem item={item} userInfo={userInfo} reGetList={reGetList} />
+          <FeedItem key={item.id} item={item} userInfo={userInfo} reGetList={reGetList} />
         )}
         style={{ overflow: "hidden" }}
       />

@@ -14,7 +14,9 @@ const CommentList = ({ parentItem }) => {
 
   // 获取评论列表
   const getCommentList = async () => {
-    setLoading(true);
+    if (parentItem.commentCount != 0) {
+      setLoading(true);
+    }
     if (parentItem.childComments) {
       // 一级评论评论列表
       setTheCommentList(parentItem.childComments);
@@ -46,9 +48,7 @@ const CommentList = ({ parentItem }) => {
           />
         </Suspense>
       )}
-      <Spin
-        spinning={loading}
-      >
+      <Spin spinning={loading}>
         {theCommentList.length !== 0 && (
           <>
             <Divider>全部评论</Divider>
@@ -62,6 +62,7 @@ const CommentList = ({ parentItem }) => {
               locale={{ emptyText: <></> }}
               renderItem={(item) => (
                 <CommentItem
+                  key={item.id}
                   item={item}
                   getCommentList={getCommentList}
                   addNewComment={addNewComment}
