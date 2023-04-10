@@ -44,6 +44,8 @@ const CommentEdit = ({ parentItem, getCommentList, userInfo }) => {
       getCommentList();
       setTextAreaValue("");
       message.success("评论成功");
+    }else{
+      message.error("评论失败")
     }
     setLoading(false);
   };

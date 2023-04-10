@@ -132,7 +132,7 @@ const CommentItem = ({ item, getCommentList, userInfo }) => {
                   id={item.id}
                   callback={changeLike}
                 />
-                {item.childComments && (
+                {item.parentId == "0" && (
                   <IconText
                     icon={MessageOutlined}
                     text={
