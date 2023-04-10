@@ -18,16 +18,21 @@ const AvatarInfo = ({ userInfo, logOut }) => {
         </Row>
         <Row justify="center">
           <Col span={24}>
-            <Menu mode="vertical" style={{ textAlign: "center" }} selectedKeys={["3"]}>
-            
+            <Menu
+              mode="vertical"
+              style={{ textAlign: "center", border: "none" }}
+              selectedKeys={["999"]}
+            >
               <Menu.Item key="1">
-              <Link to="/user">
-                个人中心</Link>
+                <Link to="/user">个人中心</Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/notes">笔记中心</Link>
               </Menu.Item>
               <Menu.Item
-              key="2"
+                key="3"
                 onClick={() => {
-                    logOut();
+                  logOut();
                 }}
               >
                 退出登录

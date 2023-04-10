@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
+import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
 import UserCenter from "../pages/UserCenter";
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
-import NotFound from "../pages/NotFound";
-import { useEffect } from "react";
+import Notes from "../pages/Notes";
+import Editor from "../pages/Editor";
 
 const CommonRoutes = [
   {
@@ -41,6 +42,14 @@ const AuthRoutes = [
         element: <Account />,
       },
     ],
+  },
+  {
+    path: "/notes",
+    element: <Notes />,
+  },
+  {
+    path: "/editor",
+    element: <Editor />,
   },
   {
     path: "*",
