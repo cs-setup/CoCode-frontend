@@ -95,7 +95,7 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
                   <Tooltip
                     title={
                       <Popconfirm
-                        placement="left"
+                        placement="leftTop"
                         title="确定要删除吗？"
                         onConfirm={handleDelete}
                         okText="确定"
