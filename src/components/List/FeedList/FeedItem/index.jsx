@@ -82,15 +82,15 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
     <List.Item key={item.id}>
       <Card bordered={false} size="small">
         <List.Item.Meta
-          avatar={<Avatar src={item.author.avatar} />}
+          avatar={<Avatar src={item.user.avatar} />}
           title={
             <Row justify="space-between">
               <Col>
                 <a href={item.href} style={{ fontSize: 20, color: "#000" }}>
-                  {item.author.nickname}
+                  {item.user.nickname}
                 </a>
               </Col>
-              {userInfo.user.id === item.author.id && (
+              {userInfo.user.id === item.user.id && (
                 <Col>
                   <Tooltip
                     title={
