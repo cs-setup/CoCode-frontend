@@ -62,7 +62,7 @@ export default function Header(props) {
   return (
     <>
       <Layout.Header className={style.header}>
-        <Row justify="center" align="middle" gutter={{ xs: 0, sm: 0, md: 12 }}>
+        <Row justify="center" align="middle" gutter={{ xs: 0, sm: 0, md: 12 }} style={{width: "100%"}}>
           <Col xs={0} sm={0} md={6} lg={4} xl={4} xxl={3}>
             <Row justify="center">
               <Col size={24}>

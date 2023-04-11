@@ -125,7 +125,7 @@ const LoginForm = (props) => {
             rules={[
               { required: true, message: "请输入密码" },
               {
-                pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/,
+                pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{8,18}$/,
                 message: "密码必须包含数字和字母，且长度在8~18之间",
               },
             ]}
