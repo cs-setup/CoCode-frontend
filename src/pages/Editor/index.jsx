@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Vditor from "vditor";
-import "vditor/dist/index.css";
 import EditorHeader from "../../components/EditorHeader";
 
 const Editor = () => {
