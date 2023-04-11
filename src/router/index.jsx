@@ -4,10 +4,10 @@ import useLogin from "../hooks/useLogin";
 const NotFound = React.lazy(()=> import("../pages/NotFound"))
 const Home = React.lazy(()=> import("../pages/Home"))
 const UserCenter = React.lazy(()=> import("../pages/UserCenter"))
-const Profile = React.lazy(()=> import("../pages/Settings/Profile"))
-const Account = React.lazy(()=> import("../pages/Settings/Account"))
 const Notes = React.lazy(()=> import("../pages/Notes"))
 const Editor = React.lazy(()=> import("../pages/Editor"))
+import Profile from "../pages/Settings/Profile";
+import Account from "../pages/Settings/Account";
 
 
 const CommonRoutes = [
