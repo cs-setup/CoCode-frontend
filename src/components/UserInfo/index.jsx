@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Card, Avatar, Button, Row, Col, Space } from "antd";
+import { Card, Avatar, Button, Row, Col, Space, Image } from "antd";
 import { UserContext } from "../../contexts/UserContext";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -17,7 +17,7 @@ const UserInfo = () => {
         <Row justify="space-between" align="middle" wrap={true}>
           <Col span={20} xs={18}>
             <Card.Meta
-              avatar={<Avatar size={64} src={userInfo.user.avatar} />}
+              avatar={<Avatar size={64} icon={<Image src={userInfo.user.avatar} style={{width: "100%", height: "100%"}} />} />}
               title={userInfo.user.nickname}
               description={
                 <Space align="start">
