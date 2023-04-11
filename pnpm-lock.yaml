@@ -11,7 +11,7 @@ specifiers:
   react-dom: ^18.2.0
   react-infinite-scroll-component: ^6.1.0
   react-router-dom: ^6.9.0
-  vditor: ^3.9.1
+  vditor: ^3.9.2
   vite: ^4.2.0
 
 dependencies:
@@ -22,7 +22,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-infinite-scroll-component: 6.1.0_react@18.2.0
   react-router-dom: 6.9.0_biqbaboplfbrettd7655fr4n2y
-  vditor: 3.9.1
+  vditor: 3.9.2
 
 devDependencies:
   '@types/react': 18.0.28
@@ -1765,8 +1765,8 @@ packages:
       picocolors: 1.0.0
     dev: true
 
-  /vditor/3.9.1:
-    resolution: {integrity: sha512-pu9+4duq/RPftiGas9QCxy8FwwFx2jPEZd2/xKIsI8BMUzwKL5M65LH0cAkmrSUwZSXACLBWGM3RYahK5n1CUA==}
+  /vditor/3.9.2:
+    resolution: {integrity: sha512-Uei2HV1WACPE82FRkYLo3ys5E3KR7ucYgbMQNR8t33f2QxZMjwR6e5S/zoXccc9ru6ZWGi35DJE5vEW29hD4lQ==}
     dependencies:
       diff-match-patch: 1.0.5
     dev: false
