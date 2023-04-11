@@ -40,7 +40,13 @@ export const verify = async (params) => {
             'Content-Type': 'multipart/form-data'
         }
     })
-    return {}
+    console.log(result);
+    if(result.code == 10000){
+        return true
+    }else{
+        return false
+    }
+    
 }
 
 export const fetchUserInfo = async () => {

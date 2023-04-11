@@ -62,8 +62,12 @@ const LoginForm = (props) => {
     verifyTimeOut();
     try {
       let tag = isLogin ? 0 : 1;
-      await verify({ phone, tag });
-      message.success("发送成功");
+      const result = await verify({ phone, tag });
+      if (result === true) {
+        message.success("发送成功");
+      } else {
+        message.error("发送失败");
+      }
     } catch (error) {}
   };
 
