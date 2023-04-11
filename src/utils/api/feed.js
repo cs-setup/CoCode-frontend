@@ -29,6 +29,8 @@ export const like = async (params) => {
     })
     if (result.code === 10000) {
         return true
+    }else{
+        return false
     }
 }
 

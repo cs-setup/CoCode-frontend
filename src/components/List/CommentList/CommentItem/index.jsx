@@ -26,7 +26,7 @@ const IconText = ({ icon, text, callback, id }) => (
       style={{ cursor: "pointer" }}
       onClick={() => {
         if (icon !== MessageOutlined) {
-          callback({ objectType: "post", objectId: id.toString() });
+          callback({ objectType: "comment", objectId: id.toString() });
         } else {
           callback();
         }
@@ -38,18 +38,20 @@ const IconText = ({ icon, text, callback, id }) => (
   </Space>
 );
 
-const CommentItem = ({ item, addNewComment, userInfo }) => {
+const CommentItem = ({ item, userInfo, getCommentList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
+  console.log(item);
 
   if (!userInfo.user) {
     userInfo = { user: { id: "" } };
   }
 
   const changeLike = async (params) => {
+    isLiked ? item.likedCount-- : item.likedCount++;
+    setIsLiked(!isLiked);
     const result = await like(params);
-    if (result === true) {
-      isLiked ? item.likedCount-- : item.likedCount++;
+    if (result === false) {
       setIsLiked(!isLiked);
     }
   };
@@ -62,8 +64,8 @@ const CommentItem = ({ item, addNewComment, userInfo }) => {
     try {
       const result = await deleteComment({ id: item.id });
       if (result === true) {
-        message.success("删除成功");
         getCommentList();
+        message.success("删除成功");
       }
     } catch (e) {
       message.error("删除失败");
@@ -136,7 +138,7 @@ const CommentItem = ({ item, addNewComment, userInfo }) => {
                   <IconText
                     icon={MessageOutlined}
                     text={
-                      item.childComments ? item.childComments.length : false
+                      item.childComments ? item.childComments.length : <>aaa</>
                     }
                     key="list-vertical-message"
                     callback={showCommentList}

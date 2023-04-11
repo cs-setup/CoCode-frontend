@@ -65,7 +65,6 @@ const CommentList = ({ parentItem }) => {
                   key={item.id}
                   item={item}
                   getCommentList={getCommentList}
-                  addNewComment={addNewComment}
                   userInfo={userInfo}
                 />
               )}

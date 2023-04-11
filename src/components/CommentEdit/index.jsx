@@ -10,7 +10,7 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  if (!userInfo.user|| !userInfo.user.avatar) {
+  if (!userInfo.user || !userInfo.user.avatar) {
     return null;
   }
 
@@ -37,17 +37,18 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
           toId: "0",
         });
       }
+      if (result) {
+        console.log(result);
+        addNewComment(result.comment);
+        setTextAreaValue("");
+        message.success("评论成功");
+      } else {
+        message.error("评论失败");
+      }
     } else {
       message.warning("内容不能为空");
     }
-    if (result) {
-      console.log(result);
-      addNewComment(result.comment);
-      setTextAreaValue("");
-      message.success("评论成功");
-    }else{
-      message.error("评论失败")
-    }
+
     setLoading(false);
   };
 
@@ -56,7 +57,7 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
       <Space direction="vertical" style={{ display: "flex" }} size="small">
         <Row justify="space-between">
           <Col span={4} lg={2}>
-            <Avatar src={userInfo.user.avatar||""} />
+            <Avatar src={userInfo.user.avatar || ""} />
           </Col>
           <Col span={20} lg={22}>
             <TextArea
