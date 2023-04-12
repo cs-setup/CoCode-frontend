@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Input, Button, Avatar, Row, Col, Space } from "antd";
 import { comment } from "../../utils/api/feed";
 import { message } from "antd";
@@ -9,10 +9,15 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const inputRef = useRef(null);
   if (!userInfo.user || !userInfo.user.avatar) {
     return null;
   }
+
+  useEffect(() => {
+    inputRef.current.focus();
+
+  }, []);
 
   const submitComment = async () => {
     setLoading(true);
@@ -68,15 +73,12 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
               onChange={(e) => {
                 setTextAreaValue(e.target.value);
               }}
-              ref={(input) => {
-                if (input != null) {
-                  input.focus();
-                }
-              }}
+              ref={inputRef}
               onFocus={() => {
                 setShowEdit(true);
               }}
               onBlur={() => {
+                console.log(111);
                 if (textAreaValue.trim() === "") {
                   setShowEdit(false);
                 }
