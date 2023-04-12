@@ -1,22 +1,63 @@
 import React, { useState } from "react";
-import { Input, Button, Form } from "antd";
+import { Input, Button, Form, message } from "antd";
 import { MobileOutlined, LockOutlined } from "@ant-design/icons";
+import { bindMessage, oldPhone, newPhone } from "../../../../utils/api/user";
+import { useEffect } from "react";
 
-const Phone = () => {
-  const [isCodeSent, setIsCodeSent] = useState(false);
+const Phone = ({ closeModal }) => {
+  const [isOld, setIsOld] = useState(true);
   const [isCounting, setIsCounting] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [code, setCode] = useState("");
+  const [countdown, setCountdown] = useState(60);
 
-  const handleSendCode = () => {
-    // 发送验证码的请求
-    // 如果请求成功，将isCodeSent设为true
-    setIsCodeSent(true);
+  // 发送验证码
+  const handleSendCode = async () => {
+    verifyTimeOut();
+    let params;
+    if (isOld) {
+      // 解绑
+      params = {
+        phone: phone,
+        tag: 0,
+      };
+    } else {
+      // 新绑
+      params = {
+        phone: phone,
+        tag: 1,
+      };
+    }
+    const result = await bindMessage(params);
+    if (result === true) {
+      message.success("发送成功");
+    }
   };
 
-  const handleSubmit = () => {
-    // 提交手机号和验证码的请求
-    // 如果请求成功，跳转到使用新手机发送验证码绑定
+  // 表单提交
+  const handleSubmit = async () => {
+    let result;
+    if (isOld) {
+      // 旧手机换绑
+      result = await oldPhone({ code });
+    } else {
+      // 新手机绑定
+      result = await newPhone({ phone, code });
+    }
+    if (result === true) {
+      message.success(isOld ? "解绑成功" : "绑定成功");
+      if (isOld) {
+        setIsCounting(false);
+        setPhone("");
+        setCode("");
+        setIsOld(false);
+      } else {
+        closeModal();
+      }
+    }
   };
 
+  // 验证码倒计时
   const verifyTimeOut = () => {
     setIsCounting(true);
     const timer = setInterval(() => {
@@ -30,8 +71,9 @@ const Phone = () => {
   };
 
   return (
+    <>
     <Form>
-      <h2>{isCodeSent? "绑定新手机" : "解绑旧手机"}</h2>
+      <h2>{isOld ? "验证旧手机" : "绑定新手机"}</h2>
       <Form.Item
         name="phone"
         rules={[
@@ -42,6 +84,10 @@ const Phone = () => {
         <Input
           prefix={<MobileOutlined className="site-form-item-icon" />}
           placeholder="手机号"
+          value={phone}
+          onChange={(e) => {
+            setPhone(e.target.value);
+          }}
         />
       </Form.Item>
       <Form.Item
@@ -52,6 +98,10 @@ const Phone = () => {
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             placeholder="验证码"
+            value={code}
+            onChange={(e) => {
+              setCode(e.target.value);
+            }}
           />
           <Button onClick={handleSendCode} disabled={isCounting}>
             {isCounting ? `${countdown}s` : "发送验证码"}
@@ -59,10 +109,13 @@ const Phone = () => {
         </div>
       </Form.Item>
 
-        <Form.Item>
-          <Button onClick={handleSubmit} type="primary">提交</Button>
-        </Form.Item>
-    </Form>
+      <Form.Item>
+        <Button type="primary" onClick={handleSubmit}>
+          提交
+        </Button>
+      </Form.Item>
+      </Form>
+    </>
   );
 };
 

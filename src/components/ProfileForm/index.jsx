@@ -43,25 +43,6 @@ const ProfileForm = ({ userInfo, setUpdateUser }) => {
         <Input showCount maxLength={25} />
       </Form.Item>
 
-      {/* <Form.Item
-        name="phone"
-        label="手机号码"
-        rules={[
-          { required: true, message: "请输入手机号" },
-          {
-            pattern: /^1[3456789]\d{9}$/,
-            message: "请输入正确的手机号",
-          },
-        ]}
-      >
-        <Input
-          value={phone}
-          onChange={(e) => {
-            setPhone(e.target.value);
-          }}
-        />
-      </Form.Item> */}
-
       <Form.Item name="description" label="个人简介">
         <Input.TextArea
           autoSize={{ minRows: 2, maxRows: 6 }}
