@@ -38,7 +38,6 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
         });
       }
       if (result) {
-        console.log(result);
         addNewComment(result.comment);
         setTextAreaValue("");
         message.success("评论成功");

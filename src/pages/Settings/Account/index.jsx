@@ -23,51 +23,50 @@ const Account = () => {
   };
   return (
     <Settings>
-      <Card title="账号设置" style={{ minHeight: 558 }}>
-        <Card bordered={false} size="small">
-          <List itemLayout="vertical">
-            <List.Item>
-              <Row justify="space-between">
-                <Col span={4}>
-                  <CenterItem>手机</CenterItem>
-                </Col>
-                <Col>{userInfo.user.phone}</Col>
-                <Col span={4}>
-                  <CenterItem>
-                    <a
-                      onClick={() => {
-                        showModal();
-                        setHandleType("phone");
-                      }}
-                    >
-                      换绑
-                    </a>
-                  </CenterItem>
-                </Col>
-              </Row>
-            </List.Item>
-            <List.Item>
-              <Row justify="space-between">
-                <Col span={4}>
-                  <CenterItem>密码</CenterItem>
-                </Col>
-                <Col span={4}>
-                  <CenterItem>
-                    <a
-                      onClick={() => {
-                        showModal();
-                        setHandleType("password");
-                      }}
-                    >
-                      重置
-                    </a>
-                  </CenterItem>
-                </Col>
-              </Row>
-            </List.Item>
-          </List>
-        </Card>
+      <Card bordered={false} size="small">
+        <List itemLayout="vertical">
+          <List.Item>
+            <Row justify="space-between">
+              <Col span={4}>
+                <CenterItem>手机</CenterItem>
+              </Col>
+              <Col>{userInfo.user.phone}</Col>
+              <Col span={4}>
+                <CenterItem>
+                  <a
+                    onClick={() => {
+                      showModal();
+                      setHandleType("phone");
+                    }}
+                  >
+                    换绑
+                  </a>
+                </CenterItem>
+              </Col>
+            </Row>
+          </List.Item>
+          <List.Item>
+            <Row justify="space-between">
+              <Col span={4}>
+                <CenterItem>密码</CenterItem>
+              </Col>
+              <Col span={4}>
+                <CenterItem>
+                  <a
+                    onClick={() => {
+                      showModal();
+                      setHandleType("password");
+                    }}
+                  >
+                    重置
+                  </a>
+                </CenterItem>
+              </Col>
+            </Row>
+          </List.Item>
+        </List>
       </Card>
+
       <Modal
         centered
         open={openModal}
@@ -81,7 +80,11 @@ const Account = () => {
         <Row justify="start">
           <Col span={24}>
             <Card bordered={false}>
-              {handleType == "phone" ? <Phone /> : <Password closeModal={closeModal} />}
+              {handleType == "phone" ? (
+                <Phone closeModal={closeModal} />
+              ) : (
+                <Password closeModal={closeModal} />
+              )}
             </Card>
           </Col>
         </Row>

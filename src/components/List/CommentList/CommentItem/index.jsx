@@ -41,7 +41,6 @@ const IconText = ({ icon, text, callback, id }) => (
 const CommentItem = ({ item, userInfo, getCommentList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
-  console.log(item);
 
   if (!userInfo.user) {
     userInfo = { user: { id: "" } };

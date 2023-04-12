@@ -84,6 +84,7 @@ const LoginForm = (props) => {
     }, 60000);
   };
 
+  // 执行登录操作
   const doLogin = (result) => {
     if (result.token) {
       localStorage.setItem("token", result.token);

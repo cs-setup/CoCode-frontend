@@ -40,76 +40,74 @@ const Profile = () => {
   };
   return (
     <Settings>
-      <Card title="个人资料">
-        <Space direction="vertical" style={{ display: "flex" }} size="large">
-          <Card
-            title="我的头像"
-            bordered={false}
-            headStyle={{ border: 0 }}
-            size="small"
+      <Space direction="vertical" style={{ display: "flex" }} size="large">
+        <Card
+          title="我的头像"
+          bordered={false}
+          headStyle={{ border: 0 }}
+          size="small"
+        >
+          <Upload
+            action=""
+            listType="picture-circle"
+            beforeUpload={handleUpload}
+            maxCount={1}
+            showUploadList={false}
+            onMouseEnter={handleMaskToggle}
+            onMouseLeave={handleMaskToggle}
           >
-            <Upload
-              action=""
-              listType="picture-circle"
-              beforeUpload={handleUpload}
-              maxCount={1}
-              showUploadList={false}
-              onMouseEnter={handleMaskToggle}
-              onMouseLeave={handleMaskToggle}
-            >
-              {loading ? (
-                <LoadingOutlined />
-              ) : (
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100%",
-                  }}
-                >
-                  {showMask && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "50%",
-                        backgroundColor: "rgba(116,116,116,0.4)",
-                        opacity: 1,
-                        transition: "opacity 0.2s ease-in-out",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        textAlign: "center",
-                        color: "#fff",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        zIndex: 100,
-                      }}
-                    >
-                      修改我的头像
-                    </div>
-                  )}
-                  <Avatar
-                    src={imageUrl ? imageUrl : userInfo.user.avatar}
-                    style={{ width: "100%", height: "100%" }}
-                  ></Avatar>
-                </div>
-              )}
-            </Upload>
-          </Card>
-          <Card
-            title="我的资料"
-            bordered={false}
-            headStyle={{ border: 0 }}
-            size="small"
-          >
-            <ProfileForm userInfo={userInfo} setUpdateUser={setUpdateUser} />
-          </Card>
-        </Space>
-      </Card>
+            {loading ? (
+              <LoadingOutlined />
+            ) : (
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                {showMask && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(116,116,116,0.4)",
+                      opacity: 1,
+                      transition: "opacity 0.2s ease-in-out",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      color: "#fff",
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      zIndex: 100,
+                    }}
+                  >
+                    修改我的头像
+                  </div>
+                )}
+                <Avatar
+                  src={imageUrl ? imageUrl : userInfo.user.avatar}
+                  style={{ width: "100%", height: "100%" }}
+                ></Avatar>
+              </div>
+            )}
+          </Upload>
+        </Card>
+        <Card
+          title="我的资料"
+          bordered={false}
+          headStyle={{ border: 0 }}
+          size="small"
+        >
+          <ProfileForm userInfo={userInfo} setUpdateUser={setUpdateUser} />
+        </Card>
+      </Space>
     </Settings>
   );
 };
