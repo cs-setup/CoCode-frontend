@@ -69,6 +69,11 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
               onChange={(e) => {
                 setTextAreaValue(e.target.value);
               }}
+              ref={(input) => {
+                if (input != null) {
+                  input.focus();
+                }
+              }}
               onFocus={() => {
                 setShowEdit(true);
               }}
