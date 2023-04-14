@@ -10,6 +10,7 @@ import {
   Card,
   Tooltip,
   Popconfirm,
+  message,
 } from "antd";
 import {
   LikeOutlined,
@@ -21,7 +22,6 @@ import {
 import { like } from "../../../../utils/api/feed";
 import { deleteFeed } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
-import { message } from "antd";
 
 const IconText = ({ icon, text, callback, id }) => (
   <Row justify="center">
