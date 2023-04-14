@@ -78,7 +78,6 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
                 setShowEdit(true);
               }}
               onBlur={() => {
-                console.log(111);
                 if (textAreaValue.trim() === "") {
                   setShowEdit(false);
                 }

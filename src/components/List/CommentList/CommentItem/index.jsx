@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import formatTime from "../../../../utils/formatTime";
 import {
   List,
@@ -41,6 +41,7 @@ const IconText = ({ icon, text, callback, id }) => (
 const CommentItem = ({ item, userInfo, getCommentList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
+  const [fetchState, setFetchState] = useState(true);
 
   if (!userInfo.user) {
     userInfo = { user: { id: "" } };
@@ -49,11 +50,22 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
   const changeLike = async (params) => {
     isLiked ? item.likedCount-- : item.likedCount++;
     setIsLiked(!isLiked);
+
     const result = await like(params);
-    if (result === false) {
-      setIsLiked(!isLiked);
+    if (!result) {
+      setFetchState(false);
     }
   };
+
+  // 处理点赞请求失败
+  useEffect(() => {
+    if (!fetchState) {
+      message.error("error");
+      isLiked ? item.likedCount-- : item.likedCount++;
+      setIsLiked(!isLiked);
+      setFetchState(true);
+    }
+  }, [fetchState]);
 
   const showCommentList = () => {
     setShowComment(!showComment);
