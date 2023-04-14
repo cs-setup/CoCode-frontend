@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { Card, Space, Menu, message } from "antd";
-import useLogin from "../../hooks/useLogin";
 import TwoColumn from "../../components/Layout/TwoColumn";
 import UserInfo from "../../components/UserInfo";
 import FeedList from "../../components/List/FeedList";
@@ -51,14 +49,6 @@ const RightColumn = () => {
 };
 
 const UserCenter = () => {
-  const navigate = useNavigate();
-  const isLogin = useLogin();
-  useEffect(() => {
-    if (!isLogin) {
-      navigate("/", { replace: true });
-      message.warning("请先登录");
-    }
-  }, []);
   return (
     <>
       <TwoColumn left={<LeftColumn />} right={<RightColumn />}></TwoColumn>

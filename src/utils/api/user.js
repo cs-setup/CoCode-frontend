@@ -55,7 +55,7 @@ export const bindMessage = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if ((result.code == 10000)) {
+  if (result.code == 10000) {
     return true;
   } else {
     message.error(result.message);
@@ -69,11 +69,11 @@ export const oldPhone = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if ((result.code == 10000)) {
+  if (result.code == 10000) {
     return true;
   } else {
     message.error(result.message);
-    return false
+    return false;
   }
 };
 
@@ -84,11 +84,11 @@ export const newPhone = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if ((result.code == 10000)) {
+  if (result.code == 10000) {
     return true;
   } else {
     message.error(result.message);
-    return false
+    return false;
   }
 };
 
@@ -107,9 +107,17 @@ export const password = async (params) => {
 };
 
 // 获取用户信息
-export const fetchUserInfo = async () => {
-  const result = await request.get("/user/info");
-  return result.data;
+export const fetchUserInfo = async (params) => {
+  const { id } = params;
+  let result;
+  if (id) {
+    result = await request.get(`/user/info/${id}`);
+  } else {
+    result = await request.get("/user/info");
+  }
+  if (result.code == 10000) {
+    return result.data;
+  }
 };
 
 // 更新头像
