@@ -17,18 +17,23 @@ export const UserProvider = ({ children }) => {
     }
   );
 
-  // 信息修改后通知更新
+  // 信息修改后手动通知更新
   const [updateUser, setUpdateUser] = useState(false);
+
+  // 登录状态变化后通知更新
   const isLogin = useLogin();
+
   const getUserInfo = async () => {
-    const result = await fetchUserInfo({id: null});
-    setUserInfo(result);
-    localStorage.setItem("userInfo", JSON.stringify(result));
+    const result = await fetchUserInfo({ id: null });
+    if (result) {
+      setUserInfo(result);
+      localStorage.setItem("userInfo", JSON.stringify(result));
+    }
     setUpdateUser(false);
   };
 
   useEffect(() => {
-      getUserInfo();
+    getUserInfo();
   }, [isLogin, updateUser]);
 
   return (

@@ -15,6 +15,10 @@ const FeedList = ({ myList }) => {
   const { publishItem, setPublishItem } = useContext(HomeContext);
   const firstPostRef = useRef(Date.now());
 
+  if(!userInfo){
+    return null
+  }
+
   // 请求文章列表
   const getArticleList = async () => {
     let result = {};
@@ -54,6 +58,7 @@ const FeedList = ({ myList }) => {
     getArticleList();
   }, [isReGetList]);
 
+  // 插入新帖子
   useEffect(() => {
     if (publishItem.id) {
       setList([publishItem, ...list]);
