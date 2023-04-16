@@ -39,7 +39,7 @@ const UserInfo = ({ user }) => {
               description={
                 <Space align="start">
                   <UserOutlined />
-                  <div>{userInfo.user.nickname}的个人主页</div>
+                  <div>{userInfo.description}</div>
                 </Space>
               }
             />
