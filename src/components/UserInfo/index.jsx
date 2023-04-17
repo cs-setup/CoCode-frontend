@@ -30,7 +30,7 @@ const UserInfo = ({ user }) => {
                   icon={
                     <Image
                       src={userInfo.user.avatar}
-                      style={{ width: "100%", height: "100%" }}
+                      style={{ borderRadius: "50%", height: 64}}
                     />
                   }
                 />
@@ -39,7 +39,7 @@ const UserInfo = ({ user }) => {
               description={
                 <Space align="start">
                   <UserOutlined />
-                  <div>{userInfo.description}</div>
+                  <div>{userInfo.user.description}</div>
                 </Space>
               }
             />
