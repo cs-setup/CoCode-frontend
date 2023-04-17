@@ -27,7 +27,7 @@ const CommonRoutes = [
 
 const AuthRoutes = [
   {
-    path: "/user",
+    path: "/user/:userId",
     element: <UserCenter />,
   },
   {

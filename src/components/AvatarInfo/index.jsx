@@ -24,7 +24,7 @@ const AvatarInfo = ({ userInfo, logOut }) => {
               selectedKeys={["999"]}
             >
               <Menu.Item key="1">
-                <Link to="/user">个人中心</Link>
+                <Link to={`user/${userInfo.user.id}`}>个人中心</Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to="/notes">笔记中心</Link>

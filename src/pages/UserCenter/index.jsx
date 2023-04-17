@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card, Space, Menu, message } from "antd";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 import TwoColumn from "../../components/Layout/TwoColumn";
 import UserInfo from "../../components/UserInfo";
 import FeedList from "../../components/List/FeedList";
@@ -8,6 +10,12 @@ import NoteList from "../../components/List/NoteList";
 
 const LeftColumn = () => {
   const [current, setCurrent] = useState("post");
+  const { userInfo } = useContext(UserContext);
+  const { userId } = useParams();
+
+  if (!userInfo) {
+    return null;
+  }
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -15,7 +23,7 @@ const LeftColumn = () => {
   return (
     <>
       <Space direction="vertical" style={{ display: "flex" }}>
-        <UserInfo></UserInfo>
+        <UserInfo userId={userId}></UserInfo>
         <Card
           title={
             <Menu
@@ -33,8 +41,11 @@ const LeftColumn = () => {
             </Menu>
           }
         >
-          {current == "post" ? <FeedList myList={true} /> : <NoteList/>}
-          
+          {current == "post" ? (
+            <FeedList listOptions={{userId}} />
+          ) : (
+            <NoteList />
+          )}
         </Card>
       </Space>
     </>

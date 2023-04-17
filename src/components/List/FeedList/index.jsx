@@ -6,7 +6,7 @@ import { getList } from "../../../utils/api/feed";
 import { HomeContext } from "../../../contexts/HomeContext";
 import { UserContext } from "../../../contexts/UserContext";
 
-const FeedList = ({ myList }) => {
+const FeedList = ({ listOptions }) => {
   const { userInfo } = useContext(UserContext);
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
@@ -17,6 +17,10 @@ const FeedList = ({ myList }) => {
 
   if(!userInfo){
     return null
+  }
+
+  if(!listOptions){
+    listOptions = {}
   }
 
   // 请求文章列表
@@ -34,9 +38,9 @@ const FeedList = ({ myList }) => {
         likedCount: "desc",
       },
     };
-    if (myList && userInfo.user && userInfo.user.id) {
-      // 请求我的feed列表
-      options.specify["authorId/eq"] = userInfo.user.id;
+    if (listOptions.userId && userInfo.user && userInfo.user.id) {
+      // 请求主页feed列表
+      options.specify["authorId/eq"] = listOptions.userId;
       result = await getList({ pageParam, options });
     } else {
       result = await getList({ pageParam, options });

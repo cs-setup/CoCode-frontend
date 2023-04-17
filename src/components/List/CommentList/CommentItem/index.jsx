@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import formatTime from "../../../../utils/formatTime";
 import {
   List,
@@ -17,6 +17,7 @@ import {
   MoreOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import { like, deleteComment } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
 
@@ -89,13 +90,20 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
       style={{ backgroundColor: "#F0F2F5", borderRadius: "16px", padding: 16 }}
     >
       <List.Item.Meta
-        avatar={<Avatar size="middle" src={item.user.avatar} />}
+        avatar={
+          <Link to={`/user/${item.user.id}`}>
+            <Avatar src={item.user.avatar} />
+          </Link>
+        }
         title={
           <Row justify="space-between">
             <Col>
-              <a href={item.href} style={{ fontSize: 16, color: "#000" }}>
+              <Link
+                style={{ fontSize: 16, color: "#000" }}
+                to={`/user/${item.user.id}`}
+              >
                 {item.user.nickname}
-              </a>
+              </Link>
             </Col>
             {userInfo.user.id === item.user.id && (
               <Col>

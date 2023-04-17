@@ -19,6 +19,7 @@ import {
   MoreOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import { like } from "../../../../utils/api/feed";
 import { deleteFeed } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
@@ -94,13 +95,17 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
     <List.Item key={item.id}>
       <Card bordered={false} size="small">
         <List.Item.Meta
-          avatar={<Avatar src={item.user.avatar} />}
+          avatar={
+            <Link to={`/user/${item.user.id}`}>
+              <Avatar src={item.user.avatar} />
+            </Link>
+          }
           title={
             <Row justify="space-between">
               <Col>
-                <a href={item.href} style={{ fontSize: 20, color: "#000" }}>
+                <Link style={{ fontSize: 20, color: "#000" }} to={`/user/${item.user.id}`}>
                   {item.user.nickname}
-                </a>
+                </Link>
               </Col>
               {userInfo.user.id === item.user.id && (
                 <Col>
