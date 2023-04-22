@@ -12,3 +12,7 @@ body{
     height: 100%;
     background-color: #f6f6f6;
 }
+
+.horizontal-menu{
+    padding: 0 8px !important;
+}

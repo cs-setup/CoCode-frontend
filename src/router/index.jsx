@@ -6,6 +6,7 @@ const Home = React.lazy(()=> import("../pages/Home"))
 const UserCenter = React.lazy(()=> import("../pages/UserCenter"))
 const Notes = React.lazy(()=> import("../pages/Notes"))
 const Editor = React.lazy(()=> import("../pages/Editor"))
+const Message = React.lazy(()=> import("../pages/chat/Message"))
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
 
@@ -41,6 +42,16 @@ const AuthRoutes = [
       {
         path: "account",
         element: <Account />,
+      },
+    ],
+  },
+  {
+    path: "/chat",
+    element: <Outlet />,
+    children: [
+      {
+        path: "message",
+        element: <Message />,
       },
     ],
   },
