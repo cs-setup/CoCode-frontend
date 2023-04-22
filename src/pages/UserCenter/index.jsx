@@ -7,11 +7,19 @@ import UserInfo from "../../components/UserInfo";
 import FeedList from "../../components/List/FeedList";
 import CenterItem from "../../components/CenterItem";
 import NoteList from "../../components/List/NoteList";
+import FollowList from "../../components/List/FollowList";
 
 const LeftColumn = () => {
   const [current, setCurrent] = useState("post");
   const { userInfo } = useContext(UserContext);
   const { userId } = useParams();
+
+  const currentList = {
+    "post": <FeedList listOptions={{userId}} />,
+    "note": <div>111</div>,
+    "follow": <FollowList type={"follow"} />,
+    "fan": <FollowList type={"fan"}/>
+  }
 
   if (!userInfo) {
     return null;
@@ -25,27 +33,31 @@ const LeftColumn = () => {
       <Space direction="vertical" style={{ display: "flex" }}>
         <UserInfo userId={userId}></UserInfo>
         <Card
+        // size="small"
+        headStyle={{minHeight: 48,justifyContent: "end"}}
           title={
             <Menu
               selectedKeys={[current]}
               onClick={onClick}
               mode="horizontal"
-              style={{ border: "none", height: "100%" }}
+              style={{ border: "none" }}
             >
-              <Menu.Item key="post" style={{}}>
+              <Menu.Item key="post" className="horizontal-menu">
                 <CenterItem>我的沸点</CenterItem>
               </Menu.Item>
-              <Menu.Item key="note">
+              <Menu.Item key="note" className="horizontal-menu">
                 <CenterItem>我的笔记</CenterItem>
+              </Menu.Item>
+              <Menu.Item key="follow" className="horizontal-menu">
+                <CenterItem>关注的人</CenterItem>
+              </Menu.Item>
+              <Menu.Item key="fan" className="horizontal-menu">
+                <CenterItem>关注者</CenterItem>
               </Menu.Item>
             </Menu>
           }
         >
-          {current == "post" ? (
-            <FeedList listOptions={{userId}} />
-          ) : (
-            <NoteList />
-          )}
+          {currentList[current]}
         </Card>
       </Space>
     </>

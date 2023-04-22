@@ -16,7 +16,7 @@ const LeftColumn = () => {
             <FeedEdit />
           </Card>
         )}
-        <Card title={<div>沸点列表</div>}>
+        <Card title={<div>沸点列表</div>} headStyle={{minHeight: 48}}>
           <FeedList />
         </Card>
       </Space>
