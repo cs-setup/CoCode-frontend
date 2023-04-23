@@ -14,15 +14,20 @@ export const WebSocketProvider = ({ children }) => {
       newSocket.send(
         JSON.stringify({ seq: Date.now(), operate: "login", data: token })
       );
+      console.log(Date.now());
+      const interval = setInterval(() => {
+        console.log("ping");
+        newSocket.send("ping");
+      }, 50000);
+      newSocket.onclose = () => {
+        console.log("WebSocket 连接已关闭！");
+        clearInterval(interval);
+      };
     };
 
-    newSocket.onclose = () => {
-      console.log("WebSocket 连接已关闭！");
+    newSocket.onmessage = (event) => {
+      console.log(event);
     };
-
-    // newSocket.onmessage = (event) => {
-    //   console.log("接收到服务器发送的数据：", event.data);
-    // };
 
     newSocket.onerror = (event) => {
       console.error("WebSocket 连接出错：", event);
