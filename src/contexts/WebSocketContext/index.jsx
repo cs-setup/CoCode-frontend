@@ -14,7 +14,6 @@ export const WebSocketProvider = ({ children }) => {
       newSocket.send(
         JSON.stringify({ seq: Date.now(), operate: "login", data: token })
       );
-      console.log(Date.now());
       const interval = setInterval(() => {
         console.log("ping");
         newSocket.send("ping");

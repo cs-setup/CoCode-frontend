@@ -15,12 +15,12 @@ const FeedList = ({ listOptions }) => {
   const { publishItem, setPublishItem } = useContext(HomeContext);
   const firstPostRef = useRef(Date.now());
 
-  if(!userInfo){
-    return null
+  if (!userInfo) {
+    return null;
   }
 
-  if(!listOptions){
-    listOptions = {}
+  if (!listOptions) {
+    listOptions = {};
   }
 
   // 请求文章列表
@@ -38,7 +38,7 @@ const FeedList = ({ listOptions }) => {
         likedCount: "desc",
       },
     };
-    if (listOptions.userId && userInfo.user && userInfo.user.id) {
+    if (listOptions.userId) {
       // 请求主页feed列表
       options.specify["authorId/eq"] = listOptions.userId;
       result = await getList({ pageParam, options });
@@ -46,7 +46,7 @@ const FeedList = ({ listOptions }) => {
       result = await getList({ pageParam, options });
     }
 
-    if (result.postList) {
+    if (result.postList.length !== 0) {
       setPageNum(pageNum + 1);
       if (result.postList.length < 10) {
         setHasMore(false);
@@ -54,6 +54,8 @@ const FeedList = ({ listOptions }) => {
         setHasMore(true);
       }
       setList([...list, ...result.postList]);
+    }else{
+      setHasMore(false)
     }
     setIsReGetList(false);
   };
@@ -103,7 +105,12 @@ const FeedList = ({ listOptions }) => {
         }}
         locale={{ emptyText: <></> }}
         renderItem={(item) => (
-          <FeedItem key={item.id} item={item} userInfo={userInfo} reGetList={reGetList} />
+          <FeedItem
+            key={item.id}
+            item={item}
+            userInfo={userInfo}
+            reGetList={reGetList}
+          />
         )}
         style={{ overflow: "hidden" }}
       />

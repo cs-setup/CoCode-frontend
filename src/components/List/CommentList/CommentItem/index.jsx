@@ -91,7 +91,7 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
     >
       <List.Item.Meta
         avatar={
-          <Link to={`/user/${item.user.id}`}>
+          <Link to={`/user/${item.user.id}`} target="_blank">
             <Avatar src={item.user.avatar} />
           </Link>
         }
@@ -101,6 +101,7 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
               <Link
                 style={{ fontSize: 16, color: "#000" }}
                 to={`/user/${item.user.id}`}
+                target="_blank"
               >
                 {item.user.nickname}
               </Link>

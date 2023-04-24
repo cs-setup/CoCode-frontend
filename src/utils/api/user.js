@@ -8,7 +8,7 @@ export const register = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return true;
   } else {
     message.error(result.message);
@@ -25,7 +25,7 @@ export const login = async (params) => {
     },
   });
 
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return result.data;
   } else {
     message.error(result.message);
@@ -41,7 +41,7 @@ export const verify = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return true;
   } else {
     return false;
@@ -55,7 +55,7 @@ export const bindMessage = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return true;
   } else {
     message.error(result.message);
@@ -69,7 +69,7 @@ export const oldPhone = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return true;
   } else {
     message.error(result.message);
@@ -84,7 +84,7 @@ export const newPhone = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return true;
   } else {
     message.error(result.message);
@@ -99,7 +99,7 @@ export const password = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return true;
   } else {
     message.error(result.message);
@@ -115,7 +115,7 @@ export const fetchUserInfo = async (params) => {
   } else {
     result = await request.get("/user/info");
   }
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return result.data;
   }
 };
@@ -127,7 +127,7 @@ export const updateAvatar = async (params) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  if (result.code == 10000) {
+  if (result.code === 10000) {
     return result.data;
   } else {
     return false;
@@ -136,8 +136,33 @@ export const updateAvatar = async (params) => {
 
 // 更新用户信息
 export const updateInfo = async (params) => {
-  const result = await request.put("user/info", params);
-  if (result.code == 10000) {
+  const result = await request.put("/user/info", params);
+  if (result.code === 10000) {
     return true;
   }
 };
+
+// 获取关注列表
+export const fetchFollow = async (params) => {
+  const result = await request.post("/user/follow", params)
+  if(result.code === 10000){
+    return result.data
+  }
+};
+
+// 获取粉丝列表
+export const fetchFan = async (params) => {
+  const result = await request.post("/user/fan", params)
+  if(result.code === 10000){
+    return result.data
+  }
+};
+
+// 关注/取消关注
+export const follow = async (params) => {
+  const {userId} = params
+  const result = await request.post(`/user/follow/${userId}`)
+  if(result.code === 10000){
+    return true
+  }
+}

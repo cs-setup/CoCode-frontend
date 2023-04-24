@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import { Card, Avatar, Button, Row, Col, Space, Image } from "antd";
+import { Link, useLocation } from "react-router-dom";
+import { Card, Avatar, Button, Row, Col, Space, Image, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { UserContext } from "../../contexts/UserContext";
 import { UserOutlined } from "@ant-design/icons";
-import { fetchUserInfo } from "../../utils/api/user";
+import { fetchUserInfo, follow } from "../../utils/api/user";
 
 const UserInfo = ({ userId }) => {
   const { userInfo } = useContext(UserContext);
   const [user, setUser] = useState({});
+  const location = useLocation();
 
   if (!userInfo) {
     return null;
@@ -16,6 +18,16 @@ const UserInfo = ({ userId }) => {
   const getUserInfo = async () => {
     const result = await fetchUserInfo({ id: userId });
     setUser(result.user);
+  };
+
+  const handleFollow = async () => {
+    const result = await follow({ userId: user.id });
+    if (result === true) {
+      message.success("操作成功");
+      setUser({ ...user, isFollowed: !user.isFollowed });
+    }else{
+      message.error("操作失败")
+    }
   };
 
   useEffect(() => {
@@ -29,7 +41,12 @@ const UserInfo = ({ userId }) => {
   return (
     <>
       <Card>
-        <Row justify="space-between" align="middle" wrap={true} gutter={[0,16]}>
+        <Row
+          justify="space-between"
+          align="middle"
+          wrap={true}
+          gutter={[0, 16]}
+        >
           <Col>
             <Card.Meta
               avatar={
@@ -52,24 +69,40 @@ const UserInfo = ({ userId }) => {
               }
             />
           </Col>
-          {userId === userInfo.user.id ? (
-            <Col>
-              <Button type="primary">
-                <Link to="/user/settings/profile">编辑资料</Link>
-              </Button>
-            </Col>
-          ) : (
-            <Col>
-              <Space>
-              <Button type="primary">
-                关注
-              </Button>
-              <Button type="primary">
-                私聊
-              </Button>
-              </Space>
-            </Col>
-          )}
+          {location.pathname.split("/")[1] === "user" &&
+            (userId === userInfo.user.id ? (
+              <Col>
+                <Button type="primary">
+                  <Link to="/user/settings/profile">编辑资料</Link>
+                </Button>
+              </Col>
+            ) : (
+              <Col>
+                {user.id && (
+                  <Space>
+                    <Button
+                      type={user.isFollowed ? "default" : "primary"}
+                      style={
+                        user.isFollowed
+                          ? { backgroundColor: "#F5F5F5", color: "#8A919F" }
+                          : {}
+                      }
+                      onClick={handleFollow}
+                    >
+                      {user.isFollowed ? (
+                        "已关注"
+                      ) : (
+                        <>
+                          <PlusOutlined />
+                          关注
+                        </>
+                      )}
+                    </Button>
+                    <Button type="primary">私聊</Button>
+                  </Space>
+                )}
+              </Col>
+            ))}
         </Row>
       </Card>
     </>

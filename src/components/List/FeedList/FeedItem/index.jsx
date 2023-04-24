@@ -96,14 +96,18 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
       <Card bordered={false} size="small">
         <List.Item.Meta
           avatar={
-            <Link to={`/user/${item.user.id}`}>
+            <Link to={`/user/${item.user.id}`} target="_blank">
               <Avatar src={item.user.avatar} />
             </Link>
           }
           title={
             <Row justify="space-between">
               <Col>
-                <Link style={{ fontSize: 20, color: "#000" }} to={`/user/${item.user.id}`}>
+                <Link
+                  to={`/user/${item.user.id}`}
+                  target="_blank"
+                  style={{ fontSize: 20, color: "#000" }}
+                >
                   {item.user.nickname}
                 </Link>
               </Col>

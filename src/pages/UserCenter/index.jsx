@@ -15,11 +15,12 @@ const LeftColumn = () => {
   const { userId } = useParams();
 
   const currentList = {
-    "post": <FeedList listOptions={{userId}} />,
-    "note": <div>111</div>,
-    "follow": <FollowList type={"follow"} />,
-    "fan": <FollowList type={"fan"}/>
-  }
+    post: <FeedList listOptions={{ userId }} />,
+    // "note": <NoteList />,
+    note: <div>note</div>,
+    follow: <FollowList type={"follow"} key={"follow"} id={userId} />,
+    fan: <FollowList type={"fan"} key={"fan"} id={userId} />,
+  };
 
   if (!userInfo) {
     return null;
@@ -33,8 +34,8 @@ const LeftColumn = () => {
       <Space direction="vertical" style={{ display: "flex" }}>
         <UserInfo userId={userId}></UserInfo>
         <Card
-        // size="small"
-        headStyle={{minHeight: 48,justifyContent: "end"}}
+          // size="small"
+          headStyle={{ minHeight: 48, justifyContent: "end" }}
           title={
             <Menu
               selectedKeys={[current]}
@@ -43,16 +44,16 @@ const LeftColumn = () => {
               style={{ border: "none" }}
             >
               <Menu.Item key="post" className="horizontal-menu">
-                <CenterItem>我的沸点</CenterItem>
+                <CenterItem>帖子</CenterItem>
               </Menu.Item>
               <Menu.Item key="note" className="horizontal-menu">
-                <CenterItem>我的笔记</CenterItem>
+                <CenterItem>笔记</CenterItem>
               </Menu.Item>
               <Menu.Item key="follow" className="horizontal-menu">
-                <CenterItem>关注的人</CenterItem>
+                <CenterItem>关注</CenterItem>
               </Menu.Item>
               <Menu.Item key="fan" className="horizontal-menu">
-                <CenterItem>关注者</CenterItem>
+                <CenterItem>被关注</CenterItem>
               </Menu.Item>
             </Menu>
           }
