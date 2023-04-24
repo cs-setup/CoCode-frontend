@@ -49,7 +49,7 @@ const TitleMeun = () => {
 
 const LeftColumn = ({ children }) => {
   return (
-    <Card title={<TitleMeun />} style={{ minHeight: 558 }} bordered={false}>
+    <Card title={<TitleMeun />} style={{ minHeight: 558 }} bordered={false}  headStyle={{minHeight: 48, justifyContent: "end"}}>
       {children}
     </Card>
   );

@@ -34,7 +34,6 @@ const LeftColumn = () => {
       <Space direction="vertical" style={{ display: "flex" }}>
         <UserInfo userId={userId}></UserInfo>
         <Card
-          // size="small"
           headStyle={{ minHeight: 48, justifyContent: "end" }}
           title={
             <Menu

@@ -5,7 +5,6 @@ import { fetchFollow, fetchFan } from "../../../utils/api/user";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const FollowList = ({ type, id }) => {
-  console.log(id);
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
