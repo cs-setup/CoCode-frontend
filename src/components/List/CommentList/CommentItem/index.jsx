@@ -156,9 +156,7 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
                 {item.parentId == "0" && (
                   <IconText
                     icon={MessageOutlined}
-                    text={
-                      item.childComments ? item.childComments.length : <>aaa</>
-                    }
+                    text={item.childComments.length}
                     key="list-vertical-message"
                     callback={showCommentList}
                   />
