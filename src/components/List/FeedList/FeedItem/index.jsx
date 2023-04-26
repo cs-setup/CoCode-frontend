@@ -51,15 +51,15 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
   const [fetchState, setFetchState] = useState(true);
-  const isLogin = useLogin()
+  const isLogin = useLogin();
 
   if (!userInfo.user) {
     userInfo = { user: { id: "" } };
   }
 
   const changeLike = async (params) => {
-    if(!isLogin){
-      return message.warning("用户未登录")
+    if (!isLogin) {
+      return message.warning("用户未登录");
     }
     isLiked ? item.likedCount-- : item.likedCount++;
     setIsLiked(!isLiked);
@@ -111,7 +111,7 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
                 <Link
                   to={`/user/${item.user.id}`}
                   target="_blank"
-                  style={{ fontSize: 20, color: "#000" }}
+                  style={{ fontSize: 20 }}
                 >
                   {item.user.nickname}
                 </Link>
@@ -135,7 +135,7 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
                           />
                         }
                       >
-                        <a style={{ color: "#000" }}>删除</a>
+                        <a>删除</a>
                       </Popconfirm>
                     }
                     placement="bottom"

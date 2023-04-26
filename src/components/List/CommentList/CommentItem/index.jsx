@@ -44,15 +44,15 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
   const [fetchState, setFetchState] = useState(true);
-  const isLogin = useLogin()
+  const isLogin = useLogin();
 
   if (!userInfo.user) {
     userInfo = { user: { id: "" } };
   }
 
   const changeLike = async (params) => {
-    if(!isLogin){
-      return message.warning("用户未登录")
+    if (!isLogin) {
+      return message.warning("用户未登录");
     }
     isLiked ? item.likedCount-- : item.likedCount++;
     setIsLiked(!isLiked);
@@ -104,7 +104,7 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
           <Row justify="space-between">
             <Col>
               <Link
-                style={{ fontSize: 16, color: "#000" }}
+                style={{ fontSize: 16 }}
                 to={`/user/${item.user.id}`}
                 target="_blank"
               >
