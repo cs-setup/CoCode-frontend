@@ -5,6 +5,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { UserContext } from "../../contexts/UserContext";
 import { UserOutlined } from "@ant-design/icons";
 import { fetchUserInfo, follow } from "../../utils/api/user";
+import useLogin from "../../hooks/useLogin";
 
 const UserInfo = ({ userId }) => {
   const { userInfo } = useContext(UserContext);
@@ -25,8 +26,8 @@ const UserInfo = ({ userId }) => {
     if (result === true) {
       message.success("操作成功");
       setUser({ ...user, isFollowed: !user.isFollowed });
-    }else{
-      message.error("操作失败")
+    } else {
+      message.error("操作失败");
     }
   };
 
@@ -70,6 +71,7 @@ const UserInfo = ({ userId }) => {
             />
           </Col>
           {location.pathname.split("/")[1] === "user" &&
+            userInfo.user.id !== "" &&
             (userId === userInfo.user.id ? (
               <Col>
                 <Button type="primary">
