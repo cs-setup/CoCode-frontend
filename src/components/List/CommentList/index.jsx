@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext, Suspense } from "react";
-import { List, Divider } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { List, Divider, Spin } from "antd";
 import { UserContext } from "../../../contexts/UserContext";
 import { commentList } from "../../../utils/api/feed";
-import { Spin } from "antd";
+import useLogin from "../../../hooks/useLogin";
 const CommentEdit = React.lazy(() => import("../../CommentEdit"));
 import CommentItem from "./CommentItem";
 
@@ -11,6 +10,7 @@ const CommentList = ({ parentItem }) => {
   const [theCommentList, setTheCommentList] = useState([]);
   const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(UserContext);
+  const isLogin = useLogin()
 
   // 获取评论列表
   const getCommentList = async () => {
@@ -39,7 +39,7 @@ const CommentList = ({ parentItem }) => {
 
   return (
     <>
-      {userInfo && (
+      {isLogin && (
         <Suspense fallback={<></>}>
           <CommentEdit
             parentItem={parentItem}

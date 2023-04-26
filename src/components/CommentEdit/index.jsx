@@ -9,15 +9,9 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const inputRef = useRef(null);
   if (!userInfo.user || !userInfo.user.avatar) {
     return null;
   }
-
-  useEffect(() => {
-    inputRef.current.focus();
-
-  }, []);
 
   const submitComment = async () => {
     setLoading(true);
@@ -73,7 +67,6 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
               onChange={(e) => {
                 setTextAreaValue(e.target.value);
               }}
-              ref={inputRef}
               onFocus={() => {
                 setShowEdit(true);
               }}
