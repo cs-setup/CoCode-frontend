@@ -1,15 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, Button } from "antd";
+import { Card, Button, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import TwoColumn from "../../components/Layout/TwoColumn";
 import UserInfo from "../../components/UserInfo";
+import NoteList from "../../components/List/NoteList";
 
 const LeftColumn = () => {
   return (
-    <Card size="small">
+    <Space direction="vertical" style={{ display: "flex" }}>
       <UserInfo></UserInfo>
-    </Card>
+      <Card>
+        {/* <div
+          dangerouslySetInnerHTML={{
+            __html:
+              "<p>111</p>\n<p>222</p>\n<h1>sfa</h1>\n<ul>\n<li>alsjdf…a</li>\n<li>adfkjaljf</li>\n<li>asdfadf</li>\n</ul>\n",
+          }}
+        ></div> */}
+        <NoteList />
+      </Card>
+    </Space>
   );
 };
 

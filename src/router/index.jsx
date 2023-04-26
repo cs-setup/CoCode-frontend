@@ -9,6 +9,7 @@ const Editor = React.lazy(()=> import("../pages/Editor"))
 const Message = React.lazy(()=> import("../pages/chat/Message"))
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
+import NoteDetail from "../pages/NoteDetail";
 
 
 const CommonRoutes = [
@@ -21,16 +22,20 @@ const CommonRoutes = [
     element: <Home />,
   },
   {
+    path: "/user/:userId",
+    element: <UserCenter />,
+  },
+  {
+    path: "/note/:id",
+    element: <NoteDetail />,
+  },
+  {
     path: "*",
     element: <NotFound />,
   },
 ];
 
 const AuthRoutes = [
-  {
-    path: "/user/:userId",
-    element: <UserCenter />,
-  },
   {
     path: "/user/settings",
     element: <Outlet />,
