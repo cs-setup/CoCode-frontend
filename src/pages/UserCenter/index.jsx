@@ -16,8 +16,7 @@ const LeftColumn = () => {
 
   const currentList = {
     post: <FeedList listOptions={{ userId }} />,
-    // "note": <NoteList />,
-    note: <div>note</div>,
+    note: <NoteList />,
     follow: <FollowList type={"follow"} key={"follow"} id={userId} />,
     fan: <FollowList type={"fan"} key={"fan"} id={userId} />,
   };
@@ -34,6 +33,7 @@ const LeftColumn = () => {
       <Space direction="vertical" style={{ display: "flex" }}>
         <UserInfo userId={userId}></UserInfo>
         <Card
+        size="small"
           headStyle={{ minHeight: 48, justifyContent: "end" }}
           title={
             <Menu
