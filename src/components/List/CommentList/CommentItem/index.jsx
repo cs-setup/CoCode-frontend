@@ -18,6 +18,7 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import useLogin from "../../../../hooks/useLogin";
 import { like, deleteComment } from "../../../../utils/api/feed";
 import CommentList from "../../CommentList";
 
@@ -43,12 +44,16 @@ const CommentItem = ({ item, userInfo, getCommentList }) => {
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [showComment, setShowComment] = useState(false);
   const [fetchState, setFetchState] = useState(true);
+  const isLogin = useLogin()
 
   if (!userInfo.user) {
     userInfo = { user: { id: "" } };
   }
 
   const changeLike = async (params) => {
+    if(!isLogin){
+      return message.warning("用户未登录")
+    }
     isLiked ? item.likedCount-- : item.likedCount++;
     setIsLiked(!isLiked);
 
