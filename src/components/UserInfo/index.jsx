@@ -10,6 +10,7 @@ import useLogin from "../../hooks/useLogin";
 const UserInfo = ({ userId }) => {
   const { userInfo } = useContext(UserContext);
   const [user, setUser] = useState({});
+  const isLogin = useLogin()
   const location = useLocation();
 
   if (!userInfo) {
@@ -71,7 +72,7 @@ const UserInfo = ({ userId }) => {
             />
           </Col>
           {location.pathname.split("/")[1] === "user" &&
-            userInfo.user.id !== "" &&
+            isLogin &&
             (userId === userInfo.user.id ? (
               <Col>
                 <Button type="primary">
