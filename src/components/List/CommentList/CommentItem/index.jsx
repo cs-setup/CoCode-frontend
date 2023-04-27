@@ -9,6 +9,7 @@ import {
   Tooltip,
   Popconfirm,
   message,
+  Typography,
 } from "antd";
 import {
   LikeOutlined,
@@ -28,7 +29,7 @@ const IconText = ({ icon, text, callback, id }) => (
       style={{ cursor: "pointer" }}
       onClick={() => {
         if (icon !== MessageOutlined) {
-          callback({ objectType: "comment", objectId: id.toString() });
+          callback({ objectType: "comment", objectId: id });
         } else {
           callback();
         }

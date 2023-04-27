@@ -1,15 +1,24 @@
-import React from "react";
-import { Card, List, Space, Row, Col, Divider, Image } from "antd";
-import { StarOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Card, List, Space, Row, Col, Divider, Image, Typography } from "antd";
+import {
+  StarOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  LikeTwoTone,
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import useLogin from "../../../../hooks/useLogin";
 import formatTime from "../../../../utils/formatTime";
+import { like } from "../../../../utils/api/feed";
 
 const IconText = ({ icon, text, callback, id }) => (
-  <Space>
+  <Space style={{ fontSize: 14 }}>
     <div
       style={{ cursor: "pointer" }}
-      onClick={() => {
-        if (icon !== MessageOutlined) {
-          callback({ objectType: "comment", objectId: id.toString() });
+      onClick={(e) => {
+        e.stopPropagation();
+        if (icon === LikeOutlined || icon === LikeTwoTone) {
+          callback({ objectType: "note", objectId: id });
         } else {
           callback();
         }
@@ -22,27 +31,91 @@ const IconText = ({ icon, text, callback, id }) => (
 );
 
 const NoteItem = ({ item }) => {
+  const [hovered, setHovered] = useState(false);
+  const [isLiked, setIsLiked] = useState(item.isLiked);
+  const [fetchState, setFetchState] = useState(true);
+  const isLogin = useLogin();
+
+  const openDetail = () => {
+    alert(111);
+  };
+  const comment = () => {
+    alert(222);
+  };
+  const toUserPage = (e) => {
+    e.stopPropagation();
+  };
+
+  const changeLike = async (params) => {
+    if (!isLogin) {
+      return message.warning("用户未登录");
+    }
+    isLiked ? item.likedCount-- : item.likedCount++;
+    setIsLiked(!isLiked);
+
+    const result = await like(params);
+    if (!result) {
+      setFetchState(false);
+    }
+  };
+
+  // 处理点赞请求失败
+  useEffect(() => {
+    if (!fetchState) {
+      message.error("error");
+      isLiked ? item.likedCount-- : item.likedCount++;
+      setIsLiked(!isLiked);
+      setFetchState(true);
+    }
+  }, [fetchState]);
+
   return (
     <>
-      <List.Item key={item.id} style={{ marginBottom: 0 }}>
+      <List.Item
+        key={item.id}
+        style={{
+          marginBottom: 0,
+          cursor: "pointer",
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onClick={openDetail}
+      >
         <Card
           size="small"
-          style={{ borderLeft: 0, borderRight: 0 }}
-          hoverable={true}
+          bordered={false}
+          style={{ backgroundColor: hovered ? "#F5F5F5" : "white" }}
         >
           <Row gutter={16}>
-            <Col style={{ fontSize: 14 }}>{item.user.nickname}</Col>
+            <Col style={{ fontSize: 14 }}>
+              <a
+                onClick={toUserPage}
+                href={`/user/${item.user.id}`}
+                target="_blank"
+              >
+                {item.user.nickname}
+              </a>
+            </Col>
             <Col style={{ fontSize: 14, color: "#8A919F" }}>
               {formatTime(item.createTime)}
             </Col>
           </Row>
-          <Row wrap={false} align="center">
-            <Col span={18}>
-              <Row gutter={[0,4]}>
-                <Col span={24} style={{fontWeight: "bold"}}>{item.title}</Col>
-                <Col span={24}> 
+          <Row wrap={false} justify="space-between">
+            <Col xs={16} sm={19} md={18} lg={18} xl={19} xxl={20}>
+              <Row gutter={[0, 4]}>
+                <Col span={24} style={{ fontWeight: "bold" }}>
+                  {item.title}
+                </Col>
+                <Col span={24}>
                   <Row>
-                    <Col style={{ color: "#8A919F" }}>{item.description}</Col>
+                    <Col style={{ fontSize: 14, color: "#8A919F" }}>
+                      <Typography.Text
+                        ellipsis
+                        style={{ fontSize: 14, color: "#8A919F" }}
+                      >
+                        {item.description}
+                      </Typography.Text>
+                    </Col>
                   </Row>
                 </Col>
                 <Col span={24}>
@@ -50,39 +123,41 @@ const NoteItem = ({ item }) => {
                     <Col>
                       <IconText
                         icon={StarOutlined}
-                        text="156"
+                        text={item.collectCount}
                         key="list-vertical-star-o"
                       />
                     </Col>
-
                     <Col>
                       <IconText
-                        icon={LikeOutlined}
-                        text="156"
-                        key="list-vertical-like-o"
+                        icon={isLiked ? LikeTwoTone : LikeOutlined}
+                        text={item.likedCount}
+                        id={item.id}
+                        callback={changeLike}
                       />
                     </Col>
                     <Col>
                       <IconText
                         icon={MessageOutlined}
-                        text="2"
+                        text={item.commentCount}
                         key="list-vertical-message"
+                        callback={comment}
                       />
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Col>
-
-            <Col>
-              <Image
-                src="https://remote-obj-1313529792.cos.ap-guangzhou.myqcloud.com/cocode/18c1abe4-092e-4121-893d-85032147366b.jpg"
-                preview={false}
-              />
-            </Col>
+            {!item.cover ? (
+              <Col>
+                <Image src={item.cover} preview={false} />
+              </Col>
+            ) : (
+              <Col></Col>
+            )}
           </Row>
         </Card>
       </List.Item>
+      <Divider style={{ margin: 0 }} />
     </>
   );
 };

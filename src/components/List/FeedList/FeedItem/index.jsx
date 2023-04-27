@@ -33,7 +33,7 @@ const IconText = ({ icon, text, callback, id }) => (
           style={{ cursor: "pointer" }}
           onClick={() => {
             if (icon !== MessageOutlined) {
-              callback({ objectType: "post", objectId: id.toString() });
+              callback({ objectType: "post", objectId: id });
             } else {
               callback();
             }

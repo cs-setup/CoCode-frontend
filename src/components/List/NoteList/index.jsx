@@ -27,7 +27,7 @@ const NoteList = () => {
     };
     // if (listOptions.userId) {
     // 请求主页note列表
-    options.specify["authorId/eq"] = "1648138274534531074";
+    options.specify["authorId/eq"] = userInfo.user.id;
     result = await fetchNoteList({ pageParam, options });
     console.log(result);
     // } else {
