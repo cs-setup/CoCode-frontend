@@ -8,11 +8,11 @@ const EditorHeader = ({ handleSubmit }) => {
     inputRef.current.focus();
   }, []);
   return (
-    <Layout.Header style={{ backgroundColor: "#fff" }}>
+    <Layout.Header style={{ backgroundColor: "#fff",padding: 0, width: "100%" }}>
       <Row justify="center">
-        <Col xs={0} sm={0} md={0} lg={5}>
+        <Col xs={0} sm={0} md={0} lg={3}>
           <Row justify="center">
-            <Col size={24}>
+            <Col span={24}>
               <div
                 style={{ fontWeight: "bold", fontSize: 32, color: "#13c2c2" }}
               >
@@ -21,7 +21,7 @@ const EditorHeader = ({ handleSubmit }) => {
             </Col>
           </Row>
         </Col>
-        <Col xs={3} sm={3} md={3} lg={0}>
+        <Col xs={4} sm={3} md={3} lg={0}>
           <Row justify="center">
             <Col size={24}>
               <div
@@ -32,7 +32,7 @@ const EditorHeader = ({ handleSubmit }) => {
             </Col>
           </Row>
         </Col>
-        <Col xs={18} sm={16} md={14} lg={12}>
+        <Col xs={15} sm={16} md={14} lg={12}>
           <Input
             size="large"
             style={{ borderRadius: 50 }}
@@ -40,7 +40,7 @@ const EditorHeader = ({ handleSubmit }) => {
             ref={inputRef}
           />
         </Col>
-        <Col span={3}>
+        <Col span={5} md={3}>
           <Row justify="center">
             <Col size={24}>
               <Button type="primary" size="large" style={{borderRadius: 30}} onClick={()=>{handleSubmit(inputRef.current.input.value)}}>
