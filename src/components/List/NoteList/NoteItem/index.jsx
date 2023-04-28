@@ -147,7 +147,7 @@ const NoteItem = ({ item }) => {
                 </Col>
               </Row>
             </Col>
-            {!item.cover ? (
+            {item.cover ? (
               <Col>
                 <Image src={item.cover} preview={false} />
               </Col>
