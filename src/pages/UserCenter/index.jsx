@@ -9,14 +9,13 @@ import CenterItem from "../../components/CenterItem";
 import NoteList from "../../components/List/NoteList";
 import FollowList from "../../components/List/FollowList";
 
-const LeftColumn = () => {
+const LeftColumn = ({userId}) => {
   const [current, setCurrent] = useState("post");
   const { userInfo } = useContext(UserContext);
-  const { userId } = useParams();
 
   const currentList = {
     post: <FeedList listOptions={{ userId }} />,
-    note: <NoteList />,
+    note: <NoteList id={userId} />,
     follow: <FollowList type={"follow"} key={"follow"} id={userId} />,
     fan: <FollowList type={"fan"} key={"fan"} id={userId} />,
   };
@@ -72,9 +71,10 @@ const RightColumn = () => {
 };
 
 const UserCenter = () => {
+  const {userId} = useParams()
   return (
     <>
-      <TwoColumn left={<LeftColumn />} right={<RightColumn />}></TwoColumn>
+      <TwoColumn key={userId} left={<LeftColumn userId={userId}/>} right={<RightColumn />}></TwoColumn>
     </>
   );
 };
