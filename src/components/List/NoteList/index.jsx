@@ -5,7 +5,7 @@ import { fetchNoteList } from "../../../utils/api/note";
 import useUserInfo from "../../../hooks/useUserInfo";
 import NoteItem from "./NoteItem";
 
-const NoteList = () => {
+const NoteList = ({ id }) => {
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -27,7 +27,7 @@ const NoteList = () => {
     };
     // if (listOptions.userId) {
     // 请求主页note列表
-    options.specify["authorId/eq"] = userInfo.user.id;
+    options.specify["authorId/eq"] = id || userInfo.user.id;
     result = await fetchNoteList({ pageParam, options });
     console.log(result);
     // } else {
@@ -76,9 +76,7 @@ const NoteList = () => {
             column: 1,
           }}
           locale={{ emptyText: <></> }}
-          renderItem={(item) => (
-            <NoteItem key={item.id} item={item} userInfo={userInfo} />
-          )}
+          renderItem={(item) => <NoteItem key={item.id} item={item} />}
           style={{ overflow: "hidden" }}
         />
       </InfiniteScroll>
