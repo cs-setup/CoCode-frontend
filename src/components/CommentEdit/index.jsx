@@ -26,6 +26,15 @@ const CommentEdit = ({ parentItem, userInfo, addNewComment }) => {
           parentId: parentItem.id,
           toId: parentItem.user.id,
         });
+      } else if (parentItem.hasOwnProperty("collectCount")) {
+        // 评论对象为笔记
+        result = await comment({
+          objectId: parentItem.id,
+          objectType: "note",
+          content: textAreaValue,
+          parentId: "0",
+          toId: "0",
+        });
       } else {
         // 评论对象为帖子
         result = await comment({

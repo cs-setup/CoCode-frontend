@@ -6,7 +6,7 @@ import {
   MessageOutlined,
   LikeTwoTone,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import useLogin from "../../../../hooks/useLogin";
 import formatTime from "../../../../utils/formatTime";
 import { like } from "../../../../utils/api/feed";
@@ -17,6 +17,7 @@ const IconText = ({ icon, text, callback, id }) => (
       style={{ cursor: "pointer" }}
       onClick={(e) => {
         e.stopPropagation();
+        e.preventDefault()
         if (icon === LikeOutlined || icon === LikeTwoTone) {
           callback({ objectType: "note", objectId: id });
         } else {
@@ -34,10 +35,12 @@ const NoteItem = ({ item }) => {
   const [hovered, setHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [fetchState, setFetchState] = useState(true);
+  const navigate = useNavigate()
   const isLogin = useLogin();
 
-  const openDetail = () => {
+  const openDetail = (id) => {
     alert(111);
+    navigate(`/note/${id}`)
   };
   const comment = () => {
     alert(222);
@@ -70,7 +73,7 @@ const NoteItem = ({ item }) => {
   }, [fetchState]);
 
   return (
-    <>
+    <Link to={`/note/${item.id}`} target="_blank">
       <List.Item
         key={item.id}
         style={{
@@ -79,7 +82,7 @@ const NoteItem = ({ item }) => {
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        onClick={openDetail}
+        // onClick={() => { openDetail(item.id) }}
       >
         <Card
           size="small"
@@ -158,7 +161,7 @@ const NoteItem = ({ item }) => {
         </Card>
       </List.Item>
       <Divider style={{ margin: 0 }} />
-    </>
+    </Link>
   );
 };
 

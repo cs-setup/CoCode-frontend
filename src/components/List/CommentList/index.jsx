@@ -10,7 +10,7 @@ const CommentList = ({ parentItem }) => {
   const [theCommentList, setTheCommentList] = useState([]);
   const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(UserContext);
-  const isLogin = useLogin()
+  const isLogin = useLogin();
 
   // 获取评论列表
   const getCommentList = async () => {
@@ -21,8 +21,14 @@ const CommentList = ({ parentItem }) => {
       // 一级评论评论列表
       setTheCommentList(parentItem.childComments);
     } else {
-      // 帖子评论列表
-      const result = await commentList({ id: parentItem.id });
+      // 帖子/笔记评论列表
+      let result;
+      if (parentItem.hasOwnProperty("collectCount")) {
+        console.log(111);
+        result = await commentList({ id: parentItem.id, type: "note" });
+      } else {
+        result = await commentList({ id: parentItem.id, type: "post" });
+      }
       setTheCommentList(result.commentList);
     }
     setLoading(false);

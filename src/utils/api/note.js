@@ -21,7 +21,6 @@ export const publish = async (params) => {
 export const note = async (params) => { 
   const {id} = params
   const result = await request.get(`/note/${id}`)
-  console.log(result);
   if(result.code === 10000){
     return result.data
   }
