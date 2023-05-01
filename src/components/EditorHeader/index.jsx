@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { Layout, Row, Col, Input, Button } from "antd";
 
-const EditorHeader = ({ handleSubmit }) => {
+const EditorHeader = ({ title, titleChange, setOpen }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
   return (
-    <Layout.Header style={{ backgroundColor: "#fff",padding: 0, width: "100%" }}>
+    <Layout.Header
+      style={{ backgroundColor: "#fff", padding: 0, width: "100%" }}
+    >
       <Row justify="center">
         <Col xs={0} sm={0} md={0} lg={3}>
           <Row justify="center">
@@ -37,13 +39,22 @@ const EditorHeader = ({ handleSubmit }) => {
             size="large"
             style={{ borderRadius: 50 }}
             placeholder="请输入标题..."
+            value={title}
+            onChange={titleChange}
             ref={inputRef}
           />
         </Col>
         <Col span={5} md={3}>
           <Row justify="center">
             <Col size={24}>
-              <Button type="primary" size="large" style={{borderRadius: 30}} onClick={()=>{handleSubmit(inputRef.current.input.value)}}>
+              <Button
+                type="primary"
+                size="large"
+                style={{ borderRadius: 30 }}
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
                 发布
               </Button>
             </Col>

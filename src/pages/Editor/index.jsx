@@ -1,42 +1,74 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Spin, Modal, Row, Col, Card, Form, Input, Button } from "antd";
+import {
+  Spin,
+  Modal,
+  Card,
+  Form,
+  Input,
+  Button,
+  Radio,
+  Space,
+  Upload,
+} from "antd";
 import Vditor from "vditor";
 import "vditor/dist/index.css";
+import { UploadOutlined } from "@ant-design/icons";
 import EditorHeader from "../../components/EditorHeader";
 import { publish } from "../../utils/api/note";
 
 const Editor = () => {
   const [vd, setVd] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [publishLoading, setPublishLoading] = useState(false);
   const [title, setTitle] = useState("");
-  const [publishLoading, setPublishLoading] = useState(false)
   const [open, setOpen] = useState(false);
+  const [radioValue, setRadioValue] = useState("noCover");
+  const [cover, setCover] = useState();
+  const [submitType, setSubmitType] = useState("0")
+  const [form] = Form.useForm();
 
   const onCancel = () => {
     setOpen(false);
   };
 
-  const handleSubmit = useCallback(
-    (noteTitle) => {
-      setTitle(noteTitle);
-      setOpen(true);
-    },
-    [title]
-  );
-
-  const publishNote = async (values) => {
-    setPublishLoading(true)
-    values.title = title;
-    values.content = vd.getHTML();
-    values.scope = 0;
-    values.flag = 0;
-    values.time = null;
-    console.log(values);
-    const result = await publish(values)
-    setPublishLoading(false)
-
+  // 封面
+  const onRadioChange = (e) => {
+    setRadioValue(e.target.value);
   };
 
+  // 发布方式
+  const typeChange = (e) => {
+    setSubmitType(e.target.value);
+  };
+
+  const titleChange = (e) => {
+    setTitle(e.target.value);
+    form.setFieldsValue({ title: e.target.value });
+  };
+
+  // 上传封面
+  const handleUpload = async (file) => {
+    setCover(file.file);
+  };
+
+  // 发布笔记
+  const publishNote = async (values) => {
+    setPublishLoading(true);
+    values.title = title;
+    values.content = vd.getValue();
+    values.scope = submitType;
+    values.flag = 0;
+    if (cover) {
+      values.cover = cover;
+    }
+    const result = await publish(values);
+    console.log(result);
+    if (result) {
+    }
+    setPublishLoading(false);
+  };
+
+  // 编辑器初始化
   useEffect(() => {
     setLoading(true);
     const vditor = new Vditor("vditor", {
@@ -98,7 +130,11 @@ const Editor = () => {
 
   return (
     <>
-      <EditorHeader handleSubmit={handleSubmit}></EditorHeader>
+      <EditorHeader
+        setOpen={setOpen}
+        titleChange={titleChange}
+        title={title}
+      ></EditorHeader>
       <Spin spinning={loading} delay={200} size="large" tip="编辑器加载中...">
         <div id="vditor" className="vditor" />
       </Spin>
@@ -112,29 +148,73 @@ const Editor = () => {
         maskClosable={true}
         closable={false}
       >
-        <Row justify="start">
-          {/* <Col xs={24} sm={24} md={16}> */}
-          <Card style={{ height: "100%", width: "100%" }}>
-            <Form name="publishNote" onFinish={publishNote}>
-              <Form.Item
-                name="description"
-                label="描述"
-                rules={[
-                  {
-                    required: true,
-                    message: "描述不能为空",
-                  },
-                ]}
-              >
-                <Input.TextArea />
-              </Form.Item>
-              <Button type="primary" htmlType="submit" loading={publishLoading}>
-                发布
-              </Button>
-            </Form>
-          </Card>
-          {/* </Col> */}
-        </Row>
+        <Card style={{ height: "100%", width: "100%" }}>
+          <Form name="publishNote" onFinish={publishNote} form={form}>
+            <Form.Item
+              name="title"
+              label="标题"
+              rules={[
+                {
+                  required: true,
+                  message: "标题不能为空",
+                },
+                {
+                  message: "标题不能超过50字",
+                  max: 50,
+                },
+              ]}
+            >
+              <Input
+                value={form.getFieldValue("title")}
+                onChange={titleChange}
+              />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              label="描述"
+              htmlFor="sss"
+              rules={[
+                {
+                  required: true,
+                  message: "描述不能为空",
+                },
+              ]}
+            >
+              <Input.TextArea />
+            </Form.Item>
+            <Form.Item>
+              <Space direction="vertical" size="large">
+                <Radio.Group value={radioValue} onChange={onRadioChange}>
+                  <Radio value="noCover">无封面</Radio>
+                  <Radio value="imgCover">单图封面</Radio>
+                </Radio.Group>
+                {radioValue === "imgCover" && (
+                  <Upload
+                    name="cover"
+                    action=""
+                    listType="picture"
+                    beforeUpload={() => false}
+                    maxCount={1}
+                    showUploadList={true}
+                    onChange={handleUpload}
+                    rules={[{ required: true, message: "请上传封面" }]}
+                  >
+                    <Button icon={<UploadOutlined />}>上传封面</Button>
+                  </Upload>
+                )}
+              </Space>
+            </Form.Item>
+            <Form.Item>
+              <Radio.Group value={submitType} onChange={typeChange}>
+                <Radio value="0">公开发布</Radio>
+                <Radio value="1">仅自己可见</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Button type="primary" htmlType="submit" loading={publishLoading}>
+              发布
+            </Button>
+          </Form>
+        </Card>
       </Modal>
     </>
   );
