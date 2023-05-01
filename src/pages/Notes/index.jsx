@@ -10,13 +10,7 @@ const LeftColumn = () => {
   return (
     <Space direction="vertical" style={{ display: "flex" }}>
       <UserInfo></UserInfo>
-      <Card>
-        {/* <div
-          dangerouslySetInnerHTML={{
-            __html:
-              "<p>111</p>\n<p>222</p>\n<h1>sfa</h1>\n<ul>\n<li>alsjdf…a</li>\n<li>adfkjaljf</li>\n<li>asdfadf</li>\n</ul>\n",
-          }}
-        ></div> */}
+      <Card title="我的笔记" size="small" headStyle={{ minHeight: 48 }}>
         <NoteList />
       </Card>
     </Space>

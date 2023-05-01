@@ -5,44 +5,50 @@ import { Card, Row, Col, Avatar, Space, Divider } from "antd";
 import { note } from "../../utils/api/note";
 import formatTime from "../../utils/formatTime";
 import TwoColumn from "../../components/Layout/TwoColumn";
-import CommentList from "../../components/List/CommentList"
+import CommentList from "../../components/List/CommentList";
 
 const LeftColumn = ({ note }) => {
   return (
-    <Card
-      title={
-        <Row align="middle">
-          <Col span={24}>
-            <h1 style={{ fontWeight: "bold", margin: 0, paddingTop: 16 }}>
-              {note.title}
-            </h1>
-          </Col>
-          <Col span={24}>
-            <Row gutter={16} align="middle">
-              <Col>
-                <Avatar src={note.user.avatar} size={40} />
-              </Col>
-              <Col>
-                <div>{note.user.nickname}</div>
-                <div
-                  style={{ fontSize: 14, color: "#8A919F", fontWeight: "400" }}
-                >
-                  {formatTime(note.createTime)}
-                </div>
-              </Col>
-            </Row>
-          </Col>
-          <Divider style={{ marginBottom: 0 }} />
-          {note.cover && <img src={note.cover} style={{ width: "100%" }} />}
-        </Row>
-      }
-      headStyle={{ border: "none" }}
-    >
-      <Space direction="vertical" style={{display: "flex"}} size="large">
+    <Space direction="vertical" style={{display: "flex"}}>
+      <Card
+        title={
+          <Row align="middle">
+            <Col span={24}>
+              <h1 style={{ fontWeight: "bold", margin: 0, paddingTop: 16 }}>
+                {note.title}
+              </h1>
+            </Col>
+            <Col span={24}>
+              <Row gutter={16} align="middle">
+                <Col>
+                  <Avatar src={note.user.avatar} size={40} />
+                </Col>
+                <Col>
+                  <div>{note.user.nickname}</div>
+                  <div
+                    style={{
+                      fontSize: 14,
+                      color: "#8A919F",
+                      fontWeight: "400",
+                    }}
+                  >
+                    {formatTime(note.createTime)}
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Divider style={{ marginBottom: 0 }} />
+            {note.cover && <img src={note.cover} style={{ width: "100%" }} />}
+          </Row>
+        }
+        headStyle={{ border: "none" }}
+      >
         <ReactMarkdown children={note.content} />
-        <CommentList />
-      </Space>
-    </Card>
+      </Card>
+      <Card title="评论" size="small" headStyle={{minHeight: 48}}>
+        <CommentList parentItem={note} />
+      </Card>
+    </Space>
   );
 };
 const RightColumn = () => {
