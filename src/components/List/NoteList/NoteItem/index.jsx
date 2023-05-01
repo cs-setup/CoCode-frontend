@@ -38,10 +38,6 @@ const NoteItem = ({ item }) => {
   const navigate = useNavigate()
   const isLogin = useLogin();
 
-  const openDetail = (id) => {
-    alert(111);
-    navigate(`/note/${id}`)
-  };
   const comment = () => {
     alert(222);
   };
