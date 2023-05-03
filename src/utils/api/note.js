@@ -33,3 +33,13 @@ export const collect = async (params) => {
     return false;
   }
 };
+
+export const deleteNote = async (params) => {
+  const { noteId } = params;
+  const result = await request.delete(`/note/${noteId}`);
+  if (result.code == 10000) {
+    return true;
+  } else {
+    return false;
+  }
+};

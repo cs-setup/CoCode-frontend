@@ -90,6 +90,8 @@ const FeedItem = ({ item, userInfo, reGetList }) => {
       if (result === true) {
         reGetList();
         message.success("删除成功");
+      } else {
+        message.error("删除失败");
       }
     } catch (e) {
       message.error("删除失败");

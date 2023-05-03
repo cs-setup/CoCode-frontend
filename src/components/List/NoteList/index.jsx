@@ -10,6 +10,7 @@ const NoteList = ({ listOptions }) => {
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [isReGetList, setIsReGetList] = useState(false);
   const firstPostRef = useRef(Date.now());
   const location = useLocation();
   const userInfo = useUserInfo();
@@ -60,9 +61,16 @@ const NoteList = ({ listOptions }) => {
     }
   };
 
+  // 重新请求文章
+  const reGetList = () => {
+    setList([]);
+    setPageNum(0);
+    setIsReGetList(true);
+  };
+
   useEffect(() => {
     getNoteList();
-  }, []);
+  }, [isReGetList]);
   return (
     <div>
       <InfiniteScroll
@@ -88,7 +96,9 @@ const NoteList = ({ listOptions }) => {
             column: 1,
           }}
           locale={{ emptyText: <></> }}
-          renderItem={(item) => <NoteItem key={item.id} item={item} />}
+          renderItem={(item) => (
+            <NoteItem key={item.id} item={item} reGetList={reGetList} />
+          )}
           style={{ overflow: "hidden" }}
         />
       </InfiniteScroll>

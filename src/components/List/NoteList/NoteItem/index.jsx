@@ -9,6 +9,8 @@ import {
   Image,
   Typography,
   message,
+  Tooltip,
+  Popconfirm,
 } from "antd";
 import {
   StarOutlined,
@@ -16,12 +18,15 @@ import {
   LikeOutlined,
   MessageOutlined,
   LikeTwoTone,
+  QuestionCircleOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useLogin from "../../../../hooks/useLogin";
 import formatTime from "../../../../utils/formatTime";
 import { like } from "../../../../utils/api/feed";
-import { collect } from "../../../../utils/api/note";
+import { collect, deleteNote } from "../../../../utils/api/note";
+import useUserInfo from "../../../../hooks/useUserInfo";
 
 const IconText = ({ icon, text, callback, id }) => (
   <label style={{ cursor: "pointer" }}>
@@ -52,8 +57,13 @@ const NoteItem = ({ item }) => {
   const [isCollected, setIsCollected] = useState(item.isCollected);
   const [likeState, setLikeState] = useState(true);
   const [collectState, setCollectState] = useState(true);
-  const navigate = useNavigate();
   const isLogin = useLogin();
+  const userInfo = useUserInfo();
+
+  if (!userInfo.user) {
+    return null;
+  }
+  console.log(userInfo);
 
   const comment = () => {
     // navigate('/home', {target: "_blank" })
@@ -109,6 +119,21 @@ const NoteItem = ({ item }) => {
     }
   }, [collectState]);
 
+  // 删除帖子
+  const handleDelete = async () => {
+    try {
+      const result = await deleteNote({ noteId: item.id });
+      if (result === true) {
+        reGetList();
+        message.success("删除成功");
+      } else {
+        message.error("删除失败");
+      }
+    } catch (e) {
+      message.error("删除失败");
+    }
+  };
+
   return (
     <Link to={`/note/${item.id}`} target="_blank">
       <List.Item
@@ -125,19 +150,60 @@ const NoteItem = ({ item }) => {
           bordered={false}
           style={{ backgroundColor: hovered ? "#F5F5F5" : "white" }}
         >
-          <Row gutter={16}>
-            <Col style={{ fontSize: 14 }}>
-              <a
-                onClick={toUserPage}
-                href={`/user/${item.user.id}`}
-                target="_blank"
-              >
-                {item.user.nickname}
-              </a>
+          <Row justify="space-between">
+            <Col>
+              <Row gutter={16}>
+                <Col style={{ fontSize: 14 }}>
+                  <a
+                    onClick={toUserPage}
+                    href={`/user/${item.user.id}`}
+                    target="_blank"
+                  >
+                    {item.user.nickname}
+                  </a>
+                </Col>
+                <Col style={{ fontSize: 14, color: "#8A919F" }}>
+                  {formatTime(item.createTime)}
+                </Col>
+              </Row>
             </Col>
-            <Col style={{ fontSize: 14, color: "#8A919F" }}>
-              {formatTime(item.createTime)}
-            </Col>
+            {userInfo.user.id === item.user.id && (
+              <Col>
+                <Tooltip
+                  title={
+                    <Popconfirm
+                      placement="leftTop"
+                      title="确定要删除吗？"
+                      onConfirm={handleDelete}
+                      okText="确定"
+                      okType="danger"
+                      showCancel={false}
+                      icon={
+                        <QuestionCircleOutlined
+                          style={{
+                            color: "red",
+                          }}
+                        />
+                      }
+                    >
+                      <a>删除</a>
+                    </Popconfirm>
+                  }
+                  placement="bottom"
+                  trigger="click"
+                  color="#fff"
+                >
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }}
+                  >
+                    <MoreOutlined />
+                  </div>
+                </Tooltip>
+              </Col>
+            )}
           </Row>
           <Row wrap={false} justify="space-between">
             <Col xs={16} sm={19} md={18} lg={18} xl={19} xxl={20}>
@@ -189,7 +255,11 @@ const NoteItem = ({ item }) => {
             </Col>
             {item.cover ? (
               <Col>
-                <Image src={item.cover} preview={false} style={{maxHeight: 64}}/>
+                <Image
+                  src={item.cover}
+                  preview={false}
+                  style={{ maxHeight: 64 }}
+                />
               </Col>
             ) : (
               <Col></Col>
