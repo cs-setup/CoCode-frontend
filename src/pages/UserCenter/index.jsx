@@ -9,9 +9,8 @@ import CenterItem from "../../components/CenterItem";
 import NoteList from "../../components/List/NoteList";
 import FollowList from "../../components/List/FollowList";
 
-const LeftColumn = ({userId}) => {
+const LeftColumn = ({ userId, setUserInfo }) => {
   const [current, setCurrent] = useState("post");
-  const { userInfo } = useContext(UserContext);
 
   const currentList = {
     post: <FeedList listOptions={{ userId }} />,
@@ -20,19 +19,15 @@ const LeftColumn = ({userId}) => {
     fan: <FollowList type={"fan"} key={"fan"} id={userId} />,
   };
 
-  if (!userInfo) {
-    return null;
-  }
-
   const onClick = (e) => {
     setCurrent(e.key);
   };
   return (
     <>
       <Space direction="vertical" style={{ display: "flex" }}>
-        <UserInfo userId={userId}></UserInfo>
+        <UserInfo userId={userId} setUserInfo={setUserInfo}></UserInfo>
         <Card
-        size="small"
+          size="small"
           headStyle={{ minHeight: 48, justifyContent: "end" }}
           title={
             <Menu
@@ -51,7 +46,7 @@ const LeftColumn = ({userId}) => {
                 <CenterItem>关注</CenterItem>
               </Menu.Item>
               <Menu.Item key="fan" className="horizontal-menu">
-                <CenterItem>被关注</CenterItem>
+                <CenterItem>粉丝</CenterItem>
               </Menu.Item>
             </Menu>
           }
@@ -62,19 +57,36 @@ const LeftColumn = ({userId}) => {
     </>
   );
 };
-const RightColumn = () => {
+const RightColumn = ({ userInfo }) => {
+  console.log(userInfo);
   return (
     <>
-      <Card>此处是广告牌</Card>
+      <Card size="small">
+        <Space style={{ display: "flex", justifyContent: "space-around" }}>
+          <Space direction="vertical">
+            <>关注</>{" "}
+            <div style={{ textAlign: "center" }}>{userInfo.followCount}</div>
+          </Space>
+          <Space direction="vertical">
+            <>粉丝</>{" "}
+            <div style={{ textAlign: "center" }}>{userInfo.fanCount}</div>
+          </Space>
+        </Space>
+      </Card>
     </>
   );
 };
 
 const UserCenter = () => {
-  const {userId} = useParams()
+  const [userInfo, setUserInfo] = useState({});
+  const { userId } = useParams();
   return (
     <>
-      <TwoColumn key={userId} left={<LeftColumn userId={userId}/>} right={<RightColumn />}></TwoColumn>
+      <TwoColumn
+        key={userId}
+        left={<LeftColumn userId={userId} setUserInfo={setUserInfo} />}
+        right={<RightColumn userInfo={userInfo} />}
+      ></TwoColumn>
     </>
   );
 };

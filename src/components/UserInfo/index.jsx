@@ -7,10 +7,10 @@ import { UserOutlined } from "@ant-design/icons";
 import { fetchUserInfo, follow } from "../../utils/api/user";
 import useLogin from "../../hooks/useLogin";
 
-const UserInfo = ({ userId }) => {
+const UserInfo = ({ userId, setUserInfo }) => {
   const { userInfo } = useContext(UserContext);
   const [user, setUser] = useState({});
-  const isLogin = useLogin()
+  const isLogin = useLogin();
   const location = useLocation();
 
   if (!userInfo) {
@@ -39,6 +39,10 @@ const UserInfo = ({ userId }) => {
       getUserInfo();
     }
   }, []);
+
+  useEffect(() => {
+    setUserInfo(user);
+  }, [user]);
 
   return (
     <>
