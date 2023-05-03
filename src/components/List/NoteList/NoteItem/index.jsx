@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Card, List, Space, Row, Col, Divider, Image, Typography } from "antd";
+import {
+  Card,
+  List,
+  Space,
+  Row,
+  Col,
+  Divider,
+  Image,
+  Typography,
+  message,
+} from "antd";
 import {
   StarOutlined,
+  StarTwoTone,
   LikeOutlined,
   MessageOutlined,
   LikeTwoTone,
@@ -10,6 +21,7 @@ import { useNavigate, Link } from "react-router-dom";
 import useLogin from "../../../../hooks/useLogin";
 import formatTime from "../../../../utils/formatTime";
 import { like } from "../../../../utils/api/feed";
+import { collect } from "../../../../utils/api/note";
 
 const IconText = ({ icon, text, callback, id }) => (
   <label style={{ cursor: "pointer" }}>
@@ -20,8 +32,8 @@ const IconText = ({ icon, text, callback, id }) => (
           e.preventDefault();
           if (icon === LikeOutlined || icon === LikeTwoTone) {
             callback({ objectType: "note", objectId: id });
-          } else if (icon === StarOutlined) {
-
+          } else if (icon === StarOutlined || icon === StarTwoTone) {
+            callback({ noteId: id });
           } else {
             callback();
           }
@@ -37,14 +49,16 @@ const IconText = ({ icon, text, callback, id }) => (
 const NoteItem = ({ item }) => {
   const [hovered, setHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(item.isLiked);
-  const [fetchState, setFetchState] = useState(true);
+  const [isCollected, setIsCollected] = useState(item.isCollected);
+  const [likeState, setLikeState] = useState(true);
+  const [collectState, setCollectState] = useState(true);
   const navigate = useNavigate();
   const isLogin = useLogin();
 
   const comment = () => {
     // navigate('/home', {target: "_blank" })
-    window.open(`/note/${item.id}`,"_blank")
-  }; 
+    window.open(`/note/${item.id}`, "_blank");
+  };
   const toUserPage = (e) => {
     e.stopPropagation();
   };
@@ -62,15 +76,38 @@ const NoteItem = ({ item }) => {
     }
   };
 
+  const changeCollect = async (params) => {
+    if (!isLogin) {
+      return message.warning("用户未登录");
+    }
+    isCollected ? item.collectCount-- : item.collectCount++;
+    setIsCollected(!isCollected);
+
+    const result = await collect(params);
+    if (!result) {
+      setCollectState(false);
+    }
+  };
+
   // 处理点赞请求失败
   useEffect(() => {
-    if (!fetchState) {
-      message.error("error");
+    if (!likeState) {
+      message.error("点赞失败");
       isLiked ? item.likedCount-- : item.likedCount++;
       setIsLiked(!isLiked);
-      setFetchState(true);
+      setLikeState(true);
     }
-  }, [fetchState]);
+  }, [likeState]);
+
+  // 处理收藏请求失败
+  useEffect(() => {
+    if (!collectState) {
+      message.error("收藏失败");
+      isCollected ? item.collectCount-- : item.collectCount++;
+      setIsCollected(!isCollected);
+      setCollectState(true);
+    }
+  }, [collectState]);
 
   return (
     <Link to={`/note/${item.id}`} target="_blank">
@@ -124,9 +161,10 @@ const NoteItem = ({ item }) => {
                   <Row gutter={16}>
                     <Col>
                       <IconText
-                        icon={StarOutlined}
+                        icon={isCollected ? StarTwoTone : StarOutlined}
                         text={item.collectCount}
-                        key="list-vertical-star-o"
+                        id={item.id}
+                        callback={changeCollect}
                       />
                     </Col>
                     <Col>

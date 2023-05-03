@@ -34,7 +34,7 @@ const LeftColumn = ({ note, setTocify }) => {
       const anchor = theTocify.add(text, level);
       return `<a id="${anchor}" href="#${anchor}" onclick="return false" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
     };
-    setTocify(theTocify)
+    setTocify(theTocify);
   }, []);
 
   const html = marked(note.content);
@@ -89,7 +89,11 @@ const LeftColumn = ({ note, setTocify }) => {
 };
 const RightColumn = ({ tocify }) => {
   console.log(tocify);
-  return <Card title="目录" size="small" style={{minHeight: 48}}>{tocify && tocify.render()}</Card>;
+  return (
+    <Card title="目录" size="small" style={{ minHeight: 48 }}>
+      {tocify && tocify.render()}
+    </Card>
+  );
 };
 
 const NoteDetail = () => {
@@ -113,9 +117,7 @@ const NoteDetail = () => {
 
   return (
     <TwoColumn
-      left={
-        <LeftColumn note={content.note} setTocify={setTocify} />
-      }
+      left={<LeftColumn note={content.note} setTocify={setTocify} />}
       right={<RightColumn note={content.note} tocify={tocify} />}
     />
   );
