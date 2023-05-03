@@ -6,7 +6,7 @@ import useLogin from "../../../hooks/useLogin";
 const CommentEdit = React.lazy(() => import("../../CommentEdit"));
 import CommentItem from "./CommentItem";
 
-const CommentList = ({ parentItem }) => {
+const CommentList = ({ parentItem, commentsRef }) => {
   const [theCommentList, setTheCommentList] = useState([]);
   const [loading, setLoading] = useState(false);
   const { userInfo } = useContext(UserContext);
@@ -32,6 +32,9 @@ const CommentList = ({ parentItem }) => {
       setTheCommentList(result.commentList);
     }
     setLoading(false);
+    // if (commentsRef) {
+    //   commentsRef.current?.scrollIntoView({ top: 0, behavior: "smooth" });
+    // }
   };
 
   // 添加最新评论

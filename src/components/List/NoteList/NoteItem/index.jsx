@@ -12,35 +12,39 @@ import formatTime from "../../../../utils/formatTime";
 import { like } from "../../../../utils/api/feed";
 
 const IconText = ({ icon, text, callback, id }) => (
-  <Space style={{ fontSize: 14 }}>
-    <div
-      style={{ cursor: "pointer" }}
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault()
-        if (icon === LikeOutlined || icon === LikeTwoTone) {
-          callback({ objectType: "note", objectId: id });
-        } else {
-          callback();
-        }
-      }}
-    >
-      {React.createElement(icon)}
-    </div>
-    <div>{text}</div>
-  </Space>
+  <label style={{ cursor: "pointer" }}>
+    <Space style={{ fontSize: 14 }}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          if (icon === LikeOutlined || icon === LikeTwoTone) {
+            callback({ objectType: "note", objectId: id });
+          } else if (icon === StarOutlined) {
+
+          } else {
+            callback();
+          }
+        }}
+      >
+        {React.createElement(icon)}
+      </div>
+      <div>{text}</div>
+    </Space>
+  </label>
 );
 
 const NoteItem = ({ item }) => {
   const [hovered, setHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(item.isLiked);
   const [fetchState, setFetchState] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const isLogin = useLogin();
 
   const comment = () => {
-    alert(222);
-  };
+    // navigate('/home', {target: "_blank" })
+    window.open(`/note/${item.id}`,"_blank")
+  }; 
   const toUserPage = (e) => {
     e.stopPropagation();
   };
@@ -78,7 +82,6 @@ const NoteItem = ({ item }) => {
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        // onClick={() => { openDetail(item.id) }}
       >
         <Card
           size="small"

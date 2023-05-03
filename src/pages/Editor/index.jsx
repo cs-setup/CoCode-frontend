@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Spin,
   Modal,
@@ -13,8 +13,10 @@ import {
 import Vditor from "vditor";
 import "vditor/dist/index.css";
 import { UploadOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import EditorHeader from "../../components/EditorHeader";
 import { publish } from "../../utils/api/note";
+import { message } from "antd";
 
 const Editor = () => {
   const [vd, setVd] = useState(null);
@@ -26,6 +28,7 @@ const Editor = () => {
   const [cover, setCover] = useState();
   const [submitType, setSubmitType] = useState("0")
   const [form] = Form.useForm();
+  const navigate = useNavigate()
 
   const onCancel = () => {
     setOpen(false);
@@ -63,7 +66,11 @@ const Editor = () => {
     }
     const result = await publish(values);
     console.log(result);
-    if (result) {
+    if (result.id) {
+      message.success("发布成功")
+      navigate(`/note/${result.id}`,{replace: true})
+    }else{
+      message.error("发布失败")
     }
     setPublishLoading(false);
   };
