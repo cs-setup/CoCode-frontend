@@ -7,7 +7,7 @@ import FeedList from "../../components/List/FeedList";
 import FeedEdit from "../../components/FeedEdit";
 
 const LeftColumn = () => {
-  const isLogin = useLogin()
+  const isLogin = useLogin();
   return (
     <>
       <Space direction="vertical" size="middle" style={{ display: "flex" }}>
@@ -16,7 +16,11 @@ const LeftColumn = () => {
             <FeedEdit />
           </Card>
         )}
-        <Card title={<div>沸点列表</div>} headStyle={{minHeight: 48}} size="small">
+        <Card
+          title={<div>沸点列表</div>}
+          headStyle={{ minHeight: 48 }}
+          size="small"
+        >
           <FeedList />
         </Card>
       </Space>
@@ -25,7 +29,11 @@ const LeftColumn = () => {
 };
 
 const RightColumn = () => {
-  return <Card title="队伍动态">aaa</Card>;
+  return (
+    <Card size="small">
+      <img src="/logo.webp" style={{ width: "100%" }} />
+    </Card>
+  );
 };
 
 export default function Home() {

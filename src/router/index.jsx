@@ -7,6 +7,7 @@ const UserCenter = React.lazy(() => import("../pages/UserCenter"));
 const Notes = React.lazy(() => import("../pages/Notes"));
 const Editor = React.lazy(() => import("../pages/Editor"));
 const Message = React.lazy(() => import("../pages/chat/Message"));
+const Explore = React.lazy(() => import("../pages/Explore"));
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
 import NoteDetail from "../pages/NoteDetail";
@@ -27,6 +28,10 @@ const CommonRoutes = [
   {
     path: "/note/:id",
     element: <NoteDetail />,
+  },
+  {
+    path: "/explore",
+    element: <Explore />,
   },
   {
     path: "*",

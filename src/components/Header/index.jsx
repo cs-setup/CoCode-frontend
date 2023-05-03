@@ -24,13 +24,13 @@ const items = [
     key: "/home",
   },
   {
-    label: <Link to="/app">论坛</Link>,
-    key: "/app",
+    label: <Link to="/explore">逛逛</Link>,
+    key: "/explore",
   },
-  {
-    label: <Link to="/squre">圈子</Link>,
-    key: "/squre",
-  },
+  // {
+  //   label: <Link to="/squre">圈子</Link>,
+  //   key: "/squre",
+  // },
 ];
 
 export default function Header(props) {
@@ -142,12 +142,12 @@ export default function Header(props) {
               <Menu.Item className={style.menuitem} key="/home">
                 <Link to="/home">首页</Link>
               </Menu.Item>
-              <Menu.Item className={style.menuitem} key="/app">
-                <Link to="/app">论坛</Link>
+              <Menu.Item className={style.menuitem} key="/explore">
+                <Link to="/explore">逛逛</Link>
               </Menu.Item>
-              <Menu.Item className={style.menuitem} key="/squre">
+              {/* <Menu.Item className={style.menuitem} key="/squre">
                 <Link to="/squre">圈子</Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </div>
         </Col>
