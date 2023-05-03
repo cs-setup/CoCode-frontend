@@ -7,7 +7,7 @@ import { WebSocketProvider } from "./contexts/WebSocketContext";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <ConfigProvider
         theme={{
@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </UserProvider>
       </ConfigProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

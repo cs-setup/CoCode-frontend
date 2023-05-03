@@ -1,15 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 import { Card, Row, Col, Avatar, Space, Divider } from "antd";
+import { marked } from "marked";
+import hljs from "highlight.js";
+import "highlight.js";
 import { note } from "../../utils/api/note";
 import formatTime from "../../utils/formatTime";
 import TwoColumn from "../../components/Layout/TwoColumn";
 import CommentList from "../../components/List/CommentList";
+import Tocify from "../../components/Tocify";
 
-const LeftColumn = ({ note }) => {
+const LeftColumn = ({ note, setTocify }) => {
+  const commentsRef = useRef(null);
+  // markdown处理
+  const renderer = new marked.Renderer();
+
+  const theTocify = new Tocify();
+
+  useEffect(() => {
+    marked.setOptions({
+      renderer: renderer,
+      gfm: true,
+      pedantic: false,
+      sanitize: false,
+      tables: true,
+      breaks: false,
+      smartLists: true,
+      highlight: function (code) {
+        return hljs.highlightAuto(code).value;
+      },
+    });
+    renderer.heading = (text, level) => {
+      const anchor = theTocify.add(text, level);
+      return `<a id="${anchor}" href="#${anchor}" onclick="return false" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
+    };
+    setTocify(theTocify)
+  }, []);
+
+  const html = marked(note.content);
+
   return (
-    <Space direction="vertical" style={{display: "flex"}}>
+    <Space direction="vertical" style={{ display: "flex" }}>
       <Card
         title={
           <Row align="middle">
@@ -43,25 +74,34 @@ const LeftColumn = ({ note }) => {
         }
         headStyle={{ border: "none" }}
       >
-        <ReactMarkdown children={note.content} />
+        <div dangerouslySetInnerHTML={{ __html: html }}></div>
       </Card>
-      <Card title="评论" size="small" headStyle={{minHeight: 48}}>
-        <CommentList parentItem={note} />
+      <Card
+        title="评论"
+        size="small"
+        headStyle={{ minHeight: 48 }}
+        ref={commentsRef}
+      >
+        <CommentList parentItem={note} commentsRef={commentsRef} />
       </Card>
     </Space>
   );
 };
-const RightColumn = () => {
-  return <Card>111</Card>;
+const RightColumn = ({ tocify }) => {
+  console.log(tocify);
+  return <Card title="目录" size="small" style={{minHeight: 48}}>{tocify && tocify.render()}</Card>;
 };
 
 const NoteDetail = () => {
   const [content, setContent] = useState("");
   const { id } = useParams();
+  const [tocify, setTocify] = useState(new Tocify());
+
   const getNoteDetail = async () => {
     const result = await note({ id });
     if (result) {
       setContent(result);
+      console.log(result);
     }
   };
   useEffect(() => {
@@ -70,10 +110,13 @@ const NoteDetail = () => {
   if (!content) {
     return null;
   }
+
   return (
     <TwoColumn
-      left={<LeftColumn note={content.note} />}
-      right={<RightColumn />}
+      left={
+        <LeftColumn note={content.note} setTocify={setTocify} />
+      }
+      right={<RightColumn note={content.note} tocify={tocify} />}
     />
   );
 };
