@@ -41,7 +41,9 @@ const UserInfo = ({ userId, setUserInfo }) => {
   }, []);
 
   useEffect(() => {
-    setUserInfo(user);
+    if (setUserInfo) {
+      setUserInfo(user);
+    }
   }, [user]);
 
   return (

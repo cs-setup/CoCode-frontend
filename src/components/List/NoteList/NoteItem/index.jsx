@@ -189,7 +189,7 @@ const NoteItem = ({ item }) => {
             </Col>
             {item.cover ? (
               <Col>
-                <Image src={item.cover} preview={false} />
+                <Image src={item.cover} preview={false} style={{maxHeight: 64}}/>
               </Col>
             ) : (
               <Col></Col>

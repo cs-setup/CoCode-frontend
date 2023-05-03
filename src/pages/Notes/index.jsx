@@ -11,7 +11,7 @@ const LeftColumn = () => {
     <Space direction="vertical" style={{ display: "flex" }}>
       <UserInfo></UserInfo>
       <Card title="我的笔记" size="small" headStyle={{ minHeight: 48 }}>
-        <NoteList />
+        <NoteList listOptions={{}}/>
       </Card>
     </Space>
   );

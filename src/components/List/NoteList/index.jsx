@@ -1,16 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import { List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useLocation } from "react-router-dom";
 import { fetchNoteList } from "../../../utils/api/note";
 import useUserInfo from "../../../hooks/useUserInfo";
 import NoteItem from "./NoteItem";
 
-const NoteList = ({ id }) => {
+const NoteList = ({ listOptions }) => {
   const [list, setList] = useState([]);
   const [pageNum, setPageNum] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const firstPostRef = useRef(Date.now());
+  const location = useLocation();
   const userInfo = useUserInfo();
+
+  if (!userInfo) {
+    return null;
+  }
+
+  if (!listOptions) {
+    listOptions = {};
+  }
 
   const getNoteList = async () => {
     let result = {};
@@ -25,14 +35,17 @@ const NoteList = ({ id }) => {
         updateTime: "desc",
       },
     };
-    // if (listOptions.userId) {
-    // 请求主页note列表
-    options.specify["authorId/eq"] = id || userInfo.user.id;
-    result = await fetchNoteList({ pageParam, options });
-    console.log(result);
-    // } else {
-    //   result = await getList({ pageParam, options });
-    // }
+    if (listOptions.userId) {
+      // 请求主页note列表
+      options.specify["authorId/eq"] = listOptions.userId;
+      result = await fetchNoteList({ pageParam, options });
+      console.log(result);
+    } else if (location.pathname === "/notes") {
+      options.specify["authorId/eq"] = userInfo.user.id;
+      result = await fetchNoteList({ pageParam, options });
+    } else {
+      result = await fetchNoteList({ pageParam, options });
+    }
 
     if (result.noteList.length !== 0) {
       setPageNum(pageNum + 1);
@@ -45,7 +58,6 @@ const NoteList = ({ id }) => {
     } else {
       setHasMore(false);
     }
-    // setIsReGetList(false);
   };
 
   useEffect(() => {

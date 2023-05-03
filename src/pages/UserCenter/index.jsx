@@ -14,7 +14,7 @@ const LeftColumn = ({ userId, setUserInfo }) => {
 
   const currentList = {
     post: <FeedList listOptions={{ userId }} />,
-    note: <NoteList id={userId} />,
+    note: <NoteList listOptions={{ userId }} />,
     follow: <FollowList type={"follow"} key={"follow"} id={userId} />,
     fan: <FollowList type={"fan"} key={"fan"} id={userId} />,
   };
