@@ -11,6 +11,7 @@ const Explore = React.lazy(() => import("../pages/Explore"));
 import Profile from "../pages/Settings/Profile";
 import Account from "../pages/Settings/Account";
 import NoteDetail from "../pages/NoteDetail";
+import Raffle from "../pages/Raffle";
 
 const CommonRoutes = [
   {
@@ -32,6 +33,10 @@ const CommonRoutes = [
   {
     path: "/explore",
     element: <Explore />,
+  },
+  {
+    path: "/raffle",
+    element: <Raffle />,
   },
   {
     path: "*",
