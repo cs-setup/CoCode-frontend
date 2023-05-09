@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { InputNumber, Button, Row, Col, Space, Card, Spin } from "antd";
 import { useEffect } from "react";
 
+let usedNumbers = []
+
 const Raffle = () => {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(10);
@@ -11,14 +13,17 @@ const Raffle = () => {
 
   const handleMinValueChange = (value) => {
     setMinValue(value);
+    usedNumbers=[]
   };
 
   const handleMaxValueChange = (value) => {
     setMaxValue(value);
+    usedNumbers=[]
   };
 
   const handleQuantityChange = (value) => {
     setQuantity(value);
+    usedNumbers=[]
   };
 
   const handleGenerateClick = () => {
@@ -27,8 +32,9 @@ const Raffle = () => {
     while (numbers.length < quantity) {
       const randomNumber =
         Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-      if (!numbers.includes(randomNumber)) {
+      if (!numbers.includes(randomNumber) && !usedNumbers.includes(randomNumber)) {
         numbers.push(randomNumber);
+        usedNumbers.push(randomNumber)
       }
     }
     setRandomNumbers(numbers);
