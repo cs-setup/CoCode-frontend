@@ -1,5 +1,5 @@
 import React from "react";
-import { Anchor } from "antd";
+import { Anchor, Card } from "antd";
 import { last } from "lodash";
 
 const { Link } = Anchor;
@@ -13,20 +13,19 @@ export default class Tocify {
     this.index = 0;
   }
 
-  static getInstance(){
+  static getInstance() {
     if (!Tocify.instance) {
       // 若这个唯一的实例不存在，那么先创建它
-      Tocify.instance = new Tocify()
-  }
-  // 如果这个唯一的实例已经存在，则直接返回
-  return Tocify.instance
+      Tocify.instance = new Tocify();
+    }
+    // 如果这个唯一的实例已经存在，则直接返回
+    return Tocify.instance;
   }
 
   add(text, level) {
     const anchor = `toc${level}${++this.index}`;
     const item = { anchor, level, text };
     const items = this.tocItems;
-    console.log("aaa");
 
     if (items.length === 0) {
       // 第一个 item 直接 push
@@ -79,13 +78,14 @@ export default class Tocify {
     return (
       <Anchor
         affix
-        showInkInFixed
-        targetOffset={100}
         onClick={(e) => {
           e.preventDefault();
         }}
+        style={{padding: 0}}
       >
-        {this.renderToc(this.tocItems)}
+        <Card size="small" headStyle={{ minHeight: 48 }} title="目录" style={{maxHeight: "100vh", overflow: "scroll"}}>
+          {this.renderToc(this.tocItems)}
+        </Card>
       </Anchor>
     );
   }

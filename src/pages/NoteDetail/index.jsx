@@ -88,11 +88,10 @@ const LeftColumn = ({ note, setTocify }) => {
   );
 };
 const RightColumn = ({ tocify }) => {
-  console.log(tocify);
   return (
-    <Card title="目录" size="small" style={{ minHeight: 48 }}>
-      {tocify && tocify.render()}
-    </Card>
+    // <Card title="目录" size="small" headStyle={{ minHeight: 48 }} style={{overflow: "scroll", position: "fixed"}}>
+      <div >{tocify && tocify.render()}</div>
+    // </Card>
   );
 };
 
