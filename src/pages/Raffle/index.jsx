@@ -21,11 +21,11 @@ const Raffle = () => {
     setMaxValue(value);
   };
   const handleMinValueChange2 = (value) => {
-    setMinValue(value);
+    setMinValue2(value);
   };
 
   const handleMaxValueChange2 = (value) => {
-    setMaxValue(value);
+    setMaxValue2(value);
   };
 
   const handleQuantityChange = (value) => {
@@ -37,7 +37,7 @@ const Raffle = () => {
     const numbers = [];
     while (numbers.length < quantity) {
       const randomNumber = [
-        Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue2,
+        Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue,
         Math.floor(Math.random() * (maxValue2 - minValue2 + 1)) + minValue2,
       ];
       console.log(randomNumber);
