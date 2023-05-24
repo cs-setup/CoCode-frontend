@@ -119,9 +119,9 @@ const Raffle = () => {
                     <Col>
                       <Space>
                         <InputNumber
-                          value={maxValue}
+                          value={maxValue2}
                           onChange={handleMaxValueChange}
-                          min={minValue}
+                          min={minValue2}
                         />
                       </Space>
                     </Col>
