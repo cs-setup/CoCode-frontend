@@ -15,17 +15,21 @@ const Raffle = () => {
 
   const handleMinValueChange = (value) => {
     setMinValue(value);
-    usedNumbers = [];
   };
 
   const handleMaxValueChange = (value) => {
     setMaxValue(value);
-    usedNumbers = [];
+  };
+  const handleMinValueChange2 = (value) => {
+    setMinValue(value);
+  };
+
+  const handleMaxValueChange2 = (value) => {
+    setMaxValue(value);
   };
 
   const handleQuantityChange = (value) => {
     setQuantity(value);
-    usedNumbers = [];
   };
 
   const handleGenerateClick = () => {
@@ -109,7 +113,7 @@ const Raffle = () => {
                       <Space>
                         <InputNumber
                           value={minValue2}
-                          onChange={handleMinValueChange}
+                          onChange={handleMinValueChange2}
                           min={0}
                           max={maxValue2}
                         />
@@ -120,7 +124,7 @@ const Raffle = () => {
                       <Space>
                         <InputNumber
                           value={maxValue2}
-                          onChange={handleMaxValueChange}
+                          onChange={handleMaxValueChange2}
                           min={minValue2}
                         />
                       </Space>
