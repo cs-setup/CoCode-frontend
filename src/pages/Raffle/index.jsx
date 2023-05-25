@@ -76,7 +76,7 @@ const Raffle = () => {
           <Row justify="center">
             <Col>
               <div style={{ padding: 40, fontSize: 48, fontWeight: "bold", color: '#fff' }}>
-              525音乐故事会暖场抽奖
+              “525”音乐故事会抽奖
               </div>
             </Col>
           </Row>
