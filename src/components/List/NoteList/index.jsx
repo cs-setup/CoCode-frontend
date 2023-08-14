@@ -40,7 +40,6 @@ const NoteList = ({ listOptions }) => {
       // 请求主页note列表
       options.specify["authorId/eq"] = listOptions.userId;
       result = await fetchNoteList({ pageParam, options });
-      console.log(result);
     } else if (location.pathname === "/notes") {
       options.specify["authorId/eq"] = userInfo.user.id;
       result = await fetchNoteList({ pageParam, options });
@@ -85,11 +84,11 @@ const NoteList = ({ listOptions }) => {
             active
           />
         }
-        scrollableTarget="scrollableDiv"
+        scrollableTarget='scrollableDiv'
       >
         <List
-          itemLayout="vertical"
-          size="middle"
+          itemLayout='vertical'
+          size='middle'
           split={false}
           dataSource={list}
           grid={{

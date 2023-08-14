@@ -24,9 +24,8 @@ export const note = async (params) => {
 };
 
 export const collect = async (params) => {
-  console.log(params);
   const result = await request.post("/note/collect", params);
-  console.log(result);
+
   if (result.code === 10000) {
     return true;
   } else {

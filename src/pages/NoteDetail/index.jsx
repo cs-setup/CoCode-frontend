@@ -40,17 +40,17 @@ const LeftColumn = ({ note, setTocify }) => {
   const html = marked(note.content);
 
   return (
-    <Space direction="vertical" style={{ display: "flex" }}>
+    <Space direction='vertical' style={{ display: "flex" }}>
       <Card
         title={
-          <Row align="middle">
+          <Row align='middle'>
             <Col span={24}>
               <h1 style={{ fontWeight: "bold", margin: 0, paddingTop: 16 }}>
                 {note.title}
               </h1>
             </Col>
             <Col span={24}>
-              <Row gutter={16} align="middle">
+              <Row gutter={16} align='middle'>
                 <Col>
                   <Avatar src={note.user.avatar} size={40} />
                 </Col>
@@ -77,8 +77,8 @@ const LeftColumn = ({ note, setTocify }) => {
         <div dangerouslySetInnerHTML={{ __html: html }}></div>
       </Card>
       <Card
-        title="评论"
-        size="small"
+        title='评论'
+        size='small'
         headStyle={{ minHeight: 48 }}
         ref={commentsRef}
       >
@@ -90,7 +90,7 @@ const LeftColumn = ({ note, setTocify }) => {
 const RightColumn = ({ tocify }) => {
   return (
     // <Card title="目录" size="small" headStyle={{ minHeight: 48 }} style={{overflow: "scroll", position: "fixed"}}>
-      <div >{tocify && tocify.render()}</div>
+    <div>{tocify && tocify.render()}</div>
     // </Card>
   );
 };
@@ -104,7 +104,6 @@ const NoteDetail = () => {
     const result = await note({ id });
     if (result) {
       setContent(result);
-      console.log(result);
     }
   };
   useEffect(() => {

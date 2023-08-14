@@ -24,28 +24,28 @@ const LeftColumn = ({ userId, setUserInfo }) => {
   };
   return (
     <>
-      <Space direction="vertical" style={{ display: "flex" }}>
+      <Space direction='vertical' style={{ display: "flex" }}>
         <UserInfo userId={userId} setUserInfo={setUserInfo}></UserInfo>
         <Card
-          size="small"
+          size='small'
           headStyle={{ minHeight: 48, justifyContent: "end" }}
           title={
             <Menu
               selectedKeys={[current]}
               onClick={onClick}
-              mode="horizontal"
+              mode='horizontal'
               style={{ border: "none" }}
             >
-              <Menu.Item key="post" className="horizontal-menu">
+              <Menu.Item key='post' className='horizontal-menu'>
                 <CenterItem>帖子</CenterItem>
               </Menu.Item>
-              <Menu.Item key="note" className="horizontal-menu">
+              <Menu.Item key='note' className='horizontal-menu'>
                 <CenterItem>笔记</CenterItem>
               </Menu.Item>
-              <Menu.Item key="follow" className="horizontal-menu">
+              <Menu.Item key='follow' className='horizontal-menu'>
                 <CenterItem>关注</CenterItem>
               </Menu.Item>
-              <Menu.Item key="fan" className="horizontal-menu">
+              <Menu.Item key='fan' className='horizontal-menu'>
                 <CenterItem>粉丝</CenterItem>
               </Menu.Item>
             </Menu>
@@ -58,16 +58,15 @@ const LeftColumn = ({ userId, setUserInfo }) => {
   );
 };
 const RightColumn = ({ userInfo }) => {
-  console.log(userInfo);
   return (
     <>
-      <Card size="small">
+      <Card size='small'>
         <Space style={{ display: "flex", justifyContent: "space-around" }}>
-          <Space direction="vertical">
+          <Space direction='vertical'>
             <>关注</>{" "}
             <div style={{ textAlign: "center" }}>{userInfo.followCount}</div>
           </Space>
-          <Space direction="vertical">
+          <Space direction='vertical'>
             <>粉丝</>{" "}
             <div style={{ textAlign: "center" }}>{userInfo.fanCount}</div>
           </Space>

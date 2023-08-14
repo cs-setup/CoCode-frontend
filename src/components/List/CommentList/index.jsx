@@ -24,7 +24,6 @@ const CommentList = ({ parentItem, commentsRef }) => {
       // 帖子/笔记评论列表
       let result;
       if (parentItem.hasOwnProperty("collectCount")) {
-        console.log(111);
         result = await commentList({ id: parentItem.id, type: "note" });
       } else {
         result = await commentList({ id: parentItem.id, type: "post" });
@@ -62,8 +61,8 @@ const CommentList = ({ parentItem, commentsRef }) => {
           <>
             <Divider>全部评论</Divider>
             <List
-              itemLayout="vertical"
-              size="middle"
+              itemLayout='vertical'
+              size='middle'
               dataSource={theCommentList}
               grid={{
                 column: 1,

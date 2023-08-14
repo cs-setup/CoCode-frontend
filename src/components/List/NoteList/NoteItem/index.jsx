@@ -63,7 +63,6 @@ const NoteItem = ({ item }) => {
   if (!userInfo.user) {
     return null;
   }
-  console.log(userInfo);
 
   const comment = () => {
     // navigate('/home', {target: "_blank" })
@@ -135,7 +134,7 @@ const NoteItem = ({ item }) => {
   };
 
   return (
-    <Link to={`/note/${item.id}`} target="_blank">
+    <Link to={`/note/${item.id}`} target='_blank'>
       <List.Item
         key={item.id}
         style={{
@@ -146,18 +145,18 @@ const NoteItem = ({ item }) => {
         onMouseLeave={() => setHovered(false)}
       >
         <Card
-          size="small"
+          size='small'
           bordered={false}
           style={{ backgroundColor: hovered ? "#F5F5F5" : "white" }}
         >
-          <Row justify="space-between">
+          <Row justify='space-between'>
             <Col>
               <Row gutter={16}>
                 <Col style={{ fontSize: 14 }}>
                   <a
                     onClick={toUserPage}
                     href={`/user/${item.user.id}`}
-                    target="_blank"
+                    target='_blank'
                   >
                     {item.user.nickname}
                   </a>
@@ -172,11 +171,11 @@ const NoteItem = ({ item }) => {
                 <Tooltip
                   title={
                     <Popconfirm
-                      placement="leftTop"
-                      title="确定要删除吗？"
+                      placement='leftTop'
+                      title='确定要删除吗？'
                       onConfirm={handleDelete}
-                      okText="确定"
-                      okType="danger"
+                      okText='确定'
+                      okType='danger'
                       showCancel={false}
                       icon={
                         <QuestionCircleOutlined
@@ -189,9 +188,9 @@ const NoteItem = ({ item }) => {
                       <a>删除</a>
                     </Popconfirm>
                   }
-                  placement="bottom"
-                  trigger="click"
-                  color="#fff"
+                  placement='bottom'
+                  trigger='click'
+                  color='#fff'
                 >
                   <div
                     onClick={(e) => {
@@ -205,7 +204,7 @@ const NoteItem = ({ item }) => {
               </Col>
             )}
           </Row>
-          <Row wrap={false} justify="space-between">
+          <Row wrap={false} justify='space-between'>
             <Col xs={16} sm={19} md={18} lg={18} xl={19} xxl={20}>
               <Row gutter={[0, 4]}>
                 <Col span={24} style={{ fontWeight: "bold" }}>
@@ -245,7 +244,7 @@ const NoteItem = ({ item }) => {
                       <IconText
                         icon={MessageOutlined}
                         text={item.commentCount}
-                        key="list-vertical-message"
+                        key='list-vertical-message'
                         callback={comment}
                       />
                     </Col>

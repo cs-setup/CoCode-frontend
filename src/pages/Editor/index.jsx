@@ -26,9 +26,9 @@ const Editor = () => {
   const [open, setOpen] = useState(false);
   const [radioValue, setRadioValue] = useState("noCover");
   const [cover, setCover] = useState();
-  const [submitType, setSubmitType] = useState("0")
+  const [submitType, setSubmitType] = useState("0");
   const [form] = Form.useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onCancel = () => {
     setOpen(false);
@@ -65,12 +65,12 @@ const Editor = () => {
       values.cover = cover;
     }
     const result = await publish(values);
-    console.log(result);
+
     if (result.id) {
-      message.success("发布成功")
-      navigate(`/note/${result.id}`,{replace: true})
-    }else{
-      message.error("发布失败")
+      message.success("发布成功");
+      navigate(`/note/${result.id}`, { replace: true });
+    } else {
+      message.error("发布失败");
     }
     setPublishLoading(false);
   };
@@ -142,8 +142,8 @@ const Editor = () => {
         titleChange={titleChange}
         title={title}
       ></EditorHeader>
-      <Spin spinning={loading} delay={200} size="large" tip="编辑器加载中...">
-        <div id="vditor" className="vditor" />
+      <Spin spinning={loading} delay={200} size='large' tip='编辑器加载中...'>
+        <div id='vditor' className='vditor' />
       </Spin>
       <Modal
         centered
@@ -156,10 +156,10 @@ const Editor = () => {
         closable={false}
       >
         <Card style={{ height: "100%", width: "100%" }}>
-          <Form name="publishNote" onFinish={publishNote} form={form}>
+          <Form name='publishNote' onFinish={publishNote} form={form}>
             <Form.Item
-              name="title"
-              label="标题"
+              name='title'
+              label='标题'
               rules={[
                 {
                   required: true,
@@ -177,9 +177,9 @@ const Editor = () => {
               />
             </Form.Item>
             <Form.Item
-              name="description"
-              label="描述"
-              htmlFor="sss"
+              name='description'
+              label='描述'
+              htmlFor='sss'
               rules={[
                 {
                   required: true,
@@ -190,16 +190,16 @@ const Editor = () => {
               <Input.TextArea />
             </Form.Item>
             <Form.Item>
-              <Space direction="vertical" size="large">
+              <Space direction='vertical' size='large'>
                 <Radio.Group value={radioValue} onChange={onRadioChange}>
-                  <Radio value="noCover">无封面</Radio>
-                  <Radio value="imgCover">单图封面</Radio>
+                  <Radio value='noCover'>无封面</Radio>
+                  <Radio value='imgCover'>单图封面</Radio>
                 </Radio.Group>
                 {radioValue === "imgCover" && (
                   <Upload
-                    name="cover"
-                    action=""
-                    listType="picture"
+                    name='cover'
+                    action=''
+                    listType='picture'
                     beforeUpload={() => false}
                     maxCount={1}
                     showUploadList={true}
@@ -213,11 +213,11 @@ const Editor = () => {
             </Form.Item>
             <Form.Item>
               <Radio.Group value={submitType} onChange={typeChange}>
-                <Radio value="0">公开发布</Radio>
-                <Radio value="1">仅自己可见</Radio>
+                <Radio value='0'>公开发布</Radio>
+                <Radio value='1'>仅自己可见</Radio>
               </Radio.Group>
             </Form.Item>
-            <Button type="primary" htmlType="submit" loading={publishLoading}>
+            <Button type='primary' htmlType='submit' loading={publishLoading}>
               发布
             </Button>
           </Form>

@@ -44,8 +44,7 @@ export const deleteFeed = async (params) => {
 
 export const commentList = async (params) => {
   let result;
-  console.log(params);
-  console.log(params.type);
+
   if (params.type == "note") {
     result = await request.get(`/comment/list/note/${params.id}`);
   } else {
