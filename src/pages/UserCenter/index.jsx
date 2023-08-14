@@ -17,6 +17,7 @@ const LeftColumn = ({ userId, setUserInfo }) => {
     note: <NoteList listOptions={{ userId }} />,
     follow: <FollowList type={"follow"} key={"follow"} id={userId} />,
     fan: <FollowList type={"fan"} key={"fan"} id={userId} />,
+    collect: <NoteList listOptions={{ userId, collect: true }} />,
   };
 
   const onClick = (e) => {
@@ -47,6 +48,9 @@ const LeftColumn = ({ userId, setUserInfo }) => {
               </Menu.Item>
               <Menu.Item key='fan' className='horizontal-menu'>
                 <CenterItem>粉丝</CenterItem>
+              </Menu.Item>
+              <Menu.Item key='collect' className='horizontal-menu'>
+                <CenterItem>收藏夹</CenterItem>
               </Menu.Item>
             </Menu>
           }
