@@ -50,7 +50,7 @@ const LeftColumn = ({ userId, setUserInfo }) => {
                 <CenterItem>粉丝</CenterItem>
               </Menu.Item>
               <Menu.Item key='collect' className='horizontal-menu'>
-                <CenterItem>收藏夹</CenterItem>
+                <CenterItem>收藏列表</CenterItem>
               </Menu.Item>
             </Menu>
           }
